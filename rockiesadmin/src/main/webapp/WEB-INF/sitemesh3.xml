@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+	<mime-type>text/html</mime-type>
+	<mime-type>application/vnd.wap.xhtml+xml</mime-type>
+	<mime-type>application/xhtml+xml</mime-type>
+  <mapping path="/*" decorator="/decorators/decorator.jsp"/>
+<!-- 排除，不进行装饰的路径 -->
+<mapping path="/index.jsp" exclue="true"/>
+<mapping path="/WEB-INF/pages/login.jsp" exclue="true"/>
+<mapping path="/assets/js/umeditor/jsp/imageUp.jsp" exclue="true"/>
+<mapping path="/tologin.*" exclue="true"/>
+<mapping path="/login.*" exclue="true"/>
+</sitemesh> 

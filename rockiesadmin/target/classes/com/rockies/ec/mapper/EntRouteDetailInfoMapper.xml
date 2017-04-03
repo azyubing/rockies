@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rockies.ec.mapper.EntRouteDetailInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.rockies.ec.model.EntRouteDetailInfo" >
+    <id column="PID" property="pid" jdbcType="VARCHAR" />
+    <id column="pday" property="pday" jdbcType="INTEGER" />
+    <id column="starttime" property="starttime" jdbcType="VARCHAR" />
+    <result column="endtime" property="endtime" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="title_en" property="titleEn" jdbcType="VARCHAR" />
+    <result column="itype" property="itype" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="del_flg" property="delFlg" jdbcType="VARCHAR" />
+    <result column="ctdt" property="ctdt" jdbcType="TIMESTAMP" />
+    <result column="ctuser" property="ctuser" jdbcType="VARCHAR" />
+    <result column="updt" property="updt" jdbcType="TIMESTAMP" />
+    <result column="upuser" property="upuser" jdbcType="VARCHAR" />
+    <result column="order_num" property="orderNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PID, pday, starttime, endtime, title, title_en, itype, description, del_flg, ctdt, 
+    ctuser, updt, upuser,order_num
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.rockies.ec.model.EntRouteDetailInfo" >
+    select 
+    <include refid="Base_Column_List" />
+    from ent_route_detail
+    where PID = #{pid,jdbcType=VARCHAR}
+      and pday = #{pday,jdbcType=INTEGER}
+      and starttime = #{starttime,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllListByParam" parameterType="Map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ent_route_detail
+    <where>
+    	del_flg=0
+    	<if test="title !=null and title != ''">
+		  and title like "%"#{title,jdbcType=VARCHAR}"%" 
+		</if>
+		<if test="pid !=null and pid != ''">
+		  and pid = #{pid,jdbcType=VARCHAR}
+		</if>
+		<if test="pday !=null and pday != ''">
+		  and pday = #{pday,jdbcType=VARCHAR}
+		</if>
+    </where>
+    order by order_num
+    <if test="offset!=null and limit != ''">
+	  limit #{offset},#{limit};
+	</if>
+  </select>
+  <select id="getCount" parameterType="Map" resultType="java.lang.Integer">
+	select  count(*) from ent_route_detail
+	<where>
+		del_flg=0
+    	<if test="title !=null and title != ''">
+		  and title like "%"#{title,jdbcType=VARCHAR}"%" 
+		</if>
+		<if test="pid !=null and pid != ''">
+		  and pid = #{pid,jdbcType=VARCHAR}
+		</if>
+		<if test="pday !=null and pday != ''">
+		  and pday = #{pday,jdbcType=VARCHAR}
+		</if>
+    </where>
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="com.rockies.ec.model.EntRouteDetailInfo" >
+    delete from ent_route_detail
+    where PID = #{pid,jdbcType=VARCHAR}
+      and pday = #{pday,jdbcType=INTEGER}
+      and starttime = #{starttime,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.rockies.ec.model.EntRouteDetailInfo" >
+    insert into ent_route_detail (PID, pday, starttime, 
+      endtime, title, title_en, 
+      itype, description, del_flg, 
+      ctdt, ctuser, updt, 
+      upuser,order_num)
+    values (#{pid,jdbcType=VARCHAR}, #{pday,jdbcType=INTEGER}, #{starttime,jdbcType=VARCHAR}, 
+      #{endtime,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{titleEn,jdbcType=VARCHAR}, 
+      #{itype,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{delFlg,jdbcType=VARCHAR}, 
+      #{ctdt,jdbcType=TIMESTAMP}, #{ctuser,jdbcType=VARCHAR}, #{updt,jdbcType=TIMESTAMP}, 
+      #{upuser,jdbcType=VARCHAR}, #{orderNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rockies.ec.model.EntRouteDetailInfo" >
+    insert into ent_route_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        PID,
+      </if>
+      <if test="pday != null" >
+        pday,
+      </if>
+      <if test="starttime != null" >
+        starttime,
+      </if>
+      <if test="endtime != null" >
+        endtime,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="titleEn != null" >
+        title_en,
+      </if>
+      <if test="itype != null" >
+        itype,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="delFlg != null" >
+        del_flg,
+      </if>
+      <if test="ctdt != null" >
+        ctdt,
+      </if>
+      <if test="ctuser != null" >
+        ctuser,
+      </if>
+      <if test="updt != null" >
+        updt,
+      </if>
+      <if test="upuser != null" >
+        upuser,
+      </if>
+      <if test="orderNum != null">
+        order_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="pday != null" >
+        #{pday,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="titleEn != null" >
+        #{titleEn,jdbcType=VARCHAR},
+      </if>
+      <if test="itype != null" >
+        #{itype,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlg != null" >
+        #{delFlg,jdbcType=VARCHAR},
+      </if>
+      <if test="ctdt != null" >
+        #{ctdt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctuser != null" >
+        #{ctuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updt != null" >
+        #{updt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upuser != null" >
+        #{upuser,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rockies.ec.model.EntRouteDetailInfo" >
+    update ent_route_detail
+    <set >
+      <if test="newStarttime != null" >
+        starttime = #{newStarttime,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        endtime = #{endtime,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="titleEn != null" >
+        title_en = #{titleEn,jdbcType=VARCHAR},
+      </if>
+      <if test="itype != null" >
+        itype = #{itype,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlg != null" >
+        del_flg = #{delFlg,jdbcType=VARCHAR},
+      </if>
+      <if test="ctdt != null" >
+        ctdt = #{ctdt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctuser != null" >
+        ctuser = #{ctuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updt != null" >
+        updt = #{updt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upuser != null" >
+        upuser = #{upuser,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null">
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where PID = #{pid,jdbcType=VARCHAR}
+      and pday = #{pday,jdbcType=INTEGER}
+      and starttime = #{starttime,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rockies.ec.model.EntRouteDetailInfo" >
+    update ent_route_detail
+    set 
+      starttime = #{newStarttime,jdbcType=VARCHAR},
+      endtime = #{endtime,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      title_en = #{titleEn,jdbcType=VARCHAR},
+      itype = #{itype,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      del_flg = #{delFlg,jdbcType=VARCHAR},
+      ctdt = #{ctdt,jdbcType=TIMESTAMP},
+      ctuser = #{ctuser,jdbcType=VARCHAR},
+      updt = #{updt,jdbcType=TIMESTAMP},
+      upuser = #{upuser,jdbcType=VARCHAR},
+      order_num = #{orderNum,jdbcType=INTEGER}
+    where PID = #{pid,jdbcType=VARCHAR}
+      and pday = #{pday,jdbcType=INTEGER}
+      and starttime = #{starttime,jdbcType=VARCHAR}
+  </update>
+</mapper>

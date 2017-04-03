@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rockies.ec.mapper.ProductInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.rockies.ec.model.ProductInfo" >
+    <id column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="ptype" property="ptype" jdbcType="VARCHAR" />
+    <result column="pstatus" property="pstatus" jdbcType="CHAR" />
+    <result column="pnote" property="pnote" jdbcType="VARCHAR" />
+    <result column="pname" property="pname" jdbcType="VARCHAR" />
+    <result column="pname_en" property="pname_en" jdbcType="VARCHAR" />
+    <result column="continent" property="continent" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="supplier_no" property="supplier_no" jdbcType="VARCHAR" />
+    <result column="startdate" property="startdate" jdbcType="TIMESTAMP" />
+    <result column="enddate" property="enddate" jdbcType="TIMESTAMP" />
+    <result column="list_img" property="list_img" jdbcType="VARCHAR" />
+    <result column="size_img1" property="size_img1" jdbcType="VARCHAR" />
+    <result column="size_img2" property="size_img2" jdbcType="VARCHAR" />
+    <result column="size_img3" property="size_img3" jdbcType="VARCHAR" />
+    <result column="size_img4" property="size_img4" jdbcType="VARCHAR" />
+    <result column="size_img5" property="size_img5" jdbcType="VARCHAR" />
+    <result column="start_price" property="start_price" jdbcType="DECIMAL" />
+    <result column="prepay" property="prepay" jdbcType="DECIMAL" />
+    <result column="del_flg" property="del_flg" jdbcType="VARCHAR" />
+    <result column="fromcity" property="fromcity" jdbcType="VARCHAR" />
+    <result column="sale_cnt" property="sale_cnt" jdbcType="BIGINT" />
+    <result column="sharecnt" property="sharecnt" jdbcType="BIGINT" />
+    <result column="collection_cnt" property="collection_cnt" jdbcType="BIGINT" />
+    <result column="map_address" property="map_address" jdbcType="VARCHAR" />
+    <result column="map_lng" property="map_lng" jdbcType="VARCHAR" />
+    <result column="map_lat" property="map_lat" jdbcType="VARCHAR" />
+    <result column="tags" property="tags" jdbcType="VARCHAR" />
+    <result column="service_fee_rate" property="service_fee_rate" jdbcType="DECIMAL" />
+    <result column="tax_rate" property="tax_rate" jdbcType="DECIMAL" />
+    <result column="confirm_time" property="confirm_time" jdbcType="INTEGER" />
+    <result column="ctdt" property="ctdt" jdbcType="TIMESTAMP" />
+    <result column="ctuser" property="ctuser" jdbcType="VARCHAR" />
+    <result column="updt" property="updt" jdbcType="TIMESTAMP" />
+    <result column="upuser" property="upuser" jdbcType="VARCHAR" />
+    <result column="pdesc" property="pdesc" jdbcType="VARCHAR" />
+    <result column="price_desc" property="price_desc" jdbcType="VARCHAR" />
+    <result column="video_url" property="video_url" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pid, ptype, pstatus, pnote, pname, pname_en, continent, country, city, supplier_no, 
+    startdate, enddate, list_img, size_img1, size_img2, size_img3, size_img4, size_img5, 
+    start_price, prepay, del_flg, fromcity, sale_cnt, sharecnt, collection_cnt, map_address, 
+    map_lng, map_lat, tags, service_fee_rate, tax_rate, confirm_time, ctdt, ctuser, updt, 
+    upuser,pdesc,price_desc,video_url
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from product
+    where pid = #{pid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllListByParam" resultMap="BaseResultMap" parameterType="Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from product
+    <where>
+    	del_flg=0
+    </where>
+    order by ctdt 
+    <if test="offset!=null and limit != ''">
+	  limit #{offset},#{limit};
+	</if>
+  </select>
+  <select id="selectProductInfoListByParam" resultType="Map" parameterType="Map" >
+    select p.pname,p.ptype,p.supplier_no,p.country,p.pid,p.pstatus,p.startdate,p.enddate,
+	c.cityName,
+	s.s_name
+	from product as p
+ 	left join city as c on p.country = c.id
+ 	left join suppliers as s on p.supplier_no = s.sid
+    <where>
+    	p.del_flg=0
+    	<if test="pid !=null and pid != ''">
+		  and p.pid = #{pid,jdbcType=VARCHAR}
+		</if>
+		<if test="pname !=null and pname != ''">
+		  and p.pname like "%"#{pname,jdbcType=VARCHAR}"%" 
+		</if>
+		<if test="supplier_no !=null and supplier_no != ''">
+		  and p.supplier_no = #{supplier_no,jdbcType=VARCHAR}
+		</if>
+		<if test="ptype !=null and ptype != ''">
+		  and p.ptype = #{ptype,jdbcType=VARCHAR}
+		</if>
+		<if test="country !=null and country != ''">
+		  and p.country = #{country,jdbcType=VARCHAR}
+		</if>
+		<if test="continent !=null and continent != ''">
+		  and p.continent = #{continent,jdbcType=VARCHAR}
+		</if>
+		<if test="distinctFlg == 1 and themeCatalogId != null and themeId != null ">
+		  and p.pid not in (select productId from themeproduct 
+			where themeId = #{themeId} and themeCatalogId = #{themeCatalogId})
+		</if>
+		
+    </where>
+    <if test="offset !=null and limit != null">
+	  limit #{offset},#{limit};
+	</if>
+  </select>
+  <select id="getCount"  parameterType="Map" resultType="java.lang.Integer" >
+	select  count(*) from product as p
+	<where>
+		p.del_flg=0
+		<if test="pid !=null and pid != ''">
+		  and p.pid = #{pid,jdbcType=VARCHAR}
+		</if>
+		<if test="pname !=null and pname != ''">
+		  and p.pname like "%"#{pname,jdbcType=VARCHAR}"%" 
+		</if>
+		<if test="supplier_no !=null and supplier_no != ''">
+		  and p.supplier_no = #{supplier_no,jdbcType=VARCHAR}
+		</if>
+		<if test="ptype !=null and ptype != ''">
+		  and p.ptype = #{ptype,jdbcType=VARCHAR}
+		</if>
+		<if test="country !=null and country != ''">
+		  and p.country = #{country,jdbcType=VARCHAR}
+		</if>
+		<if test="continent !=null and continent != ''">
+		  and p.continent = #{continent,jdbcType=VARCHAR}
+		</if>
+		<if test="distinctFlg == 1 and themeCatalogId != null and themeId != null ">
+		  and p.pid not in (select productId from themeproduct 
+			where themeId = #{themeId} and themeCatalogId = #{themeCatalogId})
+		</if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from product
+    where pid = #{pid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.rockies.ec.model.ProductInfo" >
+  	<selectKey keyProperty="pid" resultType="String" order="BEFORE">
+  		select
+    	IFNULL(CONCAT('P', LPAD(RIGHT(MAX(pid),19)+1,19,'0')),'P0000000000000000001') as pid 
+    	from product
+  	</selectKey>
+    insert into product (pid, ptype, pstatus, 
+      pnote, pname, pname_en, 
+      continent, country, city, 
+      supplier_no, startdate, enddate, 
+      list_img, size_img1, size_img2, 
+      size_img3, size_img4, size_img5, 
+      start_price, prepay, del_flg, 
+      fromcity, sale_cnt, sharecnt, 
+      collection_cnt, map_address, map_lng, 
+      map_lat, tags, service_fee_rate, 
+      tax_rate, confirm_time, ctdt, 
+      ctuser,pdesc,price_desc,video_url
+      )
+    values (#{pid,jdbcType=VARCHAR}, #{ptype,jdbcType=VARCHAR}, #{pstatus,jdbcType=CHAR}, 
+      #{pnote,jdbcType=VARCHAR}, #{pname,jdbcType=VARCHAR}, #{pname_en,jdbcType=VARCHAR}, 
+      #{continent,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{supplier_no,jdbcType=VARCHAR}, #{startdate,jdbcType=TIMESTAMP}, #{enddate,jdbcType=TIMESTAMP}, 
+      #{list_img,jdbcType=VARCHAR}, #{size_img1,jdbcType=VARCHAR}, #{size_img2,jdbcType=VARCHAR}, 
+      #{size_img3,jdbcType=VARCHAR}, #{size_img4,jdbcType=VARCHAR}, #{size_img5,jdbcType=VARCHAR}, 
+      #{start_price,jdbcType=DECIMAL}, #{prepay,jdbcType=DECIMAL}, 0, 
+      #{fromcity,jdbcType=VARCHAR}, #{sale_cnt,jdbcType=BIGINT}, #{sharecnt,jdbcType=BIGINT}, 
+      #{collection_cnt,jdbcType=BIGINT}, #{map_address,jdbcType=VARCHAR}, #{map_lng,jdbcType=VARCHAR}, 
+      #{map_lat,jdbcType=VARCHAR}, #{tags,jdbcType=VARCHAR}, #{service_fee_rate,jdbcType=DECIMAL}, 
+      #{tax_rate,jdbcType=DECIMAL}, #{confirm_time,jdbcType=INTEGER}, 
+		#{ctdt,jdbcType=TIMESTAMP},
+        #{ctuser,jdbcType=VARCHAR},
+        #{pdesc,jdbcType=VARCHAR},#{price_desc,jdbcType=VARCHAR},#{video_url,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.rockies.ec.model.ProductInfo" >
+  	<selectKey keyProperty="pid" resultType="String" order="BEFORE">
+  		select
+    	IFNULL(CONCAT('P', LPAD(RIGHT(MAX(pid),19)+1,19,'0')),'P0000000000000000001') as pid 
+    	from product
+  	</selectKey>
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="ptype != null" >
+        ptype,
+      </if>
+      <if test="pstatus != null" >
+        pstatus,
+      </if>
+      <if test="pnote != null" >
+        pnote,
+      </if>
+      <if test="pdesc != null" >
+        pdesc,
+      </if>
+      <if test="price_desc != null" >
+        price_desc,
+      </if>
+      <if test="video_url != null" >
+        video_url,
+      </if>
+      <if test="pname != null" >
+        pname,
+      </if>
+      <if test="pname_en != null" >
+        pname_en,
+      </if>
+      <if test="continent != null" >
+        continent,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="supplier_no != null" >
+        supplier_no,
+      </if>
+      <if test="startdate != null" >
+        startdate,
+      </if>
+      <if test="enddate != null" >
+        enddate,
+      </if>
+      <if test="list_img != null" >
+        list_img,
+      </if>
+      <if test="size_img1 != null" >
+        size_img1,
+      </if>
+      <if test="size_img2 != null" >
+        size_img2,
+      </if>
+      <if test="size_img3 != null" >
+        size_img3,
+      </if>
+      <if test="size_img4 != null" >
+        size_img4,
+      </if>
+      <if test="size_img5 != null" >
+        size_img5,
+      </if>
+      <if test="start_price != null" >
+        start_price,
+      </if>
+      <if test="prepay != null" >
+        prepay,
+      </if>
+del_flg,
+      <if test="fromcity != null" >
+        fromcity,
+      </if>
+      <if test="sale_cnt != null" >
+        sale_cnt,
+      </if>
+      <if test="sharecnt != null" >
+        sharecnt,
+      </if>
+      <if test="collection_cnt != null" >
+        collection_cnt,
+      </if>
+      <if test="map_address != null" >
+        map_address,
+      </if>
+      <if test="map_lng != null" >
+        map_lng,
+      </if>
+      <if test="map_lat != null" >
+        map_lat,
+      </if>
+      <if test="tags != null" >
+        tags,
+      </if>
+      <if test="service_fee_rate != null" >
+        service_fee_rate,
+      </if>
+      <if test="tax_rate != null" >
+        tax_rate,
+      </if>
+      <if test="confirm_time != null" >
+        confirm_time,
+      </if>
+		ctdt,
+        ctuser
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="ptype != null" >
+        #{ptype,jdbcType=VARCHAR},
+      </if>
+      <if test="pstatus != null" >
+        #{pstatus,jdbcType=CHAR},
+      </if>
+      <if test="pnote != null" >
+        #{pnote,jdbcType=VARCHAR},
+      </if>
+      <if test="pdesc != null" >
+        #{pdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="price_desc != null" >
+        #{price_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="video_url != null" >
+        #{video_url,jdbcType=VARCHAR},
+      </if>
+      <if test="pname != null" >
+        #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="pname_en != null" >
+        #{pname_en,jdbcType=VARCHAR},
+      </if>
+      <if test="continent != null" >
+        #{continent,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="supplier_no != null" >
+        #{supplier_no,jdbcType=VARCHAR},
+      </if>
+      <if test="startdate != null" >
+        #{startdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null" >
+        #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="list_img != null" >
+        #{list_img,jdbcType=VARCHAR},
+      </if>
+      <if test="size_img1 != null" >
+        #{size_img1,jdbcType=VARCHAR},
+      </if>
+      <if test="size_img2 != null" >
+        #{size_img2,jdbcType=VARCHAR},
+      </if>
+      <if test="size_img3 != null" >
+        #{size_img3,jdbcType=VARCHAR},
+      </if>
+      <if test="size_img4 != null" >
+        #{size_img4,jdbcType=VARCHAR},
+      </if>
+      <if test="size_img5 != null" >
+        #{size_img5,jdbcType=VARCHAR},
+      </if>
+      <if test="start_price != null" >
+        #{start_price,jdbcType=DECIMAL},
+      </if>
+      <if test="prepay != null" >
+        #{prepay,jdbcType=DECIMAL},
+      </if>
+0,
+      <if test="fromcity != null" >
+        #{fromcity,jdbcType=VARCHAR},
+      </if>
+      <if test="sale_cnt != null" >
+        #{sale_cnt,jdbcType=BIGINT},
+      </if>
+      <if test="sharecnt != null" >
+        #{sharecnt,jdbcType=BIGINT},
+      </if>
+      <if test="collection_cnt != null" >
+        #{collection_cnt,jdbcType=BIGINT},
+      </if>
+      <if test="map_address != null" >
+        #{map_address,jdbcType=VARCHAR},
+      </if>
+      <if test="map_lng != null" >
+        #{map_lng,jdbcType=VARCHAR},
+      </if>
+      <if test="map_lat != null" >
+        #{map_lat,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null" >
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="service_fee_rate != null" >
+        #{service_fee_rate,jdbcType=DECIMAL},
+      </if>
+      <if test="tax_rate != null" >
+        #{tax_rate,jdbcType=DECIMAL},
+      </if>
+      <if test="confirm_time != null" >
+        #{confirm_time,jdbcType=INTEGER},
+      </if>
+		#{ctdt,jdbcType=TIMESTAMP},
+        #{ctuser,jdbcType=VARCHAR}
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rockies.ec.model.ProductInfo" >
+    update product
+    <set >
+      <if test="ptype != null" >
+        ptype = #{ptype,jdbcType=VARCHAR},
+      </if>
+      <if test="pstatus != null" >
+        pstatus = #{pstatus,jdbcType=CHAR},
+      </if>
+      <if test="pnote != null" >
+        pnote = #{pnote,jdbcType=VARCHAR},
+      </if>
+      <if test="pdesc != null" >
+        pdesc = #{pdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="price_desc != null" >
+        price_desc = #{price_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="video_url != null" >
+        video_url = #{video_url,jdbcType=VARCHAR},
+      </if>
+      <if test="pname != null" >
+        pname = #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="pname_en != null" >
+        pname_en = #{pname_en,jdbcType=VARCHAR},
+      </if>
+      <if test="continent != null" >
+        continent = #{continent,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="supplier_no != null" >
+        supplier_no = #{supplier_no,jdbcType=VARCHAR},
+      </if>
+      <if test="startdate != null" >
+        startdate = #{startdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null" >
+        enddate = #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="list_img != null" >
+        list_img = #{list_img,jdbcType=VARCHAR},
+      </if>
+      <if test="size_img1 != null" >
+        size_img1 = #{size_img1,jdbcType=VARCHAR},
+      </if>
+      <if test="size_img2 != null" >
+        size_img2 = #{size_img2,jdbcType=VARCHAR},
+      </if>
+      <if test="size_img3 != null" >
+        size_img3 = #{size_img3,jdbcType=VARCHAR},
+      </if>
+      <if test="size_img4 != null" >
+        size_img4 = #{size_img4,jdbcType=VARCHAR},
+      </if>
+      <if test="size_img5 != null" >
+        size_img5 = #{size_img5,jdbcType=VARCHAR},
+      </if>
+      <if test="start_price != null" >
+        start_price = #{start_price,jdbcType=DECIMAL},
+      </if>
+      <if test="prepay != null" >
+        prepay = #{prepay,jdbcType=DECIMAL},
+      </if>
+      <if test="del_flg != null" >
+        del_flg = #{del_flg,jdbcType=VARCHAR},
+      </if>
+      <if test="fromcity != null" >
+        fromcity = #{fromcity,jdbcType=VARCHAR},
+      </if>
+      <if test="sale_cnt != null" >
+        sale_cnt = #{sale_cnt,jdbcType=BIGINT},
+      </if>
+      <if test="sharecnt != null" >
+        sharecnt = #{sharecnt,jdbcType=BIGINT},
+      </if>
+      <if test="collection_cnt != null" >
+        collection_cnt = #{collection_cnt,jdbcType=BIGINT},
+      </if>
+      <if test="map_address != null" >
+        map_address = #{map_address,jdbcType=VARCHAR},
+      </if>
+      <if test="map_lng != null" >
+        map_lng = #{map_lng,jdbcType=VARCHAR},
+      </if>
+      <if test="map_lat != null" >
+        map_lat = #{map_lat,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null" >
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="service_fee_rate != null" >
+        service_fee_rate = #{service_fee_rate,jdbcType=DECIMAL},
+      </if>
+      <if test="tax_rate != null" >
+        tax_rate = #{tax_rate,jdbcType=DECIMAL},
+      </if>
+      <if test="confirm_time != null" >
+        confirm_time = #{confirm_time,jdbcType=INTEGER},
+      </if>
+		updt = #{updt,jdbcType=TIMESTAMP},
+        upuser = #{upuser,jdbcType=VARCHAR}
+    </set>
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rockies.ec.model.ProductInfo" >
+    update product
+    set ptype = #{ptype,jdbcType=VARCHAR},
+      pstatus = #{pstatus,jdbcType=CHAR},
+      pnote = #{pnote,jdbcType=VARCHAR},
+      pdesc = #{pdesc,jdbcType=VARCHAR},
+      price_desc = #{price_desc,jdbcType=VARCHAR},
+      video_url = #{video_url,jdbcType=VARCHAR},
+      pname = #{pname,jdbcType=VARCHAR},
+      pname_en = #{pname_en,jdbcType=VARCHAR},
+      continent = #{continent,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      supplier_no = #{supplier_no,jdbcType=VARCHAR},
+      startdate = #{startdate,jdbcType=TIMESTAMP},
+      enddate = #{enddate,jdbcType=TIMESTAMP},
+      list_img = #{list_img,jdbcType=VARCHAR},
+      size_img1 = #{size_img1,jdbcType=VARCHAR},
+      size_img2 = #{size_img2,jdbcType=VARCHAR},
+      size_img3 = #{size_img3,jdbcType=VARCHAR},
+      size_img4 = #{size_img4,jdbcType=VARCHAR},
+      size_img5 = #{size_img5,jdbcType=VARCHAR},
+      start_price = #{start_price,jdbcType=DECIMAL},
+      prepay = #{prepay,jdbcType=DECIMAL},
+      del_flg = #{del_flg,jdbcType=VARCHAR},
+      fromcity = #{fromcity,jdbcType=VARCHAR},
+      sale_cnt = #{sale_cnt,jdbcType=BIGINT},
+      sharecnt = #{sharecnt,jdbcType=BIGINT},
+      collection_cnt = #{collection_cnt,jdbcType=BIGINT},
+      map_address = #{map_address,jdbcType=VARCHAR},
+      map_lng = #{map_lng,jdbcType=VARCHAR},
+      map_lat = #{map_lat,jdbcType=VARCHAR},
+      tags = #{tags,jdbcType=VARCHAR},
+      service_fee_rate = #{service_fee_rate,jdbcType=DECIMAL},
+      tax_rate = #{tax_rate,jdbcType=DECIMAL},
+      confirm_time = #{confirm_time,jdbcType=INTEGER},
+      updt = #{updt,jdbcType=TIMESTAMP},
+      upuser = #{upuser,jdbcType=VARCHAR}
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+</mapper>

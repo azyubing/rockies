@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rockies.ec.mapper.HotelInfoMapper" >
+
+  <select id="selectByPrimaryKey" resultType="com.rockies.ec.model.HotelInfo" parameterType="java.lang.String" >
+    select *
+    from hotel
+    where pid = #{pid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllListByParam" resultType="com.rockies.ec.model.HotelInfo" parameterType="Map" >
+    select h.*,p.*,c.cityName from hotel as h
+	left join product as p on h.pid = p.pid
+	left join city as c on p.country = c.id
+    <where>
+    	h.del_flg=0
+    	<if test="pid != null and pid != ''">
+		  and p.pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    	<if test="pname!=null and pname != ''">
+		  and p.pname like "%"#{pname,jdbcType=VARCHAR}"%" 
+		</if>
+    </where>
+    order by h.ctdt desc
+    	<if test="offset!=null and limit != ''">
+		  limit #{offset},#{limit};
+		</if>
+	
+  </select>
+  <select id="getCount"  parameterType="Map" resultType="java.lang.Integer" >
+	select  count(*) from hotel as h
+	left join product as p on h.pid = p.pid
+	<where>
+		h.del_flg=0
+    	<if test="pid != null and pid != ''">
+		  and p.pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    	<if test="pname!=null and pname != ''">
+		  and p.pname like "%"#{pname,jdbcType=VARCHAR}"%" 
+		</if>
+    </where>
+  </select>
+  <select id="selectHotelInfoByParam" resultType="com.rockies.ec.model.HotelInfo" parameterType="Map" >
+    select * from hotel as h
+	left join product as p on h.pid = p.pid
+    <where>
+    	<if test="pid != null and pid != ''">
+		  and p.pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    </where>
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from hotel
+    where pid = #{pid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.rockies.ec.model.HotelInfo" >
+    insert into hotel (pid, description, del_flg, 
+      hotel_infra, service, staylvl, 
+      area, ctdt, ctuser)
+    values (#{pid,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 0, 
+      #{hotel_infra,jdbcType=VARCHAR}, #{service,jdbcType=VARCHAR}, #{staylvl,jdbcType=INTEGER}, 
+      #{area,jdbcType=VARCHAR},#{ctdt,jdbcType=TIMESTAMP}, #{ctuser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rockies.ec.model.HotelInfo" >
+    insert into hotel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+        del_flg,
+      <if test="hotel_infra != null" >
+        hotel_infra,
+      </if>
+      <if test="service != null" >
+        service,
+      </if>
+      <if test="staylvl != null" >
+        staylvl,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+        ctdt,
+        ctuser
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+0,
+      <if test="hotel_infra != null" >
+        #{hotel_infra,jdbcType=VARCHAR},
+      </if>
+      <if test="service != null" >
+        #{service,jdbcType=VARCHAR},
+      </if>
+      <if test="staylvl != null" >
+        #{staylvl,jdbcType=INTEGER},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+		#{ctdt,jdbcType=TIMESTAMP},
+        #{ctuser,jdbcType=VARCHAR}
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rockies.ec.model.HotelInfo" >
+    update hotel
+    <set >
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="del_flg != null" >
+        del_flg = #{del_flg,jdbcType=VARCHAR},
+      </if>
+      <if test="hotel_infra != null" >
+        hotel_infra = #{hotel_infra,jdbcType=VARCHAR},
+      </if>
+      <if test="service != null" >
+        service = #{service,jdbcType=VARCHAR},
+      </if>
+      <if test="staylvl != null" >
+        staylvl = #{staylvl,jdbcType=INTEGER},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+		updt = #{updt,jdbcType=TIMESTAMP},
+        upuser = #{upuser,jdbcType=VARCHAR}
+    </set>
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rockies.ec.model.HotelInfo" >
+    update hotel
+    set description = #{description,jdbcType=VARCHAR},
+      del_flg = #{del_flg,jdbcType=VARCHAR},
+      hotel_infra = #{hotel_infra,jdbcType=VARCHAR},
+      service = #{service,jdbcType=VARCHAR},
+      staylvl = #{staylvl,jdbcType=INTEGER},
+      area = #{area,jdbcType=VARCHAR},
+      updt = #{updt,jdbcType=TIMESTAMP},
+      upuser = #{upuser,jdbcType=VARCHAR}
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+</mapper>

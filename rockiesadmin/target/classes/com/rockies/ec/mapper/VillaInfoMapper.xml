@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rockies.ec.mapper.VillaInfoMapper" >
+
+  <select id="selectByPrimaryKey" resultType="com.rockies.ec.model.VillaInfo" parameterType="java.lang.String" >
+    select 
+    *
+    from villa
+    where pid = #{pid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllListByParam" resultType="com.rockies.ec.model.VillaInfo" parameterType="Map" >
+    select v.*,
+    	   p.*,
+    	   c.cityName 
+    from villa as v
+	left join product as p on v.pid = p.pid
+	left join city as c on p.country = c.id
+    <where>
+    	v.del_flg=0
+    	<if test="pid != null and pid != ''">
+		  and p.pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    	<if test="pname!=null and pname != ''">
+		  and p.pname like "%"#{pname,jdbcType=VARCHAR}"%" 
+		</if>
+    </where>
+    order by v.ctdt desc
+    	<if test="offset!=null and limit != ''">
+		  limit #{offset},#{limit};
+		</if>
+	
+  </select>
+  <select id="getCount"  parameterType="Map" resultType="java.lang.Integer" >
+	select  count(*) from villa as v
+	left join product as p on v.pid = p.pid
+	<where>
+		v.del_flg=0
+    	<if test="pid != null and pid != ''">
+		  and p.pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    	<if test="pname!=null and pname != ''">
+		  and p.pname like "%"#{pname,jdbcType=VARCHAR}"%" 
+		</if>
+    </where>
+  </select>
+  <select id="selectVillaInfoByParam" resultType="com.rockies.ec.model.VillaInfo" parameterType="Map" >
+    select * from villa as v
+	left join product as p on v.pid = p.pid
+    <where>
+    	<if test="pid != null and pid != ''">
+		  and p.pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    </where>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from villa
+    where pid = #{pid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.rockies.ec.model.VillaInfo" >
+    insert into villa (pid, description, del_flg, 
+      service, area, minroomcnt, 
+      maxroomcnt, geography, ctdt, 
+      ctuser, updt, upuser
+      )
+    values (#{pid,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{del_flg,jdbcType=VARCHAR}, 
+      #{service,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{minroomcnt,jdbcType=INTEGER}, 
+      #{maxroomcnt,jdbcType=INTEGER}, #{geography,jdbcType=VARCHAR}, #{ctdt,jdbcType=TIMESTAMP}, 
+      #{ctuser,jdbcType=VARCHAR}, #{updt,jdbcType=TIMESTAMP}, #{upuser,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.rockies.ec.model.VillaInfo" >
+    insert into villa
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="del_flg != null" >
+        del_flg,
+      </if>
+      <if test="service != null" >
+        service,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="minroomcnt != null" >
+        minroomcnt,
+      </if>
+      <if test="maxroomcnt != null" >
+        maxroomcnt,
+      </if>
+      <if test="geography != null" >
+        geography,
+      </if>
+      <if test="ctdt != null" >
+        ctdt,
+      </if>
+      <if test="ctuser != null" >
+        ctuser,
+      </if>
+      <if test="updt != null" >
+        updt,
+      </if>
+      <if test="upuser != null" >
+        upuser,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="del_flg != null" >
+        #{del_flg,jdbcType=VARCHAR},
+      </if>
+      <if test="service != null" >
+        #{service,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="minroomcnt != null" >
+        #{minroomcnt,jdbcType=INTEGER},
+      </if>
+      <if test="maxroomcnt != null" >
+        #{maxroomcnt,jdbcType=INTEGER},
+      </if>
+      <if test="geography != null" >
+        #{geography,jdbcType=VARCHAR},
+      </if>
+      <if test="ctdt != null" >
+        #{ctdt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctuser != null" >
+        #{ctuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updt != null" >
+        #{updt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upuser != null" >
+        #{upuser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rockies.ec.model.VillaInfo" >
+    update villa
+    <set >
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="del_flg != null" >
+        del_flg = #{del_flg,jdbcType=VARCHAR},
+      </if>
+      <if test="service != null" >
+        service = #{service,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="minroomcnt != null" >
+        minroomcnt = #{minroomcnt,jdbcType=INTEGER},
+      </if>
+      <if test="maxroomcnt != null" >
+        maxroomcnt = #{maxroomcnt,jdbcType=INTEGER},
+      </if>
+      <if test="geography != null" >
+        geography = #{geography,jdbcType=VARCHAR},
+      </if>
+      <if test="ctdt != null" >
+        ctdt = #{ctdt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctuser != null" >
+        ctuser = #{ctuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updt != null" >
+        updt = #{updt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upuser != null" >
+        upuser = #{upuser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rockies.ec.model.VillaInfo" >
+    update villa
+    set description = #{description,jdbcType=VARCHAR},
+      del_flg = #{del_flg,jdbcType=VARCHAR},
+      service = #{service,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      minroomcnt = #{minroomcnt,jdbcType=INTEGER},
+      maxroomcnt = #{maxroomcnt,jdbcType=INTEGER},
+      geography = #{geography,jdbcType=VARCHAR},
+      ctdt = #{ctdt,jdbcType=TIMESTAMP},
+      ctuser = #{ctuser,jdbcType=VARCHAR},
+      updt = #{updt,jdbcType=TIMESTAMP},
+      upuser = #{upuser,jdbcType=VARCHAR}
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+</mapper>

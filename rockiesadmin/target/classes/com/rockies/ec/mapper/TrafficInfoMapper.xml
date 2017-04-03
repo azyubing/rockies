@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rockies.ec.mapper.TrafficInfoMapper" >
+
+  <select id="selectByPrimaryKey" resultType="com.rockies.ec.model.TrafficInfo" parameterType="java.lang.String" >
+    select 
+    *
+    from traffic
+    where pid = #{pid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllListByParam" resultType="com.rockies.ec.model.TrafficInfo" parameterType="Map" >
+    select t.*,
+    	   p.*,
+    	   c.cityName 
+    from traffic as t
+	left join product as p on t.pid = p.pid
+	left join city as c on p.country = c.id
+    <where>
+    	t.del_flg=0
+    	<if test="pid != null and pid != ''">
+		  and p.pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    	<if test="pname!=null and pname != ''">
+		  and p.pname like "%"#{pname,jdbcType=VARCHAR}"%" 
+		</if>
+    </where>
+    order by t.ctdt desc
+    	<if test="offset!=null and limit != ''">
+		  limit #{offset},#{limit};
+		</if>
+	
+  </select>
+  <select id="getCount"  parameterType="Map" resultType="java.lang.Integer" >
+	select  count(*) from traffic as t
+	left join product as p on t.pid = p.pid
+	<where>
+		t.del_flg=0
+    	<if test="pid != null and pid != ''">
+		  and p.pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    	<if test="pname!=null and pname != ''">
+		  and p.pname like "%"#{pname,jdbcType=VARCHAR}"%" 
+		</if>
+    </where>
+  </select>
+  <select id="selectTrafficInfoByParam" resultType="com.rockies.ec.model.TrafficInfo" parameterType="Map" >
+    select * from traffic as t
+	left join product as p on t.pid = p.pid
+    <where>
+    	<if test="pid != null and pid != ''">
+		  and p.pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    </where>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from traffic
+    where pid = #{pid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.rockies.ec.model.TrafficInfo" >
+    insert into traffic (pid, startplace, endplace, 
+      traffic_type, carlvl, cartype, 
+      peoplecnt, description, del_flg, 
+      map_address_start, map_start_lng, map_start_lat, 
+      map_address_end, map_end_lng, map_end_lat, 
+      ctdt, ctuser, updt, 
+      upuser,traff_kind)
+    values (#{pid,jdbcType=VARCHAR}, #{startplace,jdbcType=VARCHAR}, #{endplace,jdbcType=VARCHAR}, 
+      #{traffic_type,jdbcType=VARCHAR}, #{carlvl,jdbcType=VARCHAR}, #{cartype,jdbcType=VARCHAR}, 
+      #{peoplecnt,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{del_flg,jdbcType=VARCHAR}, 
+      #{map_address_start,jdbcType=VARCHAR}, #{map_start_lng,jdbcType=VARCHAR}, #{map_start_lat,jdbcType=VARCHAR}, 
+      #{map_address_end,jdbcType=VARCHAR}, #{map_end_lng,jdbcType=VARCHAR}, #{map_end_lat,jdbcType=VARCHAR}, 
+      #{ctdt,jdbcType=TIMESTAMP}, #{ctuser,jdbcType=VARCHAR}, #{updt,jdbcType=TIMESTAMP}, 
+      #{upuser,jdbcType=VARCHAR}, #{traff_kind,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rockies.ec.model.TrafficInfo" >
+    insert into traffic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="startplace != null" >
+        startplace,
+      </if>
+      <if test="endplace != null" >
+        endplace,
+      </if>
+      <if test="traffic_type != null" >
+        traffic_type,
+      </if>
+      <if test="carlvl != null" >
+        carlvl,
+      </if>
+      <if test="cartype != null" >
+        cartype,
+      </if>
+      <if test="peoplecnt != null" >
+        peoplecnt,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="del_flg != null" >
+        del_flg,
+      </if>
+      <if test="map_address_start != null" >
+        map_address_start,
+      </if>
+      <if test="map_start_lng != null" >
+        map_start_lng,
+      </if>
+      <if test="map_start_lat != null" >
+        map_start_lat,
+      </if>
+      <if test="map_address_end != null" >
+        map_address_end,
+      </if>
+      <if test="map_end_lng != null" >
+        map_end_lng,
+      </if>
+      <if test="map_end_lat != null" >
+        map_end_lat,
+      </if>
+      <if test="ctdt != null" >
+        ctdt,
+      </if>
+      <if test="ctuser != null" >
+        ctuser,
+      </if>
+      <if test="updt != null" >
+        updt,
+      </if>
+      <if test="upuser != null" >
+        upuser,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="startplace != null" >
+        #{startplace,jdbcType=VARCHAR},
+      </if>
+      <if test="endplace != null" >
+        #{endplace,jdbcType=VARCHAR},
+      </if>
+      <if test="traffic_type != null" >
+        #{traffic_type,jdbcType=VARCHAR},
+      </if>
+      <if test="carlvl != null" >
+        #{carlvl,jdbcType=VARCHAR},
+      </if>
+      <if test="cartype != null" >
+        #{cartype,jdbcType=VARCHAR},
+      </if>
+      <if test="peoplecnt != null" >
+        #{peoplecnt,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="del_flg != null" >
+        #{del_flg,jdbcType=VARCHAR},
+      </if>
+      <if test="map_address_start != null" >
+        #{map_address_start,jdbcType=VARCHAR},
+      </if>
+      <if test="map_start_lng != null" >
+        #{map_start_lng,jdbcType=VARCHAR},
+      </if>
+      <if test="map_start_lat != null" >
+        #{map_start_lat,jdbcType=VARCHAR},
+      </if>
+      <if test="map_address_end != null" >
+        #{map_address_end,jdbcType=VARCHAR},
+      </if>
+      <if test="map_end_lng != null" >
+        #{map_end_lng,jdbcType=VARCHAR},
+      </if>
+      <if test="map_end_lat != null" >
+        #{map_end_lat,jdbcType=VARCHAR},
+      </if>
+      <if test="ctdt != null" >
+        #{ctdt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctuser != null" >
+        #{ctuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updt != null" >
+        #{updt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upuser != null" >
+        #{upuser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rockies.ec.model.TrafficInfo" >
+    update traffic
+    <set >
+      <if test="startplace != null" >
+        startplace = #{startplace,jdbcType=VARCHAR},
+      </if>
+      <if test="endplace != null" >
+        endplace = #{endplace,jdbcType=VARCHAR},
+      </if>
+      <if test="traffic_type != null" >
+        traffic_type = #{traffic_type,jdbcType=VARCHAR},
+      </if>
+      <if test="carlvl != null" >
+        carlvl = #{carlvl,jdbcType=VARCHAR},
+      </if>
+      <if test="cartype != null" >
+        cartype = #{cartype,jdbcType=VARCHAR},
+      </if>
+      <if test="peoplecnt != null" >
+        peoplecnt = #{peoplecnt,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="del_flg != null" >
+        del_flg = #{del_flg,jdbcType=VARCHAR},
+      </if>
+      <if test="map_address_start != null" >
+        map_address_start = #{map_address_start,jdbcType=VARCHAR},
+      </if>
+      <if test="map_start_lng != null" >
+        map_start_lng = #{map_start_lng,jdbcType=VARCHAR},
+      </if>
+      <if test="map_start_lat != null" >
+        map_start_lat = #{map_start_lat,jdbcType=VARCHAR},
+      </if>
+      <if test="map_address_end != null" >
+        map_address_end = #{map_address_end,jdbcType=VARCHAR},
+      </if>
+      <if test="map_end_lng != null" >
+        map_end_lng = #{map_end_lng,jdbcType=VARCHAR},
+      </if>
+      <if test="map_end_lat != null" >
+        map_end_lat = #{map_end_lat,jdbcType=VARCHAR},
+      </if>
+      <if test="ctdt != null" >
+        ctdt = #{ctdt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctuser != null" >
+        ctuser = #{ctuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updt != null" >
+        updt = #{updt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="traff_kind != null" >
+        traff_kind = #{traff_kind,jdbcType=VARCHAR},
+      </if>
+      <if test="upuser != null" >
+        upuser = #{upuser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rockies.ec.model.TrafficInfo" >
+    update traffic
+    set startplace = #{startplace,jdbcType=VARCHAR},
+      endplace = #{endplace,jdbcType=VARCHAR},
+      traffic_type = #{traffic_type,jdbcType=VARCHAR},
+      carlvl = #{carlvl,jdbcType=VARCHAR},
+      cartype = #{cartype,jdbcType=VARCHAR},
+      peoplecnt = #{peoplecnt,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      del_flg = #{del_flg,jdbcType=VARCHAR},
+      map_address_start = #{map_address_start,jdbcType=VARCHAR},
+      map_start_lng = #{map_start_lng,jdbcType=VARCHAR},
+      map_start_lat = #{map_start_lat,jdbcType=VARCHAR},
+      map_address_end = #{map_address_end,jdbcType=VARCHAR},
+      map_end_lng = #{map_end_lng,jdbcType=VARCHAR},
+      map_end_lat = #{map_end_lat,jdbcType=VARCHAR},
+      ctdt = #{ctdt,jdbcType=TIMESTAMP},
+      ctuser = #{ctuser,jdbcType=VARCHAR},
+      updt = #{updt,jdbcType=TIMESTAMP},
+      traff_kind = #{traff_kind,jdbcType=VARCHAR},
+      upuser = #{upuser,jdbcType=VARCHAR}
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+</mapper>

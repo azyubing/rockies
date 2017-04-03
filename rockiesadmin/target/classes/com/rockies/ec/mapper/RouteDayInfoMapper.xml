@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rockies.ec.mapper.RouteDayInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.rockies.ec.model.RouteDayInfo" >
+    <id column="PID" property="pid" jdbcType="VARCHAR" />
+    <id column="pday" property="pday" jdbcType="INTEGER" />
+    <result column="tabs" property="tabs" jdbcType="VARCHAR" />
+    <result column="img1" property="img1" jdbcType="VARCHAR" />
+    <result column="img2" property="img2" jdbcType="VARCHAR" />
+    <result column="img3" property="img3" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="map_address" property="mapAddress" jdbcType="VARCHAR" />
+    <result column="map_lng" property="mapLng" jdbcType="VARCHAR" />
+    <result column="map_lat" property="mapLat" jdbcType="VARCHAR" />
+    <result column="ctdt" property="ctdt" jdbcType="TIMESTAMP" />
+    <result column="ctuser" property="ctuser" jdbcType="VARCHAR" />
+    <result column="updt" property="updt" jdbcType="TIMESTAMP" />
+    <result column="upuser" property="upuser" jdbcType="VARCHAR" />
+    <result column="del_flg" property="delFlg" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PID, pday, tabs, img1, img2, img3, description, map_address, map_lng, map_lat, ctdt, 
+    ctuser, updt, upuser, del_flg
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.rockies.ec.model.RouteDayInfo" >
+    select 
+    <include refid="Base_Column_List" />
+    from route_day
+    where PID = #{pid,jdbcType=VARCHAR}
+      and pday = #{pday,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllListByParam" resultMap="BaseResultMap" parameterType="Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from route_day
+    <where>
+    	del_flg=0
+    	<if test="tabs !=null and tabs != ''">
+		  and tabs like "%"#{tabs,jdbcType=VARCHAR}"%" 
+		</if>
+		<if test="pid !=null and pid != ''">
+		  and pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    </where>
+    order by pday
+    <if test="offset!=null and limit != ''">
+	  limit #{offset},#{limit};
+	</if>
+  </select>
+  <select id="getCount"  parameterType="Map" resultType="java.lang.Integer" >
+	select  count(*) from route_day
+	<where>
+		del_flg=0
+    	<if test="tabs !=null and tabs != ''">
+		  and tabs like "%"#{tabs,jdbcType=VARCHAR}"%" 
+		</if>
+		<if test="pid !=null and pid != ''">
+		  and pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    </where>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="com.rockies.ec.model.RouteDayInfo" >
+    delete from route_day
+    where PID = #{pid,jdbcType=VARCHAR}
+      and pday = #{pday,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rockies.ec.model.RouteDayInfo" >
+    insert into route_day (PID, pday, tabs, 
+      img1, img2, img3, description, 
+      map_address, map_lng, map_lat, 
+      ctdt, ctuser, updt, 
+      upuser, del_flg)
+    values (#{pid,jdbcType=VARCHAR}, #{pday,jdbcType=INTEGER}, #{tabs,jdbcType=VARCHAR}, 
+      #{img1,jdbcType=VARCHAR}, #{img2,jdbcType=VARCHAR}, #{img3,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{mapAddress,jdbcType=VARCHAR}, #{mapLng,jdbcType=VARCHAR}, #{mapLat,jdbcType=VARCHAR}, 
+      #{ctdt,jdbcType=TIMESTAMP}, #{ctuser,jdbcType=VARCHAR}, #{updt,jdbcType=TIMESTAMP}, 
+      #{upuser,jdbcType=VARCHAR}, #{delFlg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rockies.ec.model.RouteDayInfo" >
+    insert into route_day
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        PID,
+      </if>
+      <if test="pday != null" >
+        pday,
+      </if>
+      <if test="tabs != null" >
+        tabs,
+      </if>
+      <if test="img1 != null" >
+        img1,
+      </if>
+      <if test="img2 != null" >
+        img2,
+      </if>
+      <if test="img3 != null" >
+        img3,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="mapAddress != null" >
+        map_address,
+      </if>
+      <if test="mapLng != null" >
+        map_lng,
+      </if>
+      <if test="mapLat != null" >
+        map_lat,
+      </if>
+      <if test="ctdt != null" >
+        ctdt,
+      </if>
+      <if test="ctuser != null" >
+        ctuser,
+      </if>
+      <if test="updt != null" >
+        updt,
+      </if>
+      <if test="upuser != null" >
+        upuser,
+      </if>
+      <if test="delFlg != null" >
+        del_flg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="pday != null" >
+        #{pday,jdbcType=INTEGER},
+      </if>
+      <if test="tabs != null" >
+        #{tabs,jdbcType=VARCHAR},
+      </if>
+      <if test="img1 != null" >
+        #{img1,jdbcType=VARCHAR},
+      </if>
+      <if test="img2 != null" >
+        #{img2,jdbcType=VARCHAR},
+      </if>
+      <if test="img3 != null" >
+        #{img3,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="mapAddress != null" >
+        #{mapAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="mapLng != null" >
+        #{mapLng,jdbcType=VARCHAR},
+      </if>
+      <if test="mapLat != null" >
+        #{mapLat,jdbcType=VARCHAR},
+      </if>
+      <if test="ctdt != null" >
+        #{ctdt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctuser != null" >
+        #{ctuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updt != null" >
+        #{updt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upuser != null" >
+        #{upuser,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlg != null" >
+        #{delFlg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rockies.ec.model.RouteDayInfo" >
+    update route_day
+    <set >
+      <if test="tabs != null" >
+        tabs = #{tabs,jdbcType=VARCHAR},
+      </if>
+      <if test="img1 != null" >
+        img1 = #{img1,jdbcType=VARCHAR},
+      </if>
+      <if test="img2 != null" >
+        img2 = #{img2,jdbcType=VARCHAR},
+      </if>
+      <if test="img3 != null" >
+        img3 = #{img3,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="mapAddress != null" >
+        map_address = #{mapAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="mapLng != null" >
+        map_lng = #{mapLng,jdbcType=VARCHAR},
+      </if>
+      <if test="mapLat != null" >
+        map_lat = #{mapLat,jdbcType=VARCHAR},
+      </if>
+      <if test="ctdt != null" >
+        ctdt = #{ctdt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctuser != null" >
+        ctuser = #{ctuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updt != null" >
+        updt = #{updt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upuser != null" >
+        upuser = #{upuser,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlg != null" >
+        del_flg = #{delFlg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PID = #{pid,jdbcType=VARCHAR}
+      and pday = #{pday,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rockies.ec.model.RouteDayInfo" >
+    update route_day
+    set tabs = #{tabs,jdbcType=VARCHAR},
+      img1 = #{img1,jdbcType=VARCHAR},
+      img2 = #{img2,jdbcType=VARCHAR},
+      img3 = #{img3,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      map_address = #{mapAddress,jdbcType=VARCHAR},
+      map_lng = #{mapLng,jdbcType=VARCHAR},
+      map_lat = #{mapLat,jdbcType=VARCHAR},
+      ctdt = #{ctdt,jdbcType=TIMESTAMP},
+      ctuser = #{ctuser,jdbcType=VARCHAR},
+      updt = #{updt,jdbcType=TIMESTAMP},
+      upuser = #{upuser,jdbcType=VARCHAR},
+      del_flg = #{delFlg,jdbcType=VARCHAR}
+    where PID = #{pid,jdbcType=VARCHAR}
+      and pday = #{pday,jdbcType=INTEGER}
+  </update>
+</mapper>

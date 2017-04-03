@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rockies.ec.mapper.EntPriceInfoMapper">
+  <resultMap id="BaseResultMap" type="com.rockies.ec.model.EntPriceInfo">
+    <id column="pid" jdbcType="VARCHAR" property="pid" />
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="starttime" jdbcType="VARCHAR" property="starttime" />
+    <result column="price_item" jdbcType="VARCHAR" property="priceItem" />
+    <result column="enddate" jdbcType="VARCHAR" property="enddate" />
+    <result column="people_cnt" jdbcType="INTEGER" property="peopleCnt" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="prepay" jdbcType="DECIMAL" property="prepay" />
+    <result column="max_cnt" jdbcType="INTEGER" property="maxCnt" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="del_flg" jdbcType="VARCHAR" property="delFlg" />
+    <result column="order_num" jdbcType="INTEGER" property="orderNum" />
+    <result column="ctdt" jdbcType="TIMESTAMP" property="ctdt" />
+    <result column="ctuser" jdbcType="VARCHAR" property="ctuser" />
+    <result column="updt" jdbcType="TIMESTAMP" property="updt" />
+    <result column="upuser" jdbcType="VARCHAR" property="upuser" />
+    <result column="price_group" property="priceGroup" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pid, starttime, price_item, enddate, people_cnt, price, prepay, max_cnt, description, 
+    del_flg, order_num, ctdt, ctuser, updt, upuser,id,price_group
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.rockies.ec.model.EntPriceInfo" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ent_price
+    where pid = #{pid,jdbcType=VARCHAR}
+	  and id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllListByParam" parameterType="Map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ent_price
+    <where>
+    	del_flg=0
+    	<if test="priceItem !=null and priceItem != ''">
+		  and price_item like "%"#{priceItem,jdbcType=VARCHAR}"%" 
+		</if>
+		<if test="pid !=null and pid != ''">
+		  and pid = #{pid,jdbcType=VARCHAR}
+		</if>
+		<if test="id !=null and id != ''">
+		  and id = #{id,jdbcType=VARCHAR}
+		</if>
+    </where>
+    order by order_num
+    <if test="offset!=null and limit != ''">
+	  limit #{offset},#{limit};
+	</if>
+  </select>
+  <select id="getCount" parameterType="Map" resultType="java.lang.Integer">
+	select  count(*) from ent_price
+	<where>
+		del_flg=0
+    	<if test="priceItem !=null and priceItem != ''">
+		  and price_item like "%"#{priceItem,jdbcType=VARCHAR}"%" 
+		</if>
+		<if test="pid !=null and pid != ''">
+		  and pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    </where>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="com.rockies.ec.model.EntPriceInfo">
+    delete from ent_price
+    where pid = #{pid,jdbcType=VARCHAR}
+      and id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rockies.ec.model.EntPriceInfo">
+    insert into ent_price (pid, starttime, price_item, 
+      enddate, people_cnt, price, 
+      prepay, max_cnt, description, 
+      del_flg, order_num, ctdt, 
+      ctuser, updt, upuser,price_group
+      )
+    values (#{pid,jdbcType=VARCHAR}, #{starttime,jdbcType=TIMESTAMP}, #{priceItem,jdbcType=VARCHAR}, 
+      #{enddate,jdbcType=TIMESTAMP}, #{peopleCnt,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, 
+      #{prepay,jdbcType=DECIMAL}, #{maxCnt,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
+      #{delFlg,jdbcType=VARCHAR}, #{orderNum,jdbcType=INTEGER}, #{ctdt,jdbcType=TIMESTAMP}, 
+      #{ctuser,jdbcType=VARCHAR}, #{updt,jdbcType=TIMESTAMP}, #{upuser,jdbcType=VARCHAR}, #{priceGroup,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.rockies.ec.model.EntPriceInfo">
+    insert into ent_price
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="starttime != null">
+        starttime,
+      </if>
+      <if test="priceItem != null">
+        price_item,
+      </if>
+      <if test="enddate != null">
+        enddate,
+      </if>
+      <if test="peopleCnt != null">
+        people_cnt,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="prepay != null">
+        prepay,
+      </if>
+      <if test="maxCnt != null">
+        max_cnt,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="delFlg != null">
+        del_flg,
+      </if>
+      <if test="orderNum != null">
+        order_num,
+      </if>
+      <if test="ctdt != null">
+        ctdt,
+      </if>
+      <if test="ctuser != null">
+        ctuser,
+      </if>
+      <if test="updt != null">
+        updt,
+      </if>
+      <if test="upuser != null">
+        upuser,
+      </if>
+      <if test="priceGroup != null">
+        price_group,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="priceItem != null">
+        #{priceItem,jdbcType=VARCHAR},
+      </if>
+      <if test="enddate != null">
+        #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="peopleCnt != null">
+        #{peopleCnt,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="prepay != null">
+        #{prepay,jdbcType=DECIMAL},
+      </if>
+      <if test="maxCnt != null">
+        #{maxCnt,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlg != null">
+        #{delFlg,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="ctdt != null">
+        #{ctdt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctuser != null">
+        #{ctuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updt != null">
+        #{updt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upuser != null">
+        #{upuser,jdbcType=VARCHAR},
+      </if>      
+      <if test="priceGroup != null">
+		#{priceGroup,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rockies.ec.model.EntPriceInfo">
+    update ent_price
+    <set>
+      <if test="starttime != null">
+        starttime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="priceItem != null">
+        price_item = #{priceItem,jdbcType=VARCHAR},
+      </if>
+      <if test="enddate != null">
+        enddate = #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="peopleCnt != null">
+        people_cnt = #{peopleCnt,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="prepay != null">
+        prepay = #{prepay,jdbcType=DECIMAL},
+      </if>
+      <if test="maxCnt != null">
+        max_cnt = #{maxCnt,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlg != null">
+        del_flg = #{delFlg,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null">
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="ctdt != null">
+        ctdt = #{ctdt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctuser != null">
+        ctuser = #{ctuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updt != null">
+        updt = #{updt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upuser != null">
+        upuser = #{upuser,jdbcType=VARCHAR},
+      </if>
+      <if test="priceGroup != null">
+		price_group = #{priceGroup,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=VARCHAR}
+      and id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rockies.ec.model.EntPriceInfo">
+    update ent_price
+    set 
+      starttime = #{starttime,jdbcType=TIMESTAMP},
+      price_item = #{priceItem,jdbcType=VARCHAR},
+      enddate = #{enddate,jdbcType=TIMESTAMP},
+      people_cnt = #{peopleCnt,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      prepay = #{prepay,jdbcType=DECIMAL},
+      max_cnt = #{maxCnt,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      del_flg = #{delFlg,jdbcType=VARCHAR},
+      order_num = #{orderNum,jdbcType=INTEGER},
+      ctdt = #{ctdt,jdbcType=TIMESTAMP},
+      ctuser = #{ctuser,jdbcType=VARCHAR},
+      updt = #{updt,jdbcType=TIMESTAMP},
+      upuser = #{upuser,jdbcType=VARCHAR},
+      price_group = #{priceGroup,jdbcType=VARCHAR}
+    where pid = #{pid,jdbcType=VARCHAR}
+      and id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

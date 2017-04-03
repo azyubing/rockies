@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rockies.ec.mapper.PermissionInfoMapper">
+	<resultMap id="permissionInfoVO" type="com.rockies.ec.vo.PermissionInfoVO">
+		<result property="pid" column="pid" jdbcType="VARCHAR" />
+		<result property="permissionName" column="permission_name" jdbcType="VARCHAR" />
+		<result property="permissionStatus" column="permission_status" jdbcType="INTEGER" />
+		<result property="permissionUrl" column="permission_url" jdbcType="VARCHAR" />
+		<result property="parentPid" column="parent_pid" jdbcType="VARCHAR" />
+		<result property="permissionOrder" column="permission_order" jdbcType="INTEGER" />
+		<result property="permissionGroupOrder" column="permission_group_order" jdbcType="INTEGER" />
+		<result property="needCheck" column="need_check" jdbcType="INTEGER" />
+		<result property="ctdt" column="ctdt" jdbcType="TIMESTAMP" />
+		<result property="ctuser" column="ctuser" jdbcType="VARCHAR" />
+		<result property="updt" column="updt" jdbcType="TIMESTAMP" />
+		<result property="upuser" column="upuser" jdbcType="VARCHAR" />
+		<collection property="childPermissionInfoList" column="pid" select="getChild"></collection>
+	</resultMap>
+	<resultMap id="loginRolePermissionVO" type="com.rockies.ec.vo.PermissionInfoVO">
+		<result property="pid" column="pid" jdbcType="VARCHAR" />
+		<result property="permissionName" column="permission_name" jdbcType="VARCHAR" />
+		<result property="permissionStatus" column="permission_status" jdbcType="INTEGER" />
+		<result property="permissionUrl" column="permission_url" jdbcType="VARCHAR" />
+		<result property="parentPid" column="parent_pid" jdbcType="VARCHAR" />
+		<result property="permissionOrder" column="permission_order" jdbcType="INTEGER" />
+		<result property="permissionGroupOrder" column="permission_group_order" jdbcType="INTEGER" />
+		<result property="needCheck" column="need_check" jdbcType="INTEGER" />
+		<result property="ctdt" column="ctdt" jdbcType="TIMESTAMP" />
+		<result property="ctuser" column="ctuser" jdbcType="VARCHAR" />
+		<result property="updt" column="updt" jdbcType="TIMESTAMP" />
+		<result property="upuser" column="upuser" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="permissionInfo" type="com.rockies.ec.model.PermissionInfo">
+		<result property="pid" column="pid" jdbcType="VARCHAR" />
+		<result property="permissionName" column="permission_name" jdbcType="VARCHAR" />
+		<result property="permissionStatus" column="permission_status" jdbcType="INTEGER" />
+		<result property="permissionUrl" column="permission_url" jdbcType="VARCHAR" />
+		<result property="parentPid" column="parent_pid" jdbcType="VARCHAR" />
+		<result property="permissionOrder" column="permission_order" jdbcType="INTEGER" />
+		<result property="permissionGroupOrder" column="permission_group_order" jdbcType="INTEGER" />
+		<result property="needCheck" column="need_check" jdbcType="INTEGER" />
+		<result property="ctdt" column="ctdt" jdbcType="TIMESTAMP" />
+		<result property="ctuser" column="ctuser" jdbcType="VARCHAR" />
+		<result property="updt" column="updt" jdbcType="TIMESTAMP" />
+		<result property="upuser" column="upuser" jdbcType="VARCHAR" />
+
+	</resultMap>
+
+	<insert id="savePermissionInfo" parameterType="com.rockies.ec.model.PermissionInfo">
+		<selectKey keyProperty="pid" resultType="String" order="BEFORE">
+			select
+			IFNULL(CONCAT('P', LPAD(RIGHT(MAX(pid),11)+1,11,'0')),'P00000000001') as order_no
+			from s_permission_info
+		</selectKey>
+		INSERT INTO s_permission_info
+		(`pid`,`permission_name`,`permission_status`,`permission_url`,`parent_pid`,`permission_order`,`permission_group_order`,`need_check`,
+		`ctdt`,`ctuser`,`updt`,`upuser`)
+		VALUES
+		(#{pid},#{permissionName},#{permissionStatus},#{permissionUrl},#{parentPid},#{permissionOrder},#{permissionGroupOrder},#{needCheck},
+		#{ctdt},#{ctuser},#{updt},#{upuser});
+	</insert>
+
+	<select id="getTwoMenu" resultMap="permissionInfoVO" >
+		SELECT * from s_permission_info where parent_pid='0'
+	</select>
+	
+	<select id="getChild" parameterType="java.lang.String" resultMap="permissionInfo">
+    	SELECT * from s_permission_info where parent_pid=#{parent_pid}
+   	</select>
+	
+	<select id="getPermissionInfo" parameterType="Map" resultMap="permissionInfo">
+    	SELECT * FROM
+		  s_permission_info p 
+		  LEFT JOIN s_role_permission r 
+		    ON p.`pid` = r.`pid` 
+		WHERE r.`role_id` = #{roleId}
+		  AND p.`parent_pid` = #{parentPid}
+   	</select>
+   	
+	<select id="loginRolePermission" resultMap="loginRolePermissionVO" parameterType="java.lang.Integer">
+	SELECT * from
+	(
+	SELECT
+	DISTINCT l.`lid`,p.*
+	FROM
+	s_login_info l
+	LEFT JOIN s_login_role lr
+	ON l.`lid` = lr.`lid`
+	LEFT JOIN s_role_permission rp
+	ON lr.`role_id` = rp.`role_id`
+	LEFT JOIN s_permission_info p
+	ON rp.`pid`=p.`pid`
+	where l.lid=#{lid}
+	) t
+	where t.parent_pid='0'
+	ORDER BY ctdt ASC
+</select>
+	
+   	
+
+</mapper>

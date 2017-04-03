@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.rockies.ec.mapper.ThemeMapper">
+    
+    <!-- 添加 返回主键id -->
+    <insert id="insert" parameterType="com.rockies.ec.model.Theme" useGeneratedKeys="true" keyProperty="id">
+    	INSERT INTO theme(name,isHome,homeShowOrder,isMore,moreShowOrder,ctdt,ctuser,updt,upuser,name_en,description) 
+    	values(#{name},#{isHome},#{homeShowOrder},#{isMore},#{moreShowOrder},#{ctdt},#{ctuser},#{updt},#{upuser},#{name_en},#{description})
+    	
+   		
+    </insert>
+    
+    <!-- 根据主键删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    	delete from theme where id=#{id}
+    </delete>
+    
+    <!-- 获取对象集合 -->
+    <select id="getAllList" resultType="com.rockies.ec.model.Theme">
+    	select * from theme
+    </select>
+    
+    <!-- 获取对象集合 parameterType="Map" 选择是否分页-->
+    <select id="getAllListByMap" resultType="com.rockies.ec.model.Theme" parameterType="Map">
+    	select * from theme
+    	<where>
+    		1=1
+    		<if test="name!=null">
+		  		and name like "%${name}%" 
+			</if>
+			<if test="isHome!=null and isHome!=''">
+		  		and isHome=#{isHome}
+			</if>
+			<if test="homeShowOrder!=null and homeShowOrder!=''">
+		  		and homeShowOrder=#{homeShowOrder}
+			</if>
+			<if test="isMore!=null and isMore!=''">
+		  		and isMore=#{isMore}
+			</if>
+			<if test="moreShowOrder!=null and moreShowOrder!=''">
+		  		and moreShowOrder=#{moreShowOrder}
+			</if>
+			<if test="ctdt!=null and ctdd!=''">
+				and ctdt=#{ctdt}
+			</if>
+			<if test="ctuser!=null and ctuser!=''">
+				and ctuser=#{ctuser}
+			</if>
+			<if test="upuser!=null">
+				and upuser=#{upuser}
+			</if>
+			<if test="updt!=null and updt!=''">
+				and updt=#{updt}
+			</if>
+    	</where>
+		<if test="offset!=null and limit!=null">
+			limit #{offset},#{limit}
+		</if>
+    </select>
+    
+    
+    <!-- 获取map集合  parameterType="Map" 分页-->
+    <select id="getAllListMap" resultType="Map" parameterType="Map">
+    	select * from theme
+    	<where>
+    		1=1
+    		<if test="name!=null">
+		  		and name like "%${name}%" 
+			</if>
+			<if test="isHome!=null and isHome!=''">
+		  		and isHome=#{isHome}
+			</if>
+			<if test="homeShowOrder!=null and homeShowOrder!=''">
+		  		and homeShowOrder=#{homeShowOrder}
+			</if>
+			<if test="isMore!=null and isMore!=''">
+		  		and isMore=#{isMore}
+			</if>
+			<if test="moreShowOrder!=null and moreShowOrder!=''">
+		  		and moreShowOrder=#{moreShowOrder}
+			</if>
+			<if test="ctdt!=null and ctdt!=''">
+				and ctdt=#{ctdt}
+			</if>
+			<if test="ctuser!=null and ctuser!=''">
+				and ctuser=#{ctuser}
+			</if>
+			<if test="upuser!=null and upuser!=''">
+				and upuser=#{upuser}
+			</if>
+			<if test="updt!=null and updt!=''">
+				and updt=#{updt}
+			</if>
+    	</where>
+		<if test="offset!=null and limit!=null">
+			limit #{offset},#{limit}
+		</if>
+    </select>
+    
+    <!-- 根据主键获取一个对象-->
+    <select id="getOneByPrimaryKey" resultType="com.rockies.ec.model.Theme" parameterType="java.lang.Integer">
+    	select * from theme where id=#{id}
+    </select>
+    
+    <!-- 总记录数-->
+    <select id="getCount" resultType="java.lang.Long" parameterType="Map">
+    	select count(*) from theme 
+    	<where>
+    		1=1
+    		<if test="name!=null">
+		  		and name like "%${name}%" 
+			</if>
+			<if test="isHome!=null and isHome!=''">
+		  		and isHome=#{isHome}
+			</if>
+			<if test="homeShowOrder!=null and homeShowOrder!=''">
+		  		and homeShowOrder=#{homeShowOrder}
+			</if>
+			<if test="isMore!=null and isMore!=''">
+		  		and isMore=#{isMore}
+			</if>
+			<if test="moreShowOrder!=null and moreShowOrder!=''">
+		  		and moreShowOrder=#{moreShowOrder}
+			</if>
+			<if test="ctdt!=null and ctdt!=''">
+				and ctdt=#{ctdt}
+			</if>
+			<if test="ctuser!=null and ctuser!=''">
+				and ctuser=#{ctuser}
+			</if>
+			<if test="upuser!=null and upuser!=''">
+				and upuser=#{upuser}
+			</if>
+			<if test="updt!=null and updt!=''">
+				and updt=#{updt}
+			</if>
+    	</where>
+    </select>
+    
+    <update id="updateObject"  parameterType="com.rockies.ec.model.Theme">
+    	UPDATE theme 
+		<set>
+			<if test="name!=null">
+		  		name=#{name},
+			</if>
+			<if test="isHome!=null">
+		  		 isHome=#{isHome},
+			</if>
+			<if test="homeShowOrder!=null">
+		  		 homeShowOrder=#{homeShowOrder},
+			</if>
+			<if test="isMore!=null">
+		  		 isMore=#{isMore},
+			</if>
+			<if test="moreShowOrder!=null">
+		  		 moreShowOrder=#{moreShowOrder},
+			</if>
+			<if test="name_en!=null">
+				name_en=#{name_en},
+			</if>
+			<if test="description!=null">
+				description=#{description},
+			</if>
+			<if test="ctdt!=null">
+				ctdt=#{ctdt},
+			</if>
+			<if test="ctuser!=null">
+				ctuser=#{ctuser},
+			</if>
+			<if test="upuser!=null">
+				upuser=#{upuser},
+			</if>
+			<if test="updt!=null">
+				updt=#{updt}
+			</if>
+		</set>
+		where id=#{id}
+    </update>
+    
+    
+</mapper>

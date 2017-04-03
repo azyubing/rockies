@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rockies.ec.mapper.EntInfoMapper" >
+
+  <select id="selectByPrimaryKey" resultType="com.rockies.ec.model.EntInfo" parameterType="java.lang.String" >
+    select 
+    *
+    from ent
+    where pid = #{pid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllListByParam" resultType="com.rockies.ec.model.EntInfo" parameterType="Map" >
+    select e.*,
+    	   p.*,
+    	   c.cityName 
+    from ent as e
+	left join product as p on e.pid = p.pid
+	left join city as c on p.country = c.id
+    <where>
+    	e.del_flg=0
+    	<if test="pid != null and pid != ''">
+		  and p.pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    	<if test="pname!=null and pname != ''">
+		  and p.pname like "%"#{pname,jdbcType=VARCHAR}"%" 
+		</if>
+    </where>
+    order by e.ctdt desc
+    	<if test="offset!=null and limit != ''">
+		  limit #{offset},#{limit};
+		</if>
+	
+  </select>
+  <select id="getCount"  parameterType="Map" resultType="java.lang.Integer" >
+	select  count(*) from ent as e
+	left join product as p on e.pid = p.pid
+	<where>
+		e.del_flg=0
+    	<if test="pid != null and pid != ''">
+		  and p.pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    	<if test="pname!=null and pname != ''">
+		  and p.pname like "%"#{pname,jdbcType=VARCHAR}"%" 
+		</if>
+    </where>
+  </select>
+  <select id="selectEntInfoByParam" resultType="com.rockies.ec.model.EntInfo" parameterType="Map" >
+    select * from ent as e
+	left join product as p on e.pid = p.pid
+    <where>
+    	<if test="pid != null and pid != ''">
+		  and p.pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    </where>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ent
+    where pid = #{pid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.rockies.ec.model.EntInfo" >
+    insert into ent (pid, enttype, servicetype, 
+      language, ent_img, show_img1, 
+      show_img2, show_img3, show_img4, 
+      ctdt, ctuser, updt, 
+      upuser, del_flg)
+    values (#{pid,jdbcType=VARCHAR}, #{enttype,jdbcType=VARCHAR}, #{servicetype,jdbcType=VARCHAR}, 
+      #{language,jdbcType=VARCHAR}, #{ent_img,jdbcType=VARCHAR}, #{show_img1,jdbcType=VARCHAR}, 
+      #{show_img2,jdbcType=VARCHAR}, #{show_img3,jdbcType=VARCHAR}, #{show_img4,jdbcType=VARCHAR}, 
+      #{ctdt,jdbcType=TIMESTAMP}, #{ctuser,jdbcType=VARCHAR}, #{updt,jdbcType=TIMESTAMP}, 
+      #{upuser,jdbcType=VARCHAR}, #{del_flg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rockies.ec.model.EntInfo" >
+    insert into ent
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="enttype != null" >
+        enttype,
+      </if>
+      <if test="servicetype != null" >
+        servicetype,
+      </if>
+      <if test="language != null" >
+        language,
+      </if>
+      <if test="ent_img != null" >
+        ent_img,
+      </if>
+      <if test="show_img1 != null" >
+        show_img1,
+      </if>
+      <if test="show_img2 != null" >
+        show_img2,
+      </if>
+      <if test="show_img3 != null" >
+        show_img3,
+      </if>
+      <if test="show_img4 != null" >
+        show_img4,
+      </if>
+      <if test="ctdt != null" >
+        ctdt,
+      </if>
+      <if test="ctuser != null" >
+        ctuser,
+      </if>
+      <if test="updt != null" >
+        updt,
+      </if>
+      <if test="upuser != null" >
+        upuser,
+      </if>
+      <if test="del_flg != null" >
+        del_flg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="enttype != null" >
+        #{enttype,jdbcType=VARCHAR},
+      </if>
+      <if test="servicetype != null" >
+        #{servicetype,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="ent_img != null" >
+        #{ent_img,jdbcType=VARCHAR},
+      </if>
+      <if test="show_img1 != null" >
+        #{show_img1,jdbcType=VARCHAR},
+      </if>
+      <if test="show_img2 != null" >
+        #{show_img2,jdbcType=VARCHAR},
+      </if>
+      <if test="show_img3 != null" >
+        #{show_img3,jdbcType=VARCHAR},
+      </if>
+      <if test="show_img4 != null" >
+        #{show_img4,jdbcType=VARCHAR},
+      </if>
+      <if test="ctdt != null" >
+        #{ctdt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctuser != null" >
+        #{ctuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updt != null" >
+        #{updt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upuser != null" >
+        #{upuser,jdbcType=VARCHAR},
+      </if>
+      <if test="del_flg != null" >
+        #{del_flg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rockies.ec.model.EntInfo" >
+    update ent
+    <set >
+      <if test="enttype != null" >
+        enttype = #{enttype,jdbcType=VARCHAR},
+      </if>
+      <if test="servicetype != null" >
+        servicetype = #{servicetype,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        language = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="ent_img != null" >
+        ent_img = #{ent_img,jdbcType=VARCHAR},
+      </if>
+      <if test="show_img1 != null" >
+        show_img1 = #{show_img1,jdbcType=VARCHAR},
+      </if>
+      <if test="show_img2 != null" >
+        show_img2 = #{show_img2,jdbcType=VARCHAR},
+      </if>
+      <if test="show_img3 != null" >
+        show_img3 = #{show_img3,jdbcType=VARCHAR},
+      </if>
+      <if test="show_img4 != null" >
+        show_img4 = #{show_img4,jdbcType=VARCHAR},
+      </if>
+      <if test="ctdt != null" >
+        ctdt = #{ctdt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctuser != null" >
+        ctuser = #{ctuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updt != null" >
+        updt = #{updt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upuser != null" >
+        upuser = #{upuser,jdbcType=VARCHAR},
+      </if>
+      <if test="del_flg != null" >
+        del_flg = #{del_flg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rockies.ec.model.EntInfo" >
+    update ent
+    set enttype = #{enttype,jdbcType=VARCHAR},
+      servicetype = #{servicetype,jdbcType=VARCHAR},
+      language = #{language,jdbcType=VARCHAR},
+      ent_img = #{ent_img,jdbcType=VARCHAR},
+      show_img1 = #{show_img1,jdbcType=VARCHAR},
+      show_img2 = #{show_img2,jdbcType=VARCHAR},
+      show_img3 = #{show_img3,jdbcType=VARCHAR},
+      show_img4 = #{show_img4,jdbcType=VARCHAR},
+      ctdt = #{ctdt,jdbcType=TIMESTAMP},
+      ctuser = #{ctuser,jdbcType=VARCHAR},
+      updt = #{updt,jdbcType=TIMESTAMP},
+      upuser = #{upuser,jdbcType=VARCHAR},
+      del_flg = #{del_flg,jdbcType=VARCHAR}
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+</mapper>
