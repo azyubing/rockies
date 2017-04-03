@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="description" content="全球家庭主题旅行平台，最好的爱是陪伴">
+    <meta name="keywords" content="">
+    <meta name="author" content=""/>
+    <title>麦味旅行 - 全球家庭旅行定制品牌</title>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="MobileOptimized" content=""/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="renderer" content="webkit">
+    <meta name="baidu-site-verification" content="eOTkNt2SNu"/>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="stylesheet" href="css/amazeui.min.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/amazeui.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/app_custom.js"></script>
+    <script type="text/javascript">
+        function initBanner0() {
+            var fontsize = document.documentElement.clientWidth < document.documentElement.clientHeight ? document.documentElement.clientWidth : document.documentElement.clientHeight
+            fontsize = fontsize / 7.5;
+            document.documentElement.style.fontSize = fontsize + 'px';
+            setTimeout(function () {
+                var height = getWindowHeight();
+                $("section").eq(0).height(height - $("header").height());
+                $(".blur_bg").height(height);
+            });
+        }
+        function getWindowHeight() {
+            var winHeight = 0;
+            if (window.innerHeight)
+                winHeight = window.innerHeight;
+            else if ((document.body) && (document.body.clientHeight))
+                winHeight = document.body.clientHeight;
+            if (document.documentElement && document.documentElement.clientHeight) {
+                winHeight = document.documentElement.clientHeight;
+            }
+            return winHeight;
+        }
+        $(function () {
+            initBanner0();
+            $("#navigation .inner_icon").click(function () {
+                $("body").animate({scrollTop: $($(this).attr("tag")).offset().top - 50}, 500);
+            });
+        })
+    </script>
+</head>
+<body class="bgColor1">
+<header data-am-widget="header" class="am-header">
+    <div class="hdIco am-header-left">
+        <a href="javascript:history.back();">
+            <i class="sprite icon-back"></i>
+        </a>
+    </div>
+    <h1 class="am-header-title">麦味旅行专属行程定制</h1>
+</header>
+<section class="banner-index-01 banner">
+    <img style="width: 100%;height: 100%;" src="images/custom/my_custom_banner_01.png">
+    <div class="banner-title">
+        <span style="font-weight: bold">最好的爱是陪伴，最好的陪伴是旅行</span>
+        <span style="font-size: 0.3rem;">麦味旅行，专注家庭定制旅行</span>
+    </div>
+    <div id="navigation" class="banner-inner">
+        <img src="images/custom/shadow.png">
+        <div style="position: relative;text-align: center;">
+            <div class="inner_icon" tag="#item1">
+                <img src="images/custom/liucheng.png">
+                <span>定制流程</span>
+            </div
+            ><div class="inner_icon" tag="#item2">
+            <img src="images/custom/jiage.png">
+            <span>定制价格</span>
+        </div
+        ><div class="inner_icon" tag="#item3">
+            <img src="images/custom/dingzhi.png">
+            <span>立刻定制</span>
+        </div>
+        </div>
+    </div>
+</section>
+<div id="item1"></div>
+<img class="blur_bg" src="images/custom/my_custom_banner_03.png">
+<section class="banner banner-index-02">
+    <div class="banner-title">
+        <span style="font-size: 0.45rem;margin-bottom: 0.2rem;">定制流程</span>
+        <span>和麦味的第一次接触</span>
+        <span>从旅行策划师开始</span>
+    </div>
+    <div style="padding: 0.43rem;">
+        <img style="width: 100%" src="images/custom/custom-step.png"/>
+    </div>
+    <div id="item2"></div>
+    <div class="banner-title">
+        <span style="font-size: 0.45rem;margin: 30px 0;">定制价格</span>
+        <div class="custom_desc">
+            <span>专业 + 服务</span>
+            <span>省事、省力、省心</span>
+            <span>最具性价比的</span>
+            <span>海外旅行方式</span>
+            <div id="scroll_flag"></div>
+            <span style="margin-top: 60px;"><div
+                    style="display: inline-block;padding: 8px 30px;background: #e0735e;">致电查询价格</div></span>
+            <span style="color: #e0735e;font-size: 0.45rem;font-weight: bold;">400 - 645 - 6701</span>
+        </div>
+    </div>
+    <div id="item3"></div>
+    <form class="am-form" action="customOver.html" id="form-verify-msg">
+        <div class="banner-title submit-info">
+            <span style="margin: 0.4rem 0;font-size: 0.5rem;font-weight: bold;">专属行程定制</span>
+            <div>
+                <span>1分钟，收集您的出行需求;</span>
+                <span>2小时，与您电话沟通;</span>
+                <span>24小时内，获得专属方案;</span>
+            </div>
+            <div class="submit-from">
+                <div class="am-form-group">
+                    <input type="text" id="targetCity" name="targetCity" placeholder="想去哪儿?"
+                           data-validation-message="请填写您的目的地">
+                </div>
+                <div style="margin-top: 0.25rem;" class="am-form-group">
+                    <input onfocus="(this.type='date')" class="input" id="year" name="year" type="text"
+                           placeholder="何时出发?">
+                </div>
+                <div style="margin-top: 0.23rem;">
+                    <div style="width: 48%;float: left" class="am-form-group">
+                        <select id="days" name="days">
+                            <option disabled selected>游玩天数</option>
+                            <option>4天以内</option>
+                            <option>5-7天</option>
+                            <option>8-10天</option>
+                            <option>11天以上</option>
+                        </select>
+                    </div>
+                    <div style="width: 48%;float: right" class="am-form-group">
+                        <select id="personCount" name="personCount" type="text" required
+                                data-validation-message="请选择游玩人数">
+                            <option disabled selected>游玩人数</option>
+                            <option>1人</option>
+                            <option>2人</option>
+                            <option>3人</option>
+                            <option>4人</option>
+                            <option>5人</option>
+                            <option>6人</option>
+                            <option>7人</option>
+                            <option>8人</option>
+                            <option>9人</option>
+                            <option>9人以上</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="margin-top: 1.2rem;" class="am-form-group">
+                    <input id="budget" name="budget" type="number" placeholder="输入大概预算，单位（¥）" required
+                           data-validation-message="请输入您的预算">
+                </div>
+                <div style="margin-top: 0.3rem;" class="am-form-group">
+                    <input id="contract" name="contract" type="number" placeholder="*阁下的联系方式?" required
+                           pattern="^[1][0-9]{10}$"
+                           data-validation-message="请填写正确的联系手机号码">
+                </div>
+                <div style="margin-top: 0.7rem;" class="am-form-group">
+                    <input type="submit"
+                           style="border: none;text-align: center;;padding: 8px 30px;background: #e0735e;color: #fff;"
+                           value="开启定制之旅"/>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!doctype html>
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="" />
+<title>API测试页面</title>
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="MobileOptimized" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="renderer" content="webkit">
+</head>
+
+<body>
+
+	<h2>测试结果：(测试结果页可以在控制台中查看)</h2>
+	<div class="btn" id="result"></div>
+	<input type="text" id="keywords" value=""></input>
+	<input type="button" class="btn" class="btn" id="searchKeyWords" value="search"
+		onclick="testSearchKeyWords()"></input>
+	——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+	短信验证码：
+	<input type="text" class="btn" class="btn" id="validateCode" value=""></input>
+	<input type="button" class="btn" class="btn" id="login" value="login"
+		onclick="testLogin()"></input>
+	<input type="button" class="btn" class="btn" id="testLoginStatus"
+		value="loginStatus" onclick="testLoginStatus()"></input>
+	<input type="button" class="btn" id="loginout" value="loginout"
+		onclick="testLoginout()"></input>
+	<input type="button" class="btn" class="btn" id="sendMsg"
+		value="send message" onclick="testSendTelVerifyCode()"></input>
+	</p>
+	<input type="button" class="btn" class="btn" id="updateUserName"
+		value="update user name" onclick="testUpdateUserName()"></input>
+	<input type="button" class="btn" class="btn" id="updateCellPhoneNumber"
+		value="update cell number" onclick="testUpdateCellPhoneNumber()"></input>
+	<input type="button" class="btn" class="btn" id="updatePassword"
+		value="update password" onclick="testUpdatePassword()"></input>
+	<input type="button" class="btn" class="btn" id="resetPassword"
+		value="reset password" onclick="testResetPassword()"></input>
+	<input type="button" class="btn" class="btn" id="testRegister"
+		value="register" onclick="testRegister()"></input>
+	</p>
+	<input type="button" class="btn" class="btn"
+		id="testMyFavoritesSearchOptions" value="获取我的收藏查找选项"
+		onclick="testMyFavoritesSearchOptions()"></input>
+	<input type="button" class="btn" class="btn" id="testMyFavorites"
+		value="获取我的收藏" onclick="testMyFavorites()"></input>
+	<input type="button" class="btn" class="btn" id="testAddMyFavorites"
+		value="增加我的收藏" onclick="testAddMyFavorite()"></input>
+	<input type="button" class="btn" class="btn" id="testDelMyFavorite"
+		value="删除我的收藏" onclick="testDelMyFavorite()"></input>
+	<input type="button" class="btn" class="btn" id="testMyOrder"
+		value="下单" onclick="testMyOrder()"></input>
+	</p>
+	<input type="button" class="btn" class="btn" id="getHotDesinations"
+		value="热门目的地" onclick="testGetHotDesinations()"></input>
+	<input type="button" class="btn" class="btn" id="testGetDesinations"
+		value="目的地" onclick="testGetDesinations()"></input>
+	</p>
+	<input type="button" class="btn" class="btn"
+		id="testGetOrdersSearchOptions" value="订单选项"
+		onclick="testGetOrdersSearchOptions()"></input>
+	<input type="button" class="btn" class="btn" id="testGetOrder"
+		value="订单详情" onclick="testGetOrder()"></input>
+	<input type="button" class="btn" class="btn" id="testGetMyOrders"
+		value="我的订单" onclick="testGetMyOrders()"></input>
+	<input type="button" class="btn" class="btn" id="testDelMyOrder"
+		value="删除我的订单" onclick="testDelMyOrder()"></input>
+	</p>
+	<input type="button" class="btn" class="btn"
+		id="testGetHotelPriceCalendar" value="酒店价格日历"
+		onclick="testGetHotelPriceCalendar()"></input>
+	<input type="button" class="btn" class="btn" id="testGetHotelRoomTypes"
+		value="酒店房间类型及价格" onclick="testGetHotelRoomTypes()"></input>
+	<input type="button" class="btn" class="btn"
+		id="testGetHotelRoomTypesPrice" value="酒店房间类型价格"
+		onclick="testGetHotelRoomTypesPrice()"></input>
+	</p>
+
+	<input type="button" class="btn" class="btn"
+		id="testGetPackagePriceCalendar" value="套餐价格日历"
+		onclick="testGetPackagePriceCalendar()"></input>
+	<input type="button" class="btn" class="btn" id="testGetPackageOptions"
+		value="套餐选项及价格" onclick="testGetPackageOptions()"></input>
+	</p>
+	<input type="button" class="btn" id="testGetVillaPriceCalendar"
+		value="别墅价格日历" onclick="testGetVillaPriceCalendar()"></input>
+	<input type="button" class="btn" class="btn" id="testGetVillaRoomTypes"
+		value="别墅选项及价格" onclick="testGetVillaRoomTypes()"></input>
+	</p>
+	<input type="button" class="btn" id="testGetEntertainmentPriceCalendar"
+		value="娱乐价格日历" onclick="testGetEntertainmentPriceCalendar()"></input>
+	<input type="button" class="btn" class="btn"
+		id="testGetEntertainmentOptions" value="娱乐选项及价格"
+		onclick="testGetEntertainmentOptions()"></input>
+	</p>
+	<input type="button" class="btn" id="testGetCarPriceDetail"
+		value="租车选项及价格" onclick="testGetCarPriceDetail()"></input>
+	</p>
+	<input type="button" class="btn" id="testGetAllThemes" value="所有主题"
+		onclick="testGetAllThemes()"></input>
+	<input type="button" class="btn" id="testGetProducts" value="所有产品"
+		onclick="testGetProducts()"></input>
+	<input type="button" class="btn" id="testGetHotServices" value="热门服务"
+		onclick="testGetHotServices()"></input>
+	<input type="button" class="btn" id="testGetProductSearchOptions"
+		value="产品查询选项" onclick="testGetProductSearchOptions()"></input>
+	<input type="button" class="btn" id="testGetProductDetail" value="产品详情"
+		onclick="testGetProductDetail()"></input>
+	<input type="button" class="btn" id="testGetProductRouteDayInfo"
+		value="行程信息" onclick="testGetProductRouteDayInfo()"></input>
+	<input type="button" class="btn" id="testGetProductComments"
+		value="获取评价" onclick="testGetProductComments()"></input>
+	<input type="button" class="btn" id="testAddProductComments"
+		value="添加评价" onclick="testAddProductComments()"></input>
+	<input type="button" class="btn" id="testGetProducts" value="所有产品"
+		onclick="testGetProducts()"></input>
+	</p>
+	<input type="button" class="btn" id="testSaveTravelPartner"
+		value="新增随行人" onclick="testSaveTravelPartner()">
+	<input type="button" class="btn" id="testUdateTravelPartner"
+		value="修改随行人" onclick="testUdateTravelPartner()">
+	<input type="button" class="btn" id="testGetTravelPartners"
+		value="获取订单随行人" onclick="testGetTravelPartners()">
+	<input type="button" class="btn" id="testDeleteTravelPartner"
+		value="删除随行人" onclick="testDeleteTravelPartner()">
+	</p>
+	<input type="button" class="btn" class="btn" id="testCancelOrder"
+		value="取消订单" onclick="testCancelOrder()"></input>
+	<input type="button" class="btn" id="testVillaOrder" value="下别墅订单"
+		onclick="testVillaOrder()">
+	<input type="button" class="btn" id="testPackageOrder" value="下套餐订单"
+		onclick="testPackageOrder()">
+	<input type="button" class="btn" id="testHotelOrder" value="下酒店订单"
+		onclick="testHotelOrder()">
+	<input type="button" class="btn" id="testEntertainmentOrder"
+		value="下娱乐订单" onclick="testEntertainmentOrder()">
+	<input type="button" class="btn" id="testTrafficOrder" value="下租车订单"
+		onclick="testTrafficOrder()">
+	——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+	<form action="" class="btn" id="_fileForm" method="post"
+		enctype="multipart/form-data">
+		<div class="btn" id="p_img">
+			<div class="fl img_info">
+				<div>我的头像</div>
+				<div class="prt" id="preview"
+					style="background-image: url(http://localhost/images/Chrysanthemum.jpg);"></div>
+				<img class="prt" alt="" src="">
+				<div class="fileUpload btn btn-primary">
+					<input class="btn" id="upload_txt" readonly="readonly" type="text">
+					<input class="upload" name="uploadList" id="uploadBtn" type="file">
+				</div>
+				<div class="ps">
+					<span>*</span>&nbsp;目前仅支持JPG、GIF、PNG、BMP格式的图片，文件小于3M
+				</div>
+				<div>
+					<button type="button" class="btn" id="upBtn" class="btn"
+						onclick="fileloadon()">上传头像</button>
+				</div>
+			</div>
+			<div class="clr"></div>
+		</div>
+	</form>
+	</p>
+	pid：
+	<input type="text" id="pid" value=""></input> 图片地址：
+	<input type="text" id="picpath" value=""></input>
+	<input type="button" class="btn" id="uploadThemeIcon" value="主题图标"
+		onclick="uploadThemeIcon()"></input>
+	<input type="button" class="btn" id="uploadCityPic" value="城市图片"
+		onclick="uploadCityPic()"></input>
+	</p>
+	<a
+		href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx192328d06dd9f5e0&redirect_uri=http%3A%2F%2Fm.imyway.cn%2Fmobile%2Fwchatlogin.do&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect">
+		<img alt="" src="../assets/img/personal/wx_icon.png">
+	</a>
+	<input type="button" id="weixinLogin" value="微信登陆"
+		onclick="webchatLogin()"></input>
+	<h5 style="color: #333; margin-bottom: 20px;">请选择支付方式</h5>
+	<div class="pay" data-val="1">
+		<img src="../assets/img/personal/zfb.png"></img>
+	</div>
+
+	<div class="pay" data-val="2">
+		<img src="../assets/img/personal/wxzf.png"></img>
+	</div>
+	<img src="" style="width: 298px; height: 298px;" id="wx_qr" />
+	<input type="button" id="weixinPay" value="微信支付" onclick="webchatPay()"></input>
+	<input type="button" id="weixinPayPic" value="展示微信支付二维码图片"
+		onclick="weixinPayPic()"></input>
+	<input type="button" id="alipay" value="支付宝支付" onclick="aliPay()"></input>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery.form.js"></script>
+	<script src="js/pingpp-pc.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/pay.js"></script>
+	<script src="js/test.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rockies.mapper.EntInfoMapper" >
+  
+  <sql id="selectEntList">
+	    from ent as e
+		left join product as p on e.pid = p.pid
+		left join city as c on p.country = c.id
+		left join city as city on p.city = city.id
+		<if test="themeIds !=null and themeIds != ''">
+			 left join themeproduct as tp on tp.productId = p.pid
+		</if>
+	    <where>
+	    	e.del_flg=0 and p.pstatus = 1
+	    	<if test="pid != null and pid != ''">
+			  and p.pid = #{pid,jdbcType=VARCHAR}
+			</if>
+	    	<if test="pname !=null and pname != ''">
+			  and (
+				  match(pname,tags) against(#{pname,jdbcType=VARCHAR})
+				or match(c.cityname) against(#{pname,jdbcType=VARCHAR})
+				or match(city.cityname) against(#{pname,jdbcType=VARCHAR})
+			  )
+			</if>
+			<if test="country !=null and country != ''">
+			  and p.country = #{country,jdbcType=VARCHAR}
+			</if>
+			<if test="city !=null and city != ''">
+			  and p.city = #{city,jdbcType=VARCHAR}
+			</if>
+			<if test="tags !=null and tags != ''">
+			  and match(tags) against(#{tags,jdbcType=VARCHAR})
+			</if>
+			<if test="themeIds !=null and themeIds != ''">
+			  and tp.themeId in 
+				<foreach item="item" index="index" collection="themeIds"
+						 open="(" separator="," close=")">
+						#{item}
+				</foreach>
+			</if>
+			<if test="startTime !=null and startTime != ''">
+			  and p.startdate >= #{startTime,jdbcType=VARCHAR}
+			</if>
+			<choose>
+				<when test="endTime !=null and endTime != ''">
+					and	p.enddate <![CDATA[   >=  ]]>  #{endTime,jdbcType=VARCHAR} and p.enddate <![CDATA[   >=  ]]> date_format(SYSDATE(),'%Y-%m-%d')
+				</when>
+				<when test="endTime ==null or endTime == ''">
+					and p.enddate <![CDATA[   >=  ]]> curdate()
+				</when>
+			</choose>
+			<if test="enttype !=null and enttype != ''">
+			  and e.enttype = #{enttype,jdbcType=VARCHAR}
+			</if>
+			<if test="servicetype !=null and servicetype != ''">
+			  and e.servicetype = #{servicetype,jdbcType=VARCHAR}
+			</if>
+			<if test="language !=null and language != ''">
+			  and e.language = #{language,jdbcType=VARCHAR}
+			</if>
+			<choose>
+				<when test="minPrice !=null and minPrice != '' and ( maxPrice ==null or maxPrice == '' ) ">
+					and p.start_price = #{minPrice,jdbcType=VARCHAR}
+				</when>
+				<when test="maxPrice !=null and maxPrice != '' and ( minPrice ==null or minPrice == '' ) ">
+					and p.start_price = #{maxPrice,jdbcType=VARCHAR}
+				</when>
+				<when test="maxPrice !=null and maxPrice != '' and minPrice !=null and minPrice != '' ">
+					and p.start_price between #{minPrice,jdbcType=VARCHAR} and #{maxPrice,jdbcType=VARCHAR} 
+				</when>
+			</choose>
+			<if test="ptype !=null and ptype != ''">
+			  and p.ptype = #{ptype,jdbcType=VARCHAR}
+			</if>
+	    </where>
+	    group by p.pid
+			<if test="cnt == 1">
+			  order by p.sale_cnt
+			</if>
+			<if test="cnt == 2">
+			  order by p.sale_cnt desc
+			</if>
+			<if test="orderPrice == 1">
+			  order by start_price
+			</if>
+			<if test="orderPrice == 2">
+			  order by start_price desc
+			</if>
+	    	<if test="offset != null and limit != ''">
+			  limit #{offset},#{limit};
+			</if>
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultType="com.rockies.model.EntInfo" parameterType="java.lang.String" >
+    select 
+    *
+    from ent
+    where pid = #{pid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllListByParam" resultType="com.rockies.model.EntInfo" parameterType="Map" >
+    select e.*,
+    	   p.*,
+    	   c.cityName 
+    from ent as e
+	left join product as p on e.pid = p.pid
+	left join city as c on p.country = c.id
+    <where>
+    	e.del_flg=0
+    	<if test="pid != null and pid != ''">
+		  and p.pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    	<if test="pname!=null and pname != ''">
+		  and p.pname like "%"#{pname,jdbcType=VARCHAR}"%" 
+		</if>
+    </where>
+    order by e.ctdt desc
+    	<if test="offset!=null and limit != ''">
+		  limit #{offset},#{limit};
+		</if>
+	
+  </select>
+  <select id="getCount"  parameterType="Map" resultType="java.lang.Integer" >
+	select  count(*) from ent as e
+	left join product as p on e.pid = p.pid
+	<where>
+		e.del_flg=0
+    	<if test="pid != null and pid != ''">
+		  and p.pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    	<if test="pname!=null and pname != ''">
+		  and p.pname like "%"#{pname,jdbcType=VARCHAR}"%" 
+		</if>
+    </where>
+  </select>
+  <select id="selectEntInfoByParam" resultType="com.rockies.model.EntInfo" parameterType="Map" >
+    select * from ent as e
+	left join product as p on e.pid = p.pid
+    <where>
+    	<if test="pid != null and pid != ''">
+		  and p.pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    </where>
+  </select>
+  <select id="selectEntListByParam" resultType="Map" parameterType="Map" >
+    select 
+    	   e.*,
+    	   p.*,
+    	  
+    	   c.cityName as countryName ,
+		   city.cityName as cityName
+    <include refid="selectEntList"></include>
+  </select>
+  
+  <select id="getEntListCount"  resultType="java.lang.Integer" parameterType="Map">
+       select count(DISTINCT p.pid)
+       from ent as e
+		left join product as p on e.pid = p.pid
+		left join city as c on p.country = c.id
+		left join city as city on p.city = city.id
+		<if test="themeIds !=null and themeIds != ''">
+			 left join themeproduct as tp on tp.productId = p.pid
+		</if>
+	    <where>
+	    	e.del_flg=0 and p.pstatus = 1
+	    	<if test="pid != null and pid != ''">
+			  and p.pid = #{pid,jdbcType=VARCHAR}
+			</if>
+	    	<if test="pname !=null and pname != ''">
+			  and (
+				  match(pname,tags) against(#{pname,jdbcType=VARCHAR})
+				or match(c.cityname) against(#{pname,jdbcType=VARCHAR})
+				or match(city.cityname) against(#{pname,jdbcType=VARCHAR})
+			  )
+			</if>
+			<if test="country !=null and country != ''">
+			  and p.country = #{country,jdbcType=VARCHAR}
+			</if>
+			<if test="city !=null and city != ''">
+			  and p.city = #{city,jdbcType=VARCHAR}
+			</if>
+			<if test="tags !=null and tags != ''">
+			  and match(tags) against(#{tags,jdbcType=VARCHAR})
+			</if>
+			<if test="themeIds !=null and themeIds != ''">
+			  and tp.themeId in 
+				<foreach item="item" index="index" collection="themeIds"
+						 open="(" separator="," close=")">
+						#{item}
+				</foreach>
+			</if>
+			<if test="startTime !=null and startTime != ''">
+			  and p.startdate >= #{startTime,jdbcType=VARCHAR}
+			</if>
+			<choose>
+				<when test="endTime !=null and endTime != ''">
+					and	p.enddate <![CDATA[   >=  ]]>  #{endTime,jdbcType=VARCHAR} and p.enddate <![CDATA[   >=  ]]> date_format(SYSDATE(),'%Y-%m-%d')
+				</when>
+				<when test="endTime ==null or endTime == ''">
+					and p.enddate <![CDATA[   >=  ]]> curdate()
+				</when>
+			</choose>
+			<if test="enttype !=null and enttype != ''">
+			  and e.enttype = #{enttype,jdbcType=VARCHAR}
+			</if>
+			<if test="servicetype !=null and servicetype != ''">
+			  and e.servicetype = #{servicetype,jdbcType=VARCHAR}
+			</if>
+			<if test="language !=null and language != ''">
+			  and e.language = #{language,jdbcType=VARCHAR}
+			</if>
+			<choose>
+				<when test="minPrice !=null and minPrice != '' and ( maxPrice ==null or maxPrice == '' ) ">
+					and p.start_price = #{minPrice,jdbcType=VARCHAR}
+				</when>
+				<when test="maxPrice !=null and maxPrice != '' and ( minPrice ==null or minPrice == '' ) ">
+					and p.start_price = #{maxPrice,jdbcType=VARCHAR}
+				</when>
+				<when test="maxPrice !=null and maxPrice != '' and minPrice !=null and minPrice != '' ">
+					and p.start_price between #{minPrice,jdbcType=VARCHAR} and #{maxPrice,jdbcType=VARCHAR} 
+				</when>
+			</choose>
+			<if test="ptype !=null and ptype != ''">
+			  and p.ptype = #{ptype,jdbcType=VARCHAR}
+			</if>
+	    </where>
+  </select>
+  
+  
+  <select id="countEntListByParam"  resultType="java.lang.Integer" parameterType="Map" >
+    select count(*) from (
+	    select e.pid
+  		from ent as e
+		left join product as p on e.pid = p.pid
+		left join city as c on p.country = c.id
+		left join city as city on p.city = city.id
+		<if test="themeIds !=null and themeIds != ''">
+			 left join themeproduct as tp on tp.productId = p.pid
+		</if>
+	    <where>
+	    	e.del_flg=0 and p.pstatus = 1
+	    	<if test="pid != null and pid != ''">
+			  and p.pid = #{pid,jdbcType=VARCHAR}
+			</if>
+	    	<if test="pname !=null and pname != ''">
+			  and (
+				  match(pname,tags) against(#{pname,jdbcType=VARCHAR})
+				or match(c.cityname) against(#{pname,jdbcType=VARCHAR})
+				or match(city.cityname) against(#{pname,jdbcType=VARCHAR})
+			  )
+			</if>
+			<if test="country !=null and country != ''">
+			  and p.country = #{country,jdbcType=VARCHAR}
+			</if>
+			<if test="city !=null and city != ''">
+			  and p.city = #{city,jdbcType=VARCHAR}
+			</if>
+			<if test="tags !=null and tags != ''">
+			  and match(tags) against(#{tags,jdbcType=VARCHAR})
+			</if>
+			<if test="themeIds !=null and themeIds != ''">
+			  and tp.themeId in 
+				<foreach item="item" index="index" collection="themeIds"
+						 open="(" separator="," close=")">
+						#{item}
+				</foreach>
+			</if>
+			<if test="startTime !=null and startTime != ''">
+			  and p.startdate >= #{startTime,jdbcType=VARCHAR}
+			</if>
+			<choose>
+				<when test="endTime !=null and endTime != ''">
+					and	p.enddate <![CDATA[   >=  ]]>  #{endTime,jdbcType=VARCHAR} and p.enddate <![CDATA[   >=  ]]> date_format(SYSDATE(),'%Y-%m-%d')
+				</when>
+				<when test="endTime ==null or endTime == ''">
+					and p.enddate <![CDATA[   >=  ]]> curdate()
+				</when>
+			</choose>
+			<if test="enttype !=null and enttype != ''">
+			  and e.enttype = #{enttype,jdbcType=VARCHAR}
+			</if>
+			<if test="servicetype !=null and servicetype != ''">
+			  and e.servicetype = #{servicetype,jdbcType=VARCHAR}
+			</if>
+			<if test="language !=null and language != ''">
+			  and e.language = #{language,jdbcType=VARCHAR}
+			</if>
+			<choose>
+				<when test="minPrice !=null and minPrice != '' and ( maxPrice ==null or maxPrice == '' ) ">
+					and p.start_price = #{minPrice,jdbcType=VARCHAR}
+				</when>
+				<when test="maxPrice !=null and maxPrice != '' and ( minPrice ==null or minPrice == '' ) ">
+					and p.start_price = #{maxPrice,jdbcType=VARCHAR}
+				</when>
+				<when test="maxPrice !=null and maxPrice != '' and minPrice !=null and minPrice != '' ">
+					and p.start_price between #{minPrice,jdbcType=VARCHAR} and #{maxPrice,jdbcType=VARCHAR} 
+				</when>
+			</choose>
+			<if test="ptype !=null and ptype != ''">
+			  and p.ptype = #{ptype,jdbcType=VARCHAR}
+			</if>
+	    </where>
+	    group by p.pid
+			<if test="cnt == 1">
+			  order by p.sale_cnt
+			</if>
+			<if test="cnt == 2">
+			  order by p.sale_cnt desc
+			</if>
+			<if test="orderPrice == 1">
+			  order by start_price
+			</if>
+			<if test="orderPrice == 2">
+			  order by start_price desc
+			</if>
+	    	<if test="offset != null and limit != ''">
+			  limit #{offset},#{limit};
+			</if>
+    ) as t1 
+  </select>
+  <!-- 娱乐类型 -->
+  <select id="selectEnttype" resultType="Map" parameterType="Map" >
+  	select distinct enttype from ent  
+  </select>
+  <!-- 服务类型 -->
+  <select id="selectServicetype" resultType="Map" parameterType="Map" >
+  	select distinct servicetype from ent  
+  </select>
+  <!-- 服务语言 -->
+  <select id="selectLanguage" resultType="Map" parameterType="Map" >
+  	select distinct language from ent  
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ent
+    where pid = #{pid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.rockies.model.EntInfo" >
+    insert into ent (pid, enttype, servicetype, 
+      language, ent_img, show_img1, 
+      show_img2, show_img3, show_img4, 
+      ctdt, ctuser, updt, 
+      upuser, del_flg)
+    values (#{pid,jdbcType=VARCHAR}, #{enttype,jdbcType=VARCHAR}, #{servicetype,jdbcType=VARCHAR}, 
+      #{language,jdbcType=VARCHAR}, #{ent_img,jdbcType=VARCHAR}, #{show_img1,jdbcType=VARCHAR}, 
+      #{show_img2,jdbcType=VARCHAR}, #{show_img3,jdbcType=VARCHAR}, #{show_img4,jdbcType=VARCHAR}, 
+      #{ctdt,jdbcType=TIMESTAMP}, #{ctuser,jdbcType=VARCHAR}, #{updt,jdbcType=TIMESTAMP}, 
+      #{upuser,jdbcType=VARCHAR}, #{del_flg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rockies.model.EntInfo" >
+    insert into ent
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="enttype != null" >
+        enttype,
+      </if>
+      <if test="servicetype != null" >
+        servicetype,
+      </if>
+      <if test="language != null" >
+        language,
+      </if>
+      <if test="ent_img != null" >
+        ent_img,
+      </if>
+      <if test="show_img1 != null" >
+        show_img1,
+      </if>
+      <if test="show_img2 != null" >
+        show_img2,
+      </if>
+      <if test="show_img3 != null" >
+        show_img3,
+      </if>
+      <if test="show_img4 != null" >
+        show_img4,
+      </if>
+      <if test="ctdt != null" >
+        ctdt,
+      </if>
+      <if test="ctuser != null" >
+        ctuser,
+      </if>
+      <if test="updt != null" >
+        updt,
+      </if>
+      <if test="upuser != null" >
+        upuser,
+      </if>
+      <if test="del_flg != null" >
+        del_flg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="enttype != null" >
+        #{enttype,jdbcType=VARCHAR},
+      </if>
+      <if test="servicetype != null" >
+        #{servicetype,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="ent_img != null" >
+        #{ent_img,jdbcType=VARCHAR},
+      </if>
+      <if test="show_img1 != null" >
+        #{show_img1,jdbcType=VARCHAR},
+      </if>
+      <if test="show_img2 != null" >
+        #{show_img2,jdbcType=VARCHAR},
+      </if>
+      <if test="show_img3 != null" >
+        #{show_img3,jdbcType=VARCHAR},
+      </if>
+      <if test="show_img4 != null" >
+        #{show_img4,jdbcType=VARCHAR},
+      </if>
+      <if test="ctdt != null" >
+        #{ctdt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctuser != null" >
+        #{ctuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updt != null" >
+        #{updt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upuser != null" >
+        #{upuser,jdbcType=VARCHAR},
+      </if>
+      <if test="del_flg != null" >
+        #{del_flg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rockies.model.EntInfo" >
+    update ent
+    <set >
+      <if test="enttype != null" >
+        enttype = #{enttype,jdbcType=VARCHAR},
+      </if>
+      <if test="servicetype != null" >
+        servicetype = #{servicetype,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        language = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="ent_img != null" >
+        ent_img = #{ent_img,jdbcType=VARCHAR},
+      </if>
+      <if test="show_img1 != null" >
+        show_img1 = #{show_img1,jdbcType=VARCHAR},
+      </if>
+      <if test="show_img2 != null" >
+        show_img2 = #{show_img2,jdbcType=VARCHAR},
+      </if>
+      <if test="show_img3 != null" >
+        show_img3 = #{show_img3,jdbcType=VARCHAR},
+      </if>
+      <if test="show_img4 != null" >
+        show_img4 = #{show_img4,jdbcType=VARCHAR},
+      </if>
+      <if test="ctdt != null" >
+        ctdt = #{ctdt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctuser != null" >
+        ctuser = #{ctuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updt != null" >
+        updt = #{updt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upuser != null" >
+        upuser = #{upuser,jdbcType=VARCHAR},
+      </if>
+      <if test="del_flg != null" >
+        del_flg = #{del_flg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rockies.model.EntInfo" >
+    update ent
+    set enttype = #{enttype,jdbcType=VARCHAR},
+      servicetype = #{servicetype,jdbcType=VARCHAR},
+      language = #{language,jdbcType=VARCHAR},
+      ent_img = #{ent_img,jdbcType=VARCHAR},
+      show_img1 = #{show_img1,jdbcType=VARCHAR},
+      show_img2 = #{show_img2,jdbcType=VARCHAR},
+      show_img3 = #{show_img3,jdbcType=VARCHAR},
+      show_img4 = #{show_img4,jdbcType=VARCHAR},
+      ctdt = #{ctdt,jdbcType=TIMESTAMP},
+      ctuser = #{ctuser,jdbcType=VARCHAR},
+      updt = #{updt,jdbcType=TIMESTAMP},
+      upuser = #{upuser,jdbcType=VARCHAR},
+      del_flg = #{del_flg,jdbcType=VARCHAR}
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+</mapper>

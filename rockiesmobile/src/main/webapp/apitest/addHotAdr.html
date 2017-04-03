@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="" />
+<title>首页热门目的地 图片设置</title>
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="MobileOptimized" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="renderer" content="webkit">
+</head>
+
+<body>
+	
+	<h1>热门目的地图片设置</h1>
+	
+	<form id="form">
+		<div>
+			<label>请选择目的地：</label>
+			<select id="adr">
+				<option value="">请选择目的地</option>
+			</select>
+		</div>
+		<br />
+		<div>
+			<label>选择目的地图片：</label>
+			<input class="fileInput" id="picFile" type="file" name="uploadList" accept="image/*">
+		</div>
+		<br />
+		<br />
+		<br />
+		<input type="button" id="submitBtn" value="确认提交">
+	</form>
+	
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery.form.js"></script>
+	<script>
+		var baseUrl = "..";
+		$(function(){
+			$.ajax({
+				url : baseUrl + "/mobile/destinations.do",
+				type : "GET",
+				dataType : "json",
+				cache : false,
+				data : {
+					page : 1,
+					pageSize : 1000
+				},
+				success : function(data) {
+					if (data.status == 'success') {
+						$.each(data.body.list,function(i,item){
+							$("#adr").append('<option value="'+item.id+'">'+item.cityName+'</option>');
+						})
+					} 
+					else {
+						alert(data.message);
+					}
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					alert(textStatus);
+				}
+			});
+			
+			//确认提交
+			$('#submitBtn').click(function(){
+				var adr = $('#adr').val();
+				var pic = $('#picFile').val();
+				if(adr != "" && pic != ""){
+					fileloadon(URL.createObjectURL(document.getElementById("picFile").files[0]));
+				}
+				else{
+					if(adr == ""){
+						alert("请选择目的地")
+					}
+					else if(pic == ""){
+						alert("请选择图片")
+					}
+				}
+				return false;
+			})
+		})
+		
+		function fileloadon(path) {
+			$("#form").submit(function() {
+				$(this).ajaxSubmit({
+					url : baseUrl+"/img/uploadFile.do",
+					type : "POST",
+					dataType : "json",
+					success : function(data) {
+						if(data.status == 'success') {
+							var icon = data.body[0];
+							$.ajax({
+								url : baseUrl+"/mobile/cityPic.do",
+								type : "POST",
+								dataType : "json",
+								cache : false,
+								data : {
+									id : $("#adr").val(),
+									icon : icon
+								},
+								success : function(data) {
+									if(data.status == 'success'){
+										alert("上传成功")
+									}
+									else{
+										alert(data.message);
+									}
+								},
+								error : function(XMLHttpRequest, textStatus, errorThrown) {
+									alert(textStatus);
+								}
+							});
+						} 
+						else{
+							alert(data.message);
+						}
+					},
+					error : function(XMLHttpRequest, textStatus, errorThrown) {
+						alert(textStatus);
+					}
+				});
+				return false;
+			});
+			$("#form").submit();
+		}
+	</script>
+	
+</body>
+</html>

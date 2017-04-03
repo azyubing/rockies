@@ -1,0 +1,163 @@
+header {
+    position: fixed !important;
+    background: #fff;
+    top: 0;
+}
+
+.am-header {
+    height: 0.8rem;
+    z-index: 9;
+    border-bottom: 1px solid #d4d4d4;
+}
+
+.am-header .hdIco a {
+    position: absolute;
+    width: 0.6rem;
+    height: 0.8rem;
+}
+
+.am-header .am-header-title {
+    font-size: 0.3rem;
+    margin: 0;
+    line-height: 0.8rem;
+}
+
+.am-header .hdIco a i {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.sprite {
+    background: url(../images/sprite.png) no-repeat;
+    background-size: 9.5rem;
+    background-position: -2.7rem -1.2rem;
+}
+
+.banner {
+    background-attachment: fixed;
+    position: relative;
+}
+
+.banner-index-01 {
+    position: relative;
+    z-index: 1;
+    margin-top: 1.1rem;
+}
+
+.banner-index-01 .banner-title {
+    position: absolute;
+    bottom: 3rem;
+    width: 100%;
+    color: #4b1106;
+}
+
+.banner-title span, .banner-inner span {
+    display: block;
+    text-align: center;
+}
+
+.banner_1 {
+    height: 100%;
+}
+
+.banner-index-02 {
+    /*background-image: url("../images/custom/my_custom_banner_02.png");*/
+    /*background-position: bottom;*/
+    position: relative;
+    padding-bottom: 1.5rem;
+    z-index: 2;
+    position: relative;
+}
+
+.am-form-group {
+    margin: 0;
+}
+
+.am-alert {
+    font-size: 0.3rem !important;
+}
+
+.blur_bg {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 0;
+    opacity: 1;
+}
+
+.submit-from {
+    width: 6rem;
+    font-size: 0.3rem;
+    padding: 0.1rem;
+    margin: 0 auto;
+    margin-top: 0.5rem;
+}
+
+.am-form input[type=text], .submit-from input, .submit-from select {
+    color: #111;
+    padding: 0.1rem;
+    text-align: center;
+    width: 100%;
+    font-size: 0.3rem !important;
+    height: 0.7rem;
+}
+
+.submit-info > div > span {
+    font-size: 0.3rem;
+    margin: 0.2rem 0;
+}
+
+.banner-index-02 .banner-title {
+    color: #fff;
+    padding-top: 0.8rem;
+}
+
+#navigation .inner_icon {
+    display: inline-block;
+    width: 33%;
+    text-align: center;
+    max-width: 2.6rem;
+}
+
+#navigation .inner_icon > div {
+    margin: 0 0.55rem
+}
+
+#navigation .inner_icon img {
+    width: 1.6rem;
+    vertical-align: top;
+}
+
+span {
+    font-size: 0.35rem;
+}
+
+.custom_desc span {
+    margin: 0.1rem 0;
+}
+
+#navigation {
+    width: 100%;
+    margin: 0 auto;
+    position: absolute;
+    bottom: 0;
+    height: 2.7rem;
+    z-index: 2;
+}
+
+#navigation span {
+    color: #2f2f2f;
+    margin-top: -0.7rem;
+}
+
+#navigation.bottom span {
+    color: #fff;
+}
+
+#navigation > img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+}

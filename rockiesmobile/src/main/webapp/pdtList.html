@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="description" content="麦味旅行专注于家庭主题定制旅游,基于深度调研家庭旅行出行需求，打造满足不同家庭关系，组合的主题旅行产品,如家庭旅游定制、亲子旅游游、蜜月旅游游、旅游度假等。致力于提供一站式，高性价比，高契合度的高端旅游体验。让每一位顾客，都拥有属于自己专属的身心之旅。">
+    <meta name="keywords" content="家庭旅游定制,私人定制旅行,亲子旅游定制,国外蜜月旅行,国外旅游度假,海岛度假">
+    <meta name="author" content=""/>
+    <title>麦味旅行 - 全球家庭旅行定制品牌</title>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="MobileOptimized" content=""/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="renderer" content="webkit">
+    <meta
+             name="baidu-site-verification"  content="eOTkNt2SNu"  />
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <script src="js/scale.js"></script>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/amazeui.min.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+
+<body class="topSticky" id="page_pdtList">
+
+<img class="shareImg" src="images/shareImg.jpg"/>
+
+<header data-am-widget="header" class="am-header" id="dropdown-top-justify">
+    <div class="hdIco am-header-left">
+        <a href="javascript:history.back();">
+            <i class="sprite icon-back"></i>
+        </a>
+    </div>
+    <div class="hdSearch">
+        <input type="text" class="searchInput" id="searchField" data-name="searchKeyWords" placeholder="你想去哪儿？"/>
+        <input type="button" class="searchBtn sprite" id="searchBtn" value=""/>
+    </div>
+</header>
+
+<div class="dropdownWrap f-box" id="dropdown-nav-justify">
+    <div class="am-dropdown f-flex" data-am-dropdown="{justify: '#dropdown-top-justify'}">
+        <button class="am-btn am-dropdown-toggle f-toe">
+            <span class="paramCur" for="dropdown_theme"></span>
+            <span class="am-icon-caret-down"></span>
+        </button>
+        <ul class="am-dropdown-content dropdownSelect" id="dropdown_theme" data-name="theme"></ul>
+    </div>
+    <div class="am-dropdown f-flex" data-am-dropdown="{justify: '#dropdown-nav-justify'}">
+        <button class="am-btn am-dropdown-toggle f-toe">
+            <span class="paramCur" for="dropdown_dest"></span>
+            <span class="am-icon-caret-down"></span>
+        </button>
+        <div class="am-dropdown-content pd-list-area-dropdown">
+            <div id="dropdown_dest"></div>
+            <ul class="area-list dropdownSelect" data-name="destination">
+            </ul>
+            <div class="area_list_banner">
+                <div style="margin:0 20px;position: relative;">
+                    <div style="position: absolute;color: #fff;width: 100%;text-align: center;top: 60px;">
+                        <div style="font-size: 32px">还没想好去哪里？</div>
+                        <div style="font-size: 25px;font-weight:bold;margin-top: 10px">试试点这里</div>
+                        <a href="custom.html#item3"><img style="width: 120px;margin-top: 25px;" src="images/area_list_banner_point.png"></a>
+                    </div>
+                    <img style="width: 100%;" src="images/area_list_banner_btm.png">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="am-dropdown f-flex" data-am-dropdown="{justify: '#dropdown-nav-justify'}">
+        <button class="am-btn am-dropdown-toggle f-toe">
+            <span class="paramCur" for="dropdown_serve"></span>
+            <span class="am-icon-caret-down"></span>
+        </button>
+        <ul class="am-dropdown-content dropdownSelect" id="dropdown_serve" data-name="service"></ul>
+    </div>
+    <div class="am-dropdown f-flex" data-am-dropdown="{justify: '#dropdown-nav-justify'}">
+        <button class="am-btn am-dropdown-toggle f-toe" data-am-dropdown-toggle>
+            <span class="paramCur" for="dropdown_sort"></span>
+            <span class="am-icon-caret-down"></span>
+        </button>
+        <ul class="am-dropdown-content dropdownSelect" id="dropdown_sort" data-name="orderby"></ul>
+    </div>
+</div>
+<div class="dropdownMask" id="dropdownMask"></div>
+
+<div class="g-body">
+    <ul class="pdtList" id="waterFall"></ul>
+    <div class="pageLoading" id="pageLoading">
+        <span class="am-icon-spinner am-icon-spin"></span>
+        <span class="text"></span>
+    </div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/amazeui.min.js"></script>
+<script src="js/amazeui.lazyload.min.js"></script>
+<script src="js/artTemplate.js"></script>
+<script src="js/template.js"></script>
+<script src="js/app.js"></script>
+<script src="js/app_pdtList.js"></script>
+
+</body>
+
+</html>

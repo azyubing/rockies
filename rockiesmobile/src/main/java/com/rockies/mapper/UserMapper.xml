@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rockies.mapper.UserMapper">
+
+	<insert id="saveUser" parameterType="com.rockies.model.User">
+		INSERT INTO user(`username`,`password`,`email`,`tel`,`status`,
+		`ctdt`,`updt`,`agree`,`photo`,`realName`,`birthday`,`idCard`,`passportNumber`,`passportImg`,
+		`countryId`,`provinceId`,`cityId`,`activecode`,`openid`,`unionid`,`weiname`,`countryName`,`provinceName`,`cityName`,`address`,`cusName`,`cusTel`,`cusEmail`)
+		VALUES (#{username},#{password},#{email},#{tel},#{status},
+		#{ctdt},#{updt},#{agree},#{photo},#{realName},#{birthday},#{idCard},#{passportNumber},#{passportImg},
+		#{countryId},#{provinceId},#{cityId},#{activecode},#{openid},#{unionid},#{weiname},#{countryName},#{provinceName},#{cityName},#{address},#{cusName},#{cusTel},#{cusEmail});
+	</insert>
+
+	<update id="modifyUser" parameterType="com.rockies.model.User">
+		update user
+		<set>
+			<if test="password!=null">
+				password = #{password},
+			</if>
+			<if test="email!=null">
+				email = #{email},
+			</if>
+			<if test="tel!=null">
+				tel = #{tel},
+			</if>
+			<if test="photo!=null and photo!=''">
+				photo = #{photo},
+			</if>
+			<if test="realName!=null">
+				realName = #{realName},
+			</if>
+			<if test="birthday!=null">
+				birthday = #{birthday},
+			</if>
+			<if test="idCard!=null">
+				idCard = #{idCard},
+			</if>
+			<if test="passportNumber!=null">
+				passportNumber = #{passportNumber},
+			</if>
+			<if test="passportImg!=null and passportImg!=''">
+				passportImg = #{passportImg},
+			</if>
+			<if test="countryId!=null and countryId!=''">
+				countryId = #{countryId},
+			</if>
+			<if test="cityId!=null and cityId!=''">
+				cityId = #{cityId},
+			</if>
+			<if test="provinceId!=null and provinceId!=''">
+				provinceId = #{provinceId},
+			</if>
+			<if test="countryName!=null">
+				countryName = #{countryName},
+			</if>
+			<if test="provinceName!=null">
+				provinceName = #{provinceName},
+			</if>
+			<if test="cityName!=null">
+				cityName = #{cityName},
+			</if>
+			<if test="address!=null and address!=''">
+				address = #{address},
+			</if>
+			<if test="cusName!=null and cusName!=''">
+				cusName = #{cusName},
+			</if>
+			<if test="cusTel!=null and cusTel!=''">
+				cusTel = #{cusTel},
+			</if>
+			<if test="cusEmail!=null and cusEmail!=''">
+				cusEmail = #{cusEmail},
+			</if>
+			<if test="updt!=null and updt!=''">
+				updt = #{updt}
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<select id="getUserById" resultType="com.rockies.model.User"
+		parameterType="java.lang.Integer">
+		select * from user where id=#{id}
+	</select>
+
+	<select id="userNameExit" resultType="java.lang.Integer"
+		parameterType="java.lang.String">
+		SELECT COUNT(*) FROM USER WHERE username = #{username}
+	</select>
+	<select id="telExit" resultType="java.lang.Integer"
+		parameterType="java.lang.String">
+		SELECT COUNT(*) FROM USER WHERE tel = #{tel}
+	</select>
+	<select id="emailExit" resultType="java.lang.Integer"
+		parameterType="java.lang.String">
+		SELECT COUNT(*) FROM USER WHERE email = #{email}
+	</select>
+
+	<select id="login" resultType="com.rockies.model.User"
+		parameterType="Map">
+		SELECT * FROM USER WHERE password=#{password}
+		<if test="username!=null and username!=''">
+			and username = #{username}
+		</if>
+		<if test="tel!=null and tel!=''">
+			and tel = #{tel}
+		</if>
+	</select>
+
+	<select id="getUserByUserName" resultType="com.rockies.model.User"
+		parameterType="java.lang.String">
+		SELECT * FROM USER WHERE username = #{username}
+	</select>
+
+	<update id="activateUser" parameterType="Map">
+		update user set status=0 where username=#{username} and
+		activecode=#{activecode}
+	</update>
+
+
+	<update id="updatePW" parameterType="com.rockies.model.User">
+		update user set password = #{password} where id=#{id}
+	</update>
+
+	<update id="updatePW2" parameterType="com.rockies.model.User">
+		update user set password = #{password} where username=#{username}
+	</update>
+
+	<update id="updatePWByTel" parameterType="com.rockies.model.User">
+		update user set password = #{password} where tel=#{tel}
+	</update>
+
+	<select id="weixinLogin" resultType="com.rockies.model.User"
+		parameterType="java.lang.String">
+		SELECT * FROM USER WHERE openid=#{openid}
+	</select>
+	<select id="getIsCanEvaluation" resultType="java.lang.Integer"
+		parameterType="Map">
+		SELECT COUNT(*) FROM route_order ro WHERE ro.`cus_no` = #{userId} AND
+		ro.routeJson like CONCAT('%',#{pid},'%')
+	</select>
+	<update id="updateUserPhoto" parameterType="Map">
+		update user set photo = #{photo} where id=#{id}
+	</update>
+</mapper>

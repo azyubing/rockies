@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+	<mime-type>text/html</mime-type>
+	<mime-type>application/vnd.wap.xhtml+xml</mime-type>
+	<mime-type>application/xhtml+xml</mime-type>
+  <mapping path="/*" decorator="/decorators/decorator.jsp"/>
+  <mapping path="/personal/*" decorator="/decorators/personal_decorator.jsp"/>
+  <mapping path="/product/*" decorator="/decorators/product_decorator.jsp"/>
+<!-- 排除，不进行装饰的路径 -->
+
+<mapping path="/testpay.html" exclue="true"/>
+<mapping path="/index.jsp" exclue="true"/>
+<mapping path="/product/package_list.*" exclue="true"/>
+<mapping path="/product/hotel_list.*" exclue="true"/>
+<mapping path="/product/villa_list.*" exclue="true"/>
+<mapping path="/product/traffic_list.*" exclue="true"/>
+<mapping path="/product/ent_list.*" exclue="true"/>
+<mapping path="/personal/myorderlist.*" exclue="true"/>
+</sitemesh>

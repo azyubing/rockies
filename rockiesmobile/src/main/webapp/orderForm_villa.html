@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+	    <meta name="screen-orientation" content="portrait">
+	    <meta name="x5-orientation" content="portrait">
+	    <meta name="description" content="麦味旅行专注于家庭主题定制旅游,基于深度调研家庭旅行出行需求，打造满足不同家庭关系，组合的主题旅行产品,如家庭旅游定制、亲子旅游游、蜜月旅游游、旅游度假等。致力于提供一站式，高性价比，高契合度的高端旅游体验。让每一位顾客，都拥有属于自己专属的身心之旅。">
+	    <meta name="keywords" content="家庭旅游定制,私人定制旅行,亲子旅游定制,国外蜜月旅行,国外旅游度假,海岛度假">
+	    <meta name="author" content=""/>
+		<title>麦味旅行 - 全球家庭旅行定制品牌</title>
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="MobileOptimized" content=""/>
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="renderer" content="webkit">
+		<meta name="baidu-site-verification" content="eOTkNt2SNu" />
+		<link rel="icon" type="image/png" href="images/favicon.png">
+		<script src="js/scale.js"></script>
+		<link rel="stylesheet" href="css/base.css">
+		<link rel="stylesheet" href="css/amazeui.min.css">
+		<link rel="stylesheet" href="css/app.css">
+	</head>
+
+	<body class="bgColor1">
+		
+		<img class="shareImg" src="images/shareImg.jpg" />
+		
+	  	<header data-am-widget="header" class="am-header">
+	      	<div class="hdIco am-header-left">
+	          	<a href="javascript:history.back();">
+					<i class="sprite icon-back"></i>
+		        </a>
+	      	</div>
+	      	<h1 class="am-header-title">产品购买</h1>      	
+	  	</header>
+	  	
+	  	<div class="g-body">	
+	  		<div class="orderForm">
+	  			<form id="orderForm" action="orderInfo.html">
+		  			<h1 class="title">入住日期&退房日期</h1>
+		  			<div class="datePicker datePicker_villa">
+						<div class="operate">
+							<div class="monthPrev" id="monthPrev"></div>
+							<div class="monthNext" id="monthNext"></div>
+							<div class="monthText"><span id="year"></span>年<span id="month"></span>月</div>
+						</div>
+						<ul class="week f-box">
+							<li>一</li>
+							<li>二</li>
+							<li>三</li>
+							<li>四</li>
+							<li>五</li>
+							<li>六</li>
+							<li>日</li>
+						</ul>
+						<div class="panel">
+							<div class="wrap">
+								<ul class="monthDate" id="monthDate"></ul>
+							</div>
+						</div>
+					</div>
+					<div class="daysTotal">入住晚数<span class="num color2" id="daysNum">0</span><span class="tip">（自动计算）</span></div>
+	
+		  			<div class="renderCounter" id="render_counter"></div>
+		  			
+		  			<div class="feeTotal">
+		  				<div class="f-box">
+		  					<label>房费</label>
+		  					<p class="fee f-flex">¥<span id="feeBasic">0</span></p>
+		  				</div>
+		  				<div class="f-box">
+		  					<label>服务费</label>
+		  					<p class="fee f-flex">¥<span id="feeServe">0</span></p>
+		  				</div>
+		  				<div class="f-box">
+		  					<label>税费</label>
+		  					<p class="fee f-flex">¥<span id="feeTax">0</span></p>
+		  				</div>
+		  			</div>
+		  			<div class="detailBar detailBar1 f-box">
+			  			<p class="total f-flex color2">¥<span id="feeTotal">0</span></p>
+				  		<input class="nextBtn" id="submitBtn" type="submit" value="下一步">
+				  		
+				  		<input type="hidden" id="feild_dateStart" name="time_start" value="" data-tipNull="请选择入住日期"><!--入住日期-->
+				  		<input type="hidden" id="feild_dateEnd" name="time_end" value="" data-tipNull="请选择退房日期"><!--退房日期-->
+				  		<input type="hidden" id="feild_daysNum" name="time_days" value="0"><!--天数-->
+				  		<input type="hidden" id="feild_feeBasic" name="order_feeBasic" value="0"><!--房费-->
+				  		<input type="hidden" id="feild_feeServe" name="order_feeServe" value="0"/><!--服务费-->
+				  		<input type="hidden" id="feild_feeTax" name="order_feeTax" value="0"/><!--税费-->
+				  		<input type="hidden" id="feild_feeTotal" name="order_total" value="0" data-tipNull="请选择卧室规格" data-reg="/^[1-9]\d*$/" data-tipReg="请选择卧室规格"/><!--总费用-->
+				  	</div>
+				</form>  	
+	  		</div>	  		
+		</div>
+		
+		<script src="js/jquery.min.js"></script>
+		<script src="js/amazeui.min.js"></script>
+		<script src="js/amazeui.lazyload.min.js"></script>
+		<script src="js/artTemplate.js"></script>
+		<script src="js/template.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/app_villa.js"></script>
+		
+	</body>
+
+</html>

@@ -1,0 +1,35 @@
+@CHARSET "UTF-8";
+a{color:#666;}a:HOVER{color:#529BFF;}
+#contact_main{max-width:1600px;min-width: 1180px;border-top: 2px solid #e3e3e3;background-color:#f6f6f6;margin-bottom: -28px;}
+#contact_main #main{width:1180px;margin: 0 auto;padding:0px 0px 40px 0px;font-size: 12px;color: #666;}
+#contact_main #main #title{font-size: 24px;color: #333;margin: 28px 0;}
+#contact_main #main .info_list table.info_table{background-color: #fff;border: 1px solid #e5e5e5;margin-top: 12px;width: 1180px;}
+#contact_main #main .info_list table.info_table thead tr td{height: 59px;line-height: 59px;border-bottom: 1px solid #e5e5e5;color: #333;font-size: 18px;font-family:'Arial';padding-left: 20px; }
+#contact_main #main .info_list table.info_table thead tr td .y{color: #999;font-size: 12px;}
+#contact_main #main .info_list table.info_table tbody tr.sub_data td{border-top: 0;padding: 20px;}
+#contact_main #main .info_list table.info_table tbody tr.sub_data td .sub_data_list .sub_data_list_li{margin: 0;border-top: 1px solid #f2f2f2; color: #333; font-size: 12px;
+border-left: 1px solid #f2f2f2;border-right: 1px solid #f2f2f2;height: 60px;line-height: 60px;}
+#contact_main #main .info_list table.info_table tbody tr.sub_data td .sub_data_list div.last{border-bottom: 1px solid #f2f2f2;}
+#contact_main #main .info_list table.info_table tbody tr.sub_data td .sub_data_list div .l_content{width: 120px;display: inline-block;text-align: center;border-right: 1px solid #f2f2f2;
+font-family: 'Arial';font-size: 14px;height: 58px;line-height: 58px;}
+#contact_main #main .info_list table.info_table tbody tr.sub_data td .sub_data_list .sub_data_list_li .l_content img{width: 16px;height: 16px;margin-top: -2px;}
+#contact_main #main .info_list table.info_table tbody tr.sub_data td .sub_data_list .sub_data_list_li .c_content{height: 58px;line-height: 58px;width: 400px;text-align: left;}
+#contact_main #main .info_list table.info_table tbody tr.sub_data td .sub_data_list .sub_data_list_li .c_content p{height: 20px;line-height: 20px;margin: 0;padding-left: 20px;position: relative;top:17px;}
+#contact_main #main .info_list table.info_table tbody tr.sub_data td .sub_data_list .sub_data_list_li .c_content .two_p{height: 20px;line-height: 20px;margin: 0;padding-left: 20px;position: relative;top:10px;}
+#contact_main #main .info_list table.info_table tbody tr.sub_data td .sub_data_list .sub_data_list_li .r_content{height: 58px;line-height: 58px;width: 608px;display: inline-block;text-align: right; }
+#contact_main #main .info_list table.info_table tbody tr.sub_data td .sub_data_list .sub_data_list_li .r_content span{height: 20px;line-height: 20px;font-size: 12px;margin-right: 10px;}
+#contact_main #main .info_list table.info_table tbody tr.sub_data td .sub_data_list .sub_data_list_li .r_content a{height: 20px;line-height: 20px;font-size: 12px;color: #529BFF;}
+#contact_main #main .info_list table.info_table tbody tr.sub_data td .sub_data_list .sub_data_list_li .r_content span.red{color: #e15868;}
+#contact_main #main .info_list table.info_table tbody tr.sub_data td .sub_data_list .sub_data_list_li .r_content span.red1{color: #e15868;font-weight: bold;}
+#contact_main #main .info_list table.info_table tbody tr.sub_data td .sub_data_list .sub_data_list_li .r_content .split{color: #f2f2f2;margin-top: -2px;margin-right: 0px;}
+#contact_main #main .info_list table.info_table tbody tr.sub_data td .sub_data_list .sub_data_list_li .r_content .confirm_now{margin-top: -3px;margin-right: 3px;}
+.time_confirm{width: 50px;height: 50px;border: 1px dashed #E15868;font-size:12px;line-height: 16px;color: #E15868;font-weight: bold;text-align: center;padding-top: 8px;display: inline-block;position: relative; top:4px;right: 4px;}
+/*pay_price*/
+#pay_price{margin-top: 20px;text-align: left;}
+#pay_price .red{color: #e15868;font-weight: bold;font-size: 24px;margin-right: 30px;}
+#pay_price .gray{color: #666;font-weight: bold;font-size: 16px;margin-right: 30px;}
+#payBtn{background-color: #529BFF;color: #fff;border-radius:0;width: 200px;height: 40px;position: relative;top:30px;margin-bottom: 30px;}
+#pay_type{margin-top: 25px;}
+#pay_type .pay{float: left;cursor: pointer;position: relative;}
+#pay_type .pay img{width: 200px;margin-right: 10px;}
+#pay_type .pay_border{width: 200px;position: absolute; top: 0;left: 0;}

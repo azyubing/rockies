@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.rockies.mapper.ProductOrderDetailMapper">
+    <resultMap id="productOrderDetail" type="com.rockies.model.ProductOrderDetail" >
+	    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+	    <result column="runing_no" property="runingNo" jdbcType="VARCHAR" />
+	    <result column="pid" property="pid" jdbcType="VARCHAR" />
+	    <result column="price_item" property="priceItem" jdbcType="VARCHAR" />
+	    <result column="ordercnt" property="ordercnt" jdbcType="INTEGER" />
+	    <result column="unit_price" property="unitPrice" jdbcType="DECIMAL" />
+	    <result column="unit_prepay" property="unitPrepay" jdbcType="DECIMAL" />
+	    <result column="priceItemId" property="priceItemId" jdbcType="INTEGER" />
+	    <result column="peoplecnt" property="peoplecnt" jdbcType="INTEGER" />
+	    <result column="amount" property="amount" jdbcType="DECIMAL" />
+	    <result column="prepay_amount" property="prepayAmount" jdbcType="DECIMAL" />
+	    <result column="ctdt" property="ctdt" jdbcType="TIMESTAMP" />
+	    <result column="ctuser" property="ctuser" jdbcType="VARCHAR" />
+	    <result column="updt" property="updt" jdbcType="TIMESTAMP" />
+	    <result column="upuser" property="upuser" jdbcType="VARCHAR" />
+	</resultMap>
+    
+    <sql id="Base_Column_List" >
+	    id,`order_no`,`runing_no`,`price_item`,`pid`,`ordercnt`,`unit_price`,`unit_prepay`,
+        `peoplecnt`,`amount`,`prepay_amount`,`ctdt`,`ctuser`,`updt`,`upuser`,`priceItemId`
+   </sql>
+   
+   <insert id="saveProductOrderDetail" parameterType="com.rockies.model.ProductOrderDetail">
+   	INSERT INTO product_order_detail (<include refid="Base_Column_List" />)
+	VALUES (null,#{orderNo},#{runingNo},#{priceItem},#{pid},#{ordercnt},#{unitPrice},#{unitPrepay},
+        #{peoplecnt},#{amount},#{prepayAmount},#{ctdt},#{ctuser},#{updt},#{upuser},#{priceItemId}
+        );
+   </insert>
+   
+   <delete id="deleteProductOrderDetail" parameterType="java.lang.String">
+   		delete from product_order_detail where order_no=#{orderNo}
+   </delete>
+</mapper>

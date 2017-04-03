@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rockies.mapper.RolePermissionMapper">
+	<resultMap id="rolePermission" type="com.rockies.model.RolePermission">
+		<id column="rp_id" property="rpId" javaType="INTEGER"/>
+		<result column="role_id" property="roleId" jdbcType="VARCHAR" />
+		<result column="pid" property="pid" jdbcType="VARCHAR" />
+		<result column="role_id" property="roleId" jdbcType="VARCHAR" />
+		<result column="isCheck" property="isCheck" jdbcType="INTEGER" />
+	</resultMap>
+
+
+	<insert id="saveRolePermission" parameterType="com.rockies.model.RolePermission">
+		INSERT INTO s_role_permission
+		(`pid`,`role_id`,`isCheck`)
+		VALUES (#{pid},#{roleId},#{isCheck});
+	</insert>
+	
+	<delete id="deleteRolePermission" parameterType="java.lang.String">
+		delete from s_role_permission where role_id=#{roleId}
+	</delete>
+	
+	<select id="getRolePermissionList" parameterType="java.lang.String" resultMap="rolePermission">
+		select * from s_role_permission where role_id=#{roleId}
+	
+	</select>
+
+</mapper>

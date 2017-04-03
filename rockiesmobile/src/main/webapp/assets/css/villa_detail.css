@@ -1,0 +1,181 @@
+@CHARSET "UTF-8";
+/*mainbody*/
+
+/*center part*/
+.center_content{margin-bottom: -28px;background:#f6f6f6;}
+.center_content .breadcrumbs{height:50px;background-color: #f6f6f6;color: #999;font-size: 12px;line-height: 50px;border: 1px solid #d3d2d3;border-bottom: 0px; }
+.center_content .breadcrumbs .i_style{width: 50px; color: #cecece;text-align: center;border-right: 1px solid #e5e5e5;line-height: 46px;margin-right: 20px;}
+.center_content .breadcrumbs span{color:#929292;}
+.center_content .p_detail{background-color: #FFFFFF;border:1px solid #e5e5e5;padding-left: 20px;height: 100px;border-top: 0px;}
+.center_content .p_detail .t1{font-size: 24px;padding-top: 20px;}
+.center_content .p_tags{margin:0; height: 51px;border-bottom: 1px solid #e5e5e5;border-left: 1px solid #e5e5e5;border-right: 1px solid #e5e5e5;padding-top: 10px;background-color: #FFF;padding-left: 20px;}
+.center_content .p_tags .tag-btn{background-color: #51bf87;border-radius: 2px;width:70px;border-color:#51bf87; }
+#setBtn{background-color: #529bff;border-radius: 2px;width:150px;border-color:#529bff; color: #fff;padding-top: 6px;padding-bottom: 6px;margin-right: 8px;}
+.center_content .p_tags .tag_btn_group{margin-top: -10px;text-align: right;}
+.center_content .p_tags .tag-item{border-left: 1px solid #e5e5e5;display: inline-block;width: 50px;height: 50px;text-align: center;line-height: 50px;}
+
+/*main banner*/
+#myCarousel .carousel-inner .item img{width: 100%;overflow:hidden}
+#myCarousel .slidesjs-navigation{position: relative;z-index: 999;display: block;float: left;}
+#myCarousel .slidesjs-next{position: relative;z-index: 999;display: block;float: right;}
+#myCarousel .my-indicators li{background-image: url("../img/hotel/p_nor.png");  display: inline-block; width: 10px; height: 10px;margin: 1px;text-indent: -999px;cursor: pointer;border: 0;border-radius: 0;background-color:transparent;}
+#myCarousel .my-indicators .active{background-image: url("../img/hotel/p_active.png"); background-color:transparent;}
+/*sub nav*/
+.sub_nav{width: 100%;top:-60px;z-index: 999;}
+.sub_nav a.nav_item{width:20%;height: 50px;background-color: #354355;border-right: 1px solid #000;color: #fff;line-height: 50px;text-align: center;cursor: pointer;display: inline-block;}
+.sub_nav a.active {background-color: #529bff;}
+.sub_nav a.last_item {border-right: 0;}
+.center_content .sales{margin:0 30px;border-bottom:1px solid #e5e5e5;top:-30px}
+.center_content .sales p{color:#ec0000;font-family: "黑体";margin:10px 0;font-weight: 500;font-size: 15px;}
+.center_content .info{margin:0 30px;padding-top:-10px}
+.center_content .info p{color:#666666;margin-bottom: 30px;}
+.center_content .info-table{margin: 0;}
+.center_content .info-table ul{list-style: none;background:#FFFFFF;border:2px solid #529bff;margin:0 30px;padding:0 30px}
+.center_content .info-table li{border-bottom: 1px solid #e5e5e5;padding:15px 0}
+.center_content .info-table .border0{border-bottom: 0;}
+.center_content .info-table span{color:#529bff;font-family: "黑体";font-size: 15px;width:120px;float:left}
+.center_content .info-table i{font-style: normal;}
+.center_content .info-table img{padding: 0 20px;}
+
+.center_content .position-title{background: url(../img/hotel/map_icon.png) no-repeat left;height:64px;border-bottom:1px solid #e5e5e5}
+.center_content .position-title p{font-size: 24px;font-weight: 500;line-height: 64px;margin-left: 84px;font-family: "黑体";}
+.center_content .position-content img{width:100%}
+.center_content .price,.center_content .evaluation,.center_content .attention,.center_content .position{margin:0 30px;background: #FFFFFF;border:1px solid #e5e5e5}
+.center_content .price,.center_content .evaluation,.center_content .attention,.center_content .position{margin-top: 30px;}
+.center_content .price-title{background: url(../img/hotel/price_icon.png) no-repeat left;height:64px;border-bottom:1px solid #e5e5e5}
+.center_content .price-title p{font-size: 24px;font-weight: 500;line-height: 64px;margin-left: 84px;font-family: "黑体";}
+.center_content .price-content{margin:20px;color:#FFFFFF;}
+.center_content .price-table{color:#000000;}
+.center_content .price-table table,.center_content .attention-content table{width:100%}
+.center_content .price-table tr,.center_content .attention-content tr{height:40px;}
+.center_content .price-table th,.center_content .attention-content th{background-color: #354355;color:#FFFFFF;padding-left: 20px;}
+.center_content .greencolor{background: #f6f6f6;}
+.center_content .graycolor{background-color: #f6f6f6;}
+.center_content .fontcol{color:#666666}
+.center_content .borderb{border-bottom: 1px solid #e5e5e5;color:#666666}
+.center_content .price-table td{width:30%;padding-left: 20px;}
+.center_content .price-info4{padding:20px 20px 20px 0;border-bottom: 1px solid #e5e5e5;}
+.center_content .price-info5{padding:20px 20px 20px 0;}
+.center_content .price-info4 i{color:#000000;font-style: normal;}
+.center_content .price-info4 span,.center_content .price-info5 span{color:#51bf87;display:inline-block;font-weight: 600;margin-bottom: 10px;color:#000000}
+.center_content .price-info4 p,.center_content .price-info5 p{color:#666666;margin: 0;}
+.center_content .price-info5 .redcol{color:#e98590}
+#p_map{margin-left:30px;margin-right: 30px;}
+.p_header{height: 64px;border: 1px solid #e5e5e5;margin-top: 30px;background-color: #fff;color: #333;font-size: 24px;}
+.p_header img{margin-top: -1px;margin-left: -1px;}.p_header span{margin-left: 15px;}.p_content{border: 1px solid #e5e5e5;border-top: 0;background-color: #fff;padding-bottom: 27px; }
+/*grade*/
+#p_discuss{margin-left: 30px;margin-right: 30px;}
+#p_discuss .p_content{padding: 20px;}
+#p_discuss .p_content .grade_bar{height: 40px;line-height: 40px;background-color: #f6f6f6;color: #666;font-size: 12px;padding: 0 20px;}
+#p_discuss .p_content .grade_bar .g{background-image: url("../img/grades/grade_source.png");background-repeat:no-repeat;margin-right: 15px;}
+#p_discuss .p_content .grade_bar .g1{ background-position:0px 1px;  padding: 0px 75px 0px 0px; }
+#p_discuss .p_content .grade_bar .g2{ background-position:0px -15px;  padding: 0px 75px 0px 0px; }
+#p_discuss .p_content .grade_bar .g3{ background-position:0px -31px;  padding: 0px 75px 0px 0px; }
+#p_discuss .p_content .grade_bar .g4{ background-position:0px -47px;  padding: 0px 75px 0px 0px; }
+#p_discuss .p_content .grade_bar .g5{ background-position:0px -63px;  padding: 0px 75px 0px 0px; }
+@media all and (min-width:0) { #p_discuss .p_content .grade_bar .g{padding-bottom: 1px;position: relative; top: -1px; } /* IE9 only, IE10也支持 */}  
+@-moz-document url-prefix(){ #p_discuss .p_content .grade_bar .t{position: relative;top:1px;} #p_discuss .p_content .grade_bar .g{padding-bottom: 0px;} /* firefox only */ } 
+
+/*time zone price */
+#time_price{padding: 0px;}#time_price .row{height: 50px;line-height: 50px;}
+#time_price .note{color: #666;}#time_price .expand{text-align: right;}#time_price #expandBtn{color: #529bff;}
+#time_price .price_list .row{height: 40px;line-height: 40px;margin: 0;}
+#time_price .price_list .list_item{background-color: #fff;}
+#time_price .price_list .dark{background-color: #f6f6f6;}
+#time_price .price_list .list_item .t{color: #333;padding-left: 20px;}
+#time_price .price_list .list_item .p{color: #666;padding-left: 0;}
+#expandBtn{cursor: pointer;}
+/*discuss content*/
+#p_discuss .p_content .discuss_content{padding: 5px 0px;}
+#p_discuss .p_content .discuss_content .d_detail{padding: 15px 0 15px 0;border-bottom: 1px solid #e5e5e5;}
+#p_discuss .p_content .discuss_content .d_detail .d_img{width: 30px;height: 30px;text-align: left;}
+#p_discuss .p_content .discuss_content .d_detail .d_name{color: #529bff;font-size: 12px;margin: 0 20px;line-height: 30px;}
+#p_discuss .p_content .discuss_content .d_detail .d_time{color: #999;font-size: 12px;line-height: 30px;}
+#p_discuss .p_content .discuss_content .d_mark{font-size: 14px;color: #666;line-height: 22px;padding-top: 10px;text-align: left;}
+#p_discuss .p_content .y_comm{padding: 10px 0px;}#p_discuss .p_content .y_comm span{color: #999;font-size: 12px;}#p_discuss .p_content .y_comm span a{color: #529bff;} 
+#y_remark textarea{width: 100%; height: 73px;border:1px solid #e5e5e5; overflow:hidden; resize:none;}
+#subCommBtn{margin-top: 5px;margin-top:10px\9; width: 150px;height: 40px;background-color: #529bff;line-height: 28px;}
+/*warning*/
+#p_warning{margin-left: 30px;margin-right: 30px;margin-bottom:30px;}
+#p_warning .p_content{padding: 20px 20px 13px 20px;}
+#p_warning .p_content .w_header{background-color: #354355;color: #fff;height: 35px;line-height: 35px;padding-left: 20px;}
+#p_warning .p_content .w_item {border-bottom: 1px solid #e5e5e5;height: 40px;line-height: 40px;color: #666;}
+#p_warning .p_content .w_item .w_t{width: 30%;display: inline-block;padding-left: 20px;}
+#p_warning .p_content .w_item .w_detail{width: 70%;display: inline-block;line-height: 40px;}
+#p_warning .p_content .w_item .w_detail img{width: 45px; height: 28px;position: relative;top: -2px;}
+#p_warning .p_content .w_note p{color: #666666;line-height: 12px;}
+#p_warning .p_content .w_note .note_t{color: #e15868;font-weight: bold;line-height:22px; padding-top: 13px;}
+.magtop{margin-top: 20px;}
+/*right part*/
+.right_content{width: 300px;background-color: red;height: 30px;}
+.right_content .r_top{background-color: #f6f6f6;height: 80px;border-top: 1px solid #D3D2D3;padding: 10px 20px 20px;}
+.right_content .r_top p{color: #666;margin: 0;}
+.right_content .r_top p .r{color: #e15868;}.right_content .r_top p .account_price{font-size: 24px;font-weight: bold;}
+.right_content .r_top .account_time{color: #999;font-size: 12px;}
+.right_content .r_middle{padding: 0px 0px 0;font-size: 12px; color: #666;}
+.right_content .r_middle .light{ color: #999;}
+.right_content .r_middle .villa_content{font-size:14px;border-top:1px solid #e5e5e5;}
+.right_content .r_middle .villa_content div{border-bottom:1px solid #e5e5e5;padding:10px 20px;}
+.right_content .r_middle .villa_content i{font-style:normal;width:80px;display:inline-block;color:#999999}
+.right_content .r_middle .villa_content img{margin:0 1px}
+.right_content .r_middle .villa_content .more{float:right;font-size:12px;line-height:30px;color:#666666}
+.right_content .r_middle .villa_info{margin-top:20px}
+.right_content .r_middle .villa_info p{margin: 0 20px;}
+.right_content .r_middle .room_info p .ri{width: 120px;display: inline-block; }
+.ml_20{margin-left: 40px;}
+.right_content .r_middle .villa_info p .ri-btn{width: 120px;display: inline-block;height: 40px;text-align: center;}
+.right_content .r_middle .villa_info .villa_date{margin-top: 5px;}
+.right_content .r_middle .villa_info .villa_date img{margin: -5px 5px 0 5px;}
+.right_content .r_middle .villa_info p .ri-btn a{height: 38px;line-height: 38px;width: 25px;display: inline-block;color: #ccc;}
+.right_content .r_middle .villa_info hr{border-color: #e5e5e5;margin: 10px 0;}
+.right_content .r_middle .villa_info .villa_type .ri-btn{height:38px;line-height:38px;width: 180px;text-align:left;padding-left:10px;position:relative}
+.right_content .r_middle .villa_info .villa_type .ri-btn.right_content .r_middle .villa_info .villa_type .ri-btn span{line-hight:38px}
+.right_content .r_middle .villa_info .villa_type .ri-btn a{width: 10px;position:absolute;right:10px}
+.right_content .r_middle .villa_info .villa_type .ri-btn2 a{width: 30px;height: 38px;line-height: 38px;width: 10px;display: inline-block;color: #ccc;margin-left:10px;}
+.right_content .r_middle .villa_info .villa_type .ri-btn2{position:absolute;width:60px;height: 38px;border: 1px solid #ccc;text-align: left;}
+.right_content .r_middle .villa_info .villa_type .ri-btn2 .count{width: 25px;display: inline-block;text-align: left;line-height: 38px;position:relative;  top: -18px;left: 10px;}
+.right_content .r_middle .villa_info .villa_type .ri-btn2 .up{height: 19px;display: block;}
+.right_content .r_middle .villa_info .villa_type .ri-btn2 .down{height: 19px;display: block;}
+.right_content .r_middle .villa_info .villa_type .ri-btn2 .up i{position: relative;top:-5px;left: 5px;}
+.right_content .r_middle .villa_info .villa_type .ri-btn2 .down i{position: relative;top:-15px;left: 5px;}
+.right_content .r_middle .villa_info .villa_type .ri-btn2 .btns{display: inline-block;width: 23px;height: 38px;}
+
+.right_content .r_middle .villa_info .villa_food{height: 33px;line-height: 33px;margin: 10px 0;}
+.right_content .r_middle .villa_info .villa_food .ri-check a img{display: inline-block;position: relative; top:-1px;width: 13px;height: 13px;top:-2px\9;}
+
+
+.right_content .r_middle .villa_info .room_add_price{height: 40px;line-height:40px; margin: 10px 0 0 ;padding: 0;}
+.right_content .r_middle .villa_info .room_add_price .t{position:relative;  top: -18px;}
+.right_content .r_middle .villa_info .room_add_price .ri-btn{width: 80px;text-align: left;}
+.right_content .r_middle .villa_info .room_add_price .ri-btn .count{width: 55px;display: inline-block;text-align: left;line-height: 38px;position:relative;  top: -18px;left: 10px;}
+.right_content .r_middle .villa_info .room_add_price .ri-btn .up{height: 19px;display: block;}
+.right_content .r_middle .villa_info .room_add_price .ri-btn .down{height: 19px;display: block;}
+.right_content .r_middle .villa_info .room_add_price .ri-btn .up i{position: relative;top:-5px;left: 5px;}
+.right_content .r_middle .villa_info .room_add_price .ri-btn .down i{position: relative;top:-15px;left: 5px;}
+.right_content .r_middle .villa_info .room_add_price .ri-btn .btns{display: inline-block;width: 23px;height: 38px;}
+.right_content .r_middle .villa_info .p2{color: #999;width: 116px;height: 18px;line-height: 25px;display: inline-block;text-align: center;margin-left: 6px;}
+
+
+.right_content .r_down .price_list{background-color: #f6f6f6;border: 1px solid #e5e5e5;padding: 20px 20px 10px 20px;margin:15px 20px 0 20px;font-size: 14px;color: #666; }
+.right_content .r_down .price_list .li{margin: 0;height: 25px;padding-bottom: 20px;}
+.right_content .r_down .price_list .li .li_l{width: 50%;text-align: left;display: inline-block;}
+.right_content .r_down .price_list .li .li_r{width: 50%;text-align: right;color: #e15868;font-family: 'Arial';display: inline-block;}
+.right_content .r_down .price_list .li .li_r .sm_r{font-size: 12px;}
+.right_content .r_down .price_total{background-color: #354355;margin:0 20px;font-size: 14px;color: #fff; }
+.right_content .r_down .price_total .li{margin: 0;height: 40px;line-height: 40px;padding: 0 20px;}
+.right_content .r_down .price_total .li .li_l{width: 50%;text-align: left;display: inline-block;}
+.right_content .r_down .price_total .li .li_r{width: 50%;text-align: right;font-family: 'Arial';display: inline-block;}
+.right_content .r_down .price_total .li .li_r .sm_r{font-size: 12px;}
+.right_content .r_down .p_info{color: #666;font-size: 14px;margin: 0 20px;height: 45px;line-height: 45px;}
+.right_content .r_down .p_btn{font-size: 14px;margin: 0 20px;}
+.right_content .r_down .p_btn #setCtripBtn{height: 40px;width: 100%;background-color: #529BFF;color: #fff;font-weight: bold;  padding-top: 9px;border-radius: 2px;}
+.magtop{margin-top: 20px;}
+.select1{width: 110px;padding: 0 0 0 10px; border:1px solid #ccc; background:url(../img/select_icon.png) 90px center no-repeat #fff;  font-size:12px; color:#666; height:40px; margin-bottom: 10px; -webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: none;}
+.select2{width: 55px;padding: 0 0 0 10px; border:1px solid #ccc; background:url(../img/select_icon.png) 35px center no-repeat #fff;  font-size:12px; color:#666; height:40px; margin-bottom: 10px; -webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: none;}
+.select3{width: 50px;padding: 0 0 0 10px; border:1px solid #ccc; background:url(../img/select_icon.png) 30px center no-repeat #fff;  font-size:12px; color:#666; height:40px; margin-bottom: 10px; -webkit-appearance: none; -webkit-border-radius: 0px; -moz-appearance: none;}
+.addition_p{display:block;width: 110px;float:left;height: 30px; font-size: 14px;padding: 10px 0;}
+/*
+.sdate{width: 100px;height: 32px; font-size:14px; text-align:center; margin-bottom: 10px;border: none;color: #000}
+*/
+.enddate{width:100px;height:32px;text-align:center; padding:0 10px;border:1px solid #e5e5e5;border-right:0px;outline-color:#4795ff;}
+.villa_child{padding-top:30px;position:relative;}

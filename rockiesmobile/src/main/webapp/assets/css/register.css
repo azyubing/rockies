@@ -1,0 +1,29 @@
+@CHARSET "UTF-8";
+#login_main{max-width:1600px;min-width: 1180px;border-top: 2px solid #cecece;background-repeat: no-repeat;height: 650px;}
+#login_main #main{width: 380px;margin: 38px auto 40px auto;text-align: center;height: 600px;background-color: #fff;box-shadow: 0px 0px 5px #DBDBDB;color: #666;}
+#login_main #main .txt{height: 40px;width: 318px;border: 1px solid #dfdfdf;margin: 0 auto;text-align: left;}
+#login_main #main .t{color: #333;font-weight: normal;height: 15px;line-height: 15px;font-size: 14px;text-align: left;width: 318px;margin: 0 auto;}
+#login_main #main .t .a1{color: #529bff;}
+#login_main #main .t .a2{color: #333;}
+#login_main #main .mt_30{margin-top: 30px;}#login_main #main .mt_20{margin-top: 20px;}
+#login_main #main .mt_10{margin-top: 10px;}
+#login_main #main input{border: none;line-height: 38px;vertical-align: middle;height: 38px;color: #666;padding-left: 10px;width: 316px;}
+#login_main #main .p{margin-top: 10px;}
+#login_main #main .yzm{width: 170px;}
+#login_main #main .yzm input{width: 168px;}
+#login_main #main .yzm_content{border: 0;}
+#login_main #main .yzm_content #yzmBtn{width: 140px;height: 40px;border-radius: 0px; line-height:0px;color: #fff;background-color: #51bf87}
+#login_main #main .inf{width: 318px;margin: 0 auto;color: #666;}
+#login_main #main .inf img{margin-top: -2px;}
+
+#loginBtn{width: 318px;height: 40px;background-color: #529bff;color: #fff;border-radius: 0px; }
+#login_main #main .other{font-size: 12px;width: 318px;margin: 20px auto;}
+
+#myModal .modal-header{border-bottom: 0px;}
+#myModal .modal-content{border-radius: 0;}
+#myModal .modal-body p{margin: 0 auto;width: 233px;font-size: 12px;text-align: center;line-height: 18px;}
+#myModal .modal-body #email_address{font-size: 12px;text-align: center;line-height: 18px;color: #529bff;}
+#myModal .modal-body p.p1{color: #333; font-weight: bold;}
+#myModal .modal-body p.p3{color: #999; margin-bottom: 15px;}
+#myModal .modal-body .toMail{width: 220px;height: 40px;background-color: #529bff;color: #fff;border-radius: 0px; }
+#myModal .modal-body .bakHome{width: 220px;height: 40px;color: #529bff; display: block;line-height: 40px;text-align: center;margin-left: 8px;}

@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+#login_main{max-width:1600px;min-width: 1180px;border-top: 2px solid #cecece;background-repeat: no-repeat;height: 590px;margin-bottom: -28px;}
+#login_main #main{width: 380px;margin: 38px auto 40px auto;text-align: center;height: 510px;background-color: #fff;box-shadow: 0px 0px 5px #DBDBDB;color: #666;}
+#login_main #main .txt{height: 50px;width: 318px;border: 1px solid #dfdfdf;margin: 0 auto;text-align: left;}
+#login_main #main input{border: none;line-height: 46px;vertical-align: middle;height: 46px;color: #666;width: 260px;}
+#login_main #main .p{margin-top: 30px;}
+#login_main #main .l{border-top: 0;margin-bottom: 20px;}
+#login_main #main .inf{width: 318px;margin: 0 auto;}
+#login_main #main .inf img{margin-top: -2px;}
+#login_main #main .inf a{color: #529bff;}
+#loginBtn{width: 318px;height: 50px;background-color: #529bff;color: #fff;border-radius: 0px; }
+#login_main #main .other{font-size: 12px;width: 318px;margin: 20px auto;}
+
+#myModal .modal-content{border-radius: 0;}
+#myModal .modal-header h4{font-size: 14px;color: #333;}
+#myModal .modal-body p{font-size: 14px;color: #999;height: 30px;line-height: 30px;}
+#myModal .modal-body p.p1 span{border-right: 1px solid #f2f2f2;color: #529bff;}
+#myModal .modal-body p.p1 a{font-size: 14px;height: 30px;line-height: 30px;color: #666;}
+
+#myModal .modal-body .txt{height: 40px;width: 265px;border: 1px solid #dfdfdf;margin: 0 auto;text-align: left;}
+#myModal .modal-body .t{color: #333;font-weight: normal;height: 15px;line-height: 15px;font-size: 14px;text-align: left;width: 263px;margin: 0 auto;}
+#myModal .modal-body .t span{border-right: 1px solid #f2f2f2;color: #999;}
+#myModal .modal-body .t a{color: #529bff;}
+#myModal .modal-body .mt_30{margin-top: 30px;}#myModal .modal-body .mt_20{margin-top: 20px;}
+#myModal .modal-body .mt_10{margin-top: 10px;}
+#myModal .modal-body input{border: none;line-height: 38px;vertical-align: middle;height: 38px;color: #666;padding-left: 10px;width: 263px;}
+#myModal .modal-body .p{margin-top: 10px;}
+#myModal .modal-body .yzm{width: 140px;}
+#myModal .modal-body .yzm input{width: 138px;}
+#myModal .modal-body .yzm_content{border: 0;}
+#myModal .modal-body .yzm_content #yzmBtn{width: 115px;height: 40px;border-radius: 0px; color: #fff;background-color: #51bf87;line-height: 30px;}
+#myModal .modal-body #confirmBtn {width: 265px;height: 40px;background-color: #529bff;color: #fff;border-radius: 0px; margin-left:2px; margin-top: 10px;line-height: 30px;}

@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+	    <meta name="screen-orientation" content="portrait">
+	    <meta name="x5-orientation" content="portrait">
+	    <meta name="description" content="麦味旅行专注于家庭主题定制旅游,基于深度调研家庭旅行出行需求，打造满足不同家庭关系，组合的主题旅行产品,如家庭旅游定制、亲子旅游游、蜜月旅游游、旅游度假等。致力于提供一站式，高性价比，高契合度的高端旅游体验。让每一位顾客，都拥有属于自己专属的身心之旅。">
+	    <meta name="keywords" content="家庭旅游定制,私人定制旅行,亲子旅游定制,国外蜜月旅行,国外旅游度假,海岛度假">
+	    <meta name="author" content=""/>
+		<title>麦味旅行 - 全球家庭旅行定制品牌</title>
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="MobileOptimized" content=""/>
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="renderer" content="webkit">
+		<meta name="baidu-site-verification" content="eOTkNt2SNu" />
+		<link rel="icon" type="image/png" href="images/favicon.png">
+		<script src="js/scale.js"></script>
+		<link rel="stylesheet" href="css/base.css">
+		<link rel="stylesheet" href="css/amazeui.min.css">
+		<link rel="stylesheet" href="css/app.css">
+	</head>
+
+	<body id="page_pdtDetail">
+		
+		<img class="shareImg" src="images/shareImg.jpg" />
+	  	
+	  	<div class="g-body">	
+	  		<div class="detailTools f-box">
+	  			<div class="f-flex">
+	  				<a class="ico ico1 sprite" href="javascript:history.back();"></a>
+	  			</div>	  				  				
+	  			<a class="ico ico2 sprite" href="index.html"></a>
+	  			<a class="ico ico3 sprite" id="collectBtn"></a>
+	  		</div>
+	  		<div class="am-slider" id="pdtBnr">
+			  	<ul class="am-slides detailBnr" id="pdtBnrSlide"></ul>
+			</div>
+	  		<div class="detailBase" id="pdtBase"></div>
+	  		<div class="am-accordion am-accordion-gapped" data-am-widget="accordion" data-am-accordion='{  }'>
+		      	<dl class="am-accordion-item">
+		        	<dt class="am-accordion-title">产品概述</dt>
+			        <dd class="am-accordion-bd am-collapse">
+			          	<div class="am-accordion-content am-accordion-content1" id="panel_desc">
+			  				<div class="renderLoading"><i class="am-icon-spinner am-icon-pulse"></i></div>
+			  			</div>
+			        </dd>
+		      	</dl>
+		      	<dl class="am-accordion-item">
+		        	<dt class="am-accordion-title">行程描述</dt>
+			        <dd class="am-accordion-bd am-collapse">
+			          	<div class="am-accordion-content" id="panel_sche">
+			          		<div class="renderLoading"><i class="am-icon-spinner am-icon-pulse"></i></div>
+			          	</div>
+			        </dd>
+		      	</dl>
+		      	<dl class="am-accordion-item">
+		        	<dt class="am-accordion-title">价格条款&费用说明</dt>
+		        	<dd class="am-accordion-bd am-collapse">		      
+		          		<div class="am-accordion-content am-accordion-content1" id="panel_fee">
+			  				<div class="renderLoading"><i class="am-icon-spinner am-icon-pulse"></i></div>
+		          		</div>
+		        	</dd>
+		      	</dl>
+		      	<dl class="am-accordion-item">
+		        	<dt class="am-accordion-title">注意事项</dt>
+		        	<dd class="am-accordion-bd am-collapse ">		      
+		          		<div class="am-accordion-content am-accordion-content1" id="panel_notes">
+		          			<div class="renderLoading"><i class="am-icon-spinner am-icon-pulse"></i></div>
+		          		</div>
+		        	</dd>
+		      	</dl>
+		      	<dl class="am-accordion-item">
+		        	<dt class="am-accordion-title">用户评价</dt>
+		        	<dd class="am-accordion-bd am-collapse ">	
+		        		<div class="am-accordion-content">
+		        			<ul class="reviewList" id="waterFall"></ul>
+					  		<div class="pageLoadBtn" id="pageLoadBtn">
+					  			<i class="am-icon-spinner am-icon-pulse"></i>
+					  			<span class="text"></span>
+					  		</div>
+		        		</div>
+				  		<div class="am-accordion-content reviewBox" id="anchor_review">
+			        		<form class="am-form" id="formReview">
+				  		 		<div class="am-form-group">
+							      	<textarea name="comments" rows="6" placeholder="亲！对此次旅行给个评价吧！（至少 10 个字喔）" data-tipNull="请填写您对此次旅行的评价（至少 10 个字喔）" data-reg="/^\S{10,}$/" data-tipReg="请填写您对此次旅行的评价（至少 10 个字喔）"></textarea>
+							    </div>			    		   
+							    <input type="button" class="submitBtn" id="reviewSubmit" value="发表评论">
+							</form>
+				  		</div>
+		        	</dd>
+		      	</dl>
+		  	</div>
+		  	<div class="detailBar f-box" id="detailBar"></div>
+		</div>
+		<div class="am-modal-actions sharePanel" id="sharePanel"></div>
+	
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.share.min.js"></script>
+		<script src="js/amazeui.min.js"></script>
+		<script src="js/amazeui.lazyload.min.js"></script>
+		<script src="js/artTemplate.js"></script>
+		<script src="js/template.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/app_pdtDetail.js"></script>
+		<script>
+		    (function (m, ei, q, i, a, j, s) {
+		        m[a] = m[a] || function () {
+                    (m[a].a = m[a].a || []).push(arguments)
+                };
+		        j = ei.createElement(q),
+		        s = ei.getElementsByTagName(q)[0];
+		        j.async = true;
+		        j.src = i;
+		        s.parentNode.insertBefore(j, s)
+		    })(window, document, 'script', '//eco-api.meiqia.com/dist/meiqia.js', '_MEIQIA');
+		    _MEIQIA('entId', 1937);
+		</script>
+		
+	</body>
+
+</html>

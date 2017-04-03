@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="description"
+          content="麦味旅行专注于家庭主题定制旅游,基于深度调研家庭旅行出行需求，打造满足不同家庭关系，组合的主题旅行产品,如家庭旅游定制、亲子旅游游、蜜月旅游游、旅游度假等。致力于提供一站式，高性价比，高契合度的高端旅游体验。让每一位顾客，都拥有属于自己专属的身心之旅。">
+    <meta name="keywords" content="家庭旅游定制,私人定制旅行,亲子旅游定制,国外蜜月旅行,国外旅游度假,海岛度假">
+    <title>我的策划师</title>
+    <style type="text/css">
+        .planner_header > div {
+            position: absolute;
+            bottom: 0.4rem;
+            text-align: center;
+            width: 100%;
+            color: #fff;
+            font-size: 0.25rem;
+            text-shadow: 1px 1px 5px rgb(117, 117, 117);
+            line-height: 0.43rem;
+        }
+
+        .planner_header {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .manager, .visaSpecialist {
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .cus_1 {
+            margin: 0.35rem 0;
+            font-size: 0.35rem;
+        }
+
+        .cus_2 {
+            line-height: 0.4rem;
+            font-size: 0.25rem;
+        }
+
+        @keyframes leftSideIn {
+            from {
+                left: -6.5rem;
+            }
+            to {
+                left: 0;
+            }
+        }
+
+        @keyframes leftSideOut {
+            from {
+                left: 0;
+            }
+            to {
+                left: -6.5rem;
+            }
+        }
+
+        @keyframes rightSideIn {
+            from {
+                right: -6.5rem;
+            }
+            to {
+                right: 0;
+            }
+        }
+
+        @keyframes rightSideOut {
+            from {
+                right: 0;
+            }
+            to {
+                right: -6.5rem;
+            }
+        }
+
+        .planner_item {
+            margin: 0 auto;
+            position: relative;
+            text-align: center;
+        }
+
+        .planner_item_left {
+            width: 6.5rem;
+            margin: 0 auto;
+            position: relative;
+            height: 13rem;;
+            padding-top: 1.5rem;
+        }
+
+        .planner_item_left .bold {
+            font-weight: bold;
+            font-size: 0.4rem;
+            text-align: center;
+        }
+
+        .planner_item_img {
+            height: 6.5rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .planner_item_img > img {
+            height: 100%;
+            margin-left: -3rem;
+        }
+
+        .to_right {
+            float: right !important;
+        }
+
+        .button_div {
+            width: 100%;
+            margin-bottom: 0.6rem;
+        }
+
+        .button_div > a {
+            border: 1px solid #333;
+            padding: 0.15rem 0.5rem;
+            color: #333;
+            cursor: pointer;
+            font-size: 0.3rem;
+        }
+
+        .button_div.active > a {
+            color: #fff;
+            background: #77b4b5;
+            border: 1px solid #77b4b5;
+        }
+
+        .box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact_planner {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 6.5rem;
+            background: rgba(255, 255, 255, 0.68);
+            font-size: 0.3rem;
+            display: none;
+        }
+
+        .contact_planner.in {
+            display: block;
+        }
+
+        .manager_item, .visaSpecialist_item {
+            width: 6.5rem;
+            overflow: hidden;
+            text-align: center;
+            font-weight: bold;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .manager_item .shadow, .visaSpecialist_item .shadow {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            height: 6.5rem;
+        }
+
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            font-family: "SimHei";
+        }
+    </style>
+    <script src="js/jquery.min.js"></script>
+</head>
+<body>
+<section class="planner_header">
+    <img style="height: 100%;margin-left: -150%;" src="http://www.imyway.cn/assets/img/planner/planner_header.png">
+    <div>
+        <div style="font-size: 0.6rem;margin-bottom: 0.3rem;">"过，另一种生活"</div>
+        <div>你并不一定会从此拥有更美好的人生，</div>
+        <div>当你下定决心准备出发时，最困难的时候就已经过去了。</div>
+        <div>那么，出发吧！去过另一种生活，</div>
+        <div>这里的风景，美不胜收……</div>
+        <img style="margin-top: 0.4rem;width: 1.3rem;" src="http://www.imyway.cn/assets/img/arrow_down.png">
+    </div>
+</section>
+<div id="planner"></div>
+<div id="manager" class="manager">
+    <div style="font-weight: bold;font-size: 0.45rem;text-align: center;margin: 1.5rem 0 0.5rem 0;line-height: 0.7rem;">"麦味旅行管家，<br>全程贴心为您服务"
+    </div>
+</div>
+<div id="visaSpecialist" class="visaSpecialist">
+    <div style="font-weight: bold;font-size: 0.45rem;text-align: center;margin: 1.5rem 0 0.5rem 0;">"签证专区·专业、高效"</div>
+</div>
+<script type="text/javascript">
+    function getWindowHeight() {
+        var winHeight = 0;
+        if (window.innerHeight)
+            winHeight = window.innerHeight;
+        else if ((document.body) && (document.body.clientHeight))
+            winHeight = document.body.clientHeight;
+        if (document.documentElement && document.documentElement.clientHeight) {
+            winHeight = document.documentElement.clientHeight;
+        }
+        return winHeight;
+    }
+
+    function init() {
+        var height = getWindowHeight();
+        $(".planner_header").height(height);
+
+        var fontsize = document.documentElement.clientWidth < document.documentElement.clientHeight ? document.documentElement.clientWidth : document.documentElement.clientHeight
+        fontsize = fontsize / 7.5;
+        document.documentElement.style.fontSize = fontsize + 'px';
+    }
+
+    function buildHtml() {
+        var flagIndex = 1;
+
+        var planners = [{
+            introduce: ['不喜欢旅行的美厨娘，', '不是一个好的心理咨询师!', '旅行策划师：小鹿', '天蝎座：想象力丰富 热情', '擅长日本、新加坡路线', '累计策划线路78次', "去过的地方：日本、韩国、英国、罗马尼亚<br>马来西亚、新加坡、泰国"],
+            img: 'http://www.imyway.cn/assets/img/planner/planner_8.png',
+            qrCode: 'http://www.imyway.cn/assets/img/planner/planner_qrcode_8.png'
+        }, {
+            introduce: ['出发之前永远是梦想，', '上路之后永远是挑战！', '旅行策划师：小史', '双鱼座：有趣 务实', '擅长澳大利亚、新西兰路线', '累计策划线路86次', "去过的地方：澳大利亚、美国、斐济"],
+            img: 'http://www.imyway.cn/assets/img/planner/planner_10.png',
+            qrCode: 'http://www.imyway.cn/assets/img/planner/planner_qrcode_10.png'
+        }, {
+            introduce: ['爱自由，爱旅行~', '', '旅行策划师：MOLLY', '水瓶座 ：善解人意', '擅长泰国，越南、台湾路线', '累计策划线路96次', "去过的地方：新加坡、泰国、韩国、台湾、越南"],
+            img: 'http://www.imyway.cn/assets/img/planner/planner_6.png',
+            qrCode: 'http://www.imyway.cn/assets/img/planner/planner_qrcode_6.png'
+        }, {
+            introduce: ['因为有爱，所以陪伴，', '（旅行是最好的陪伴）', '旅行策划师：小倩', '金牛座 ：浪漫 富有想像 热情', '擅长马来西亚，韩国、日本路线', '累计策划线路66次', "去过的地方：日本、韩国、澳门、马来西亚"],
+            img: 'http://www.imyway.cn/assets/img/planner/planner_9.png',
+            qrCode: 'http://www.imyway.cn/assets/img/planner/planner_qrcode_9.png',
+            marginLeft: '-4.5rem'
+        }, {
+            introduce: ['世界不单只是一张地图，', '更是有温度的故事~', '旅行策划师：RUBY', '射手座 ：超级奈斯', '擅长欧洲路线', '累计策划线路91次', "去过的地方: 台湾、长滩、帕劳、泰国、欧洲"],
+            img: 'http://www.imyway.cn/assets/img/planner/planner_7.png',
+            qrCode: 'http://www.imyway.cn/assets/img/planner/planner_qrcode_7.png',
+            marginLeft: '-7rem'
+        }, {
+            introduce: ['因为有梦，', '所以勇敢出发！', '旅行策划师：小壹', '巨蟹座：细腻 细心', '擅长海岛、日本路线', '累计策划线路9次', "去过的地方：新加坡、马来西亚、日本<br>韩国、泰国、加拿大"],
+            img: 'http://www.imyway.cn/assets/img/planner/planner_1.png',
+            qrCode: 'http://www.imyway.cn/assets/img/planner/planner_qrcode_1.png'
+        }, {
+            introduce: ['快乐至上，', '让身体和心灵都在路上！', '旅行策划师：小贝', '摩羯座：耐心 负责', '擅长欧洲路线', '累计策划线路111次', "去过的地方：法国、意大利、瑞士、西班牙、迪拜<br>长滩、澳大利亚、日本、新加坡"],
+            img: 'http://www.imyway.cn/assets/img/planner/planner_2.png',
+            qrCode: 'http://www.imyway.cn/assets/img/planner/planner_qrcode_2.png'
+        }, {
+            introduce: ['让行走，', '丰富你的生命和灵魂！', '旅行策划师：小珺', '处女座：追求完美', '擅长泰国、台湾路线', '累计策划线路139次', "去过的地方：日本、美国、澳大利亚、马来西亚<br>泰国、韩国、马尔代夫"],
+            img: 'http://www.imyway.cn/assets/img/planner/planner_3.png',
+            qrCode: 'http://www.imyway.cn/assets/img/planner/planner_qrcode_3.png'
+        }, {
+            introduce: ['飞速运转的闪电，', '细心为您定制每一次旅程！', '旅行策划师：小明', '处女座：追求完美', '擅长新加坡、巴厘岛、马尔代夫路线', '累计策划线路23次', '去过的地方：新加坡、巴厘岛、马尔代夫'],
+            img: 'http://www.imyway.cn/assets/img/planner/planner_4.png',
+            qrCode: 'http://www.imyway.cn/assets/img/planner/planner_qrcode_4.png'
+        }, {
+            introduce: ['旅行的理由，', '一个字就可以概括全部：走！', '旅行策划师：糖糖', '天秤座：富有创造力', '擅长澳新、迪拜等路线', '累计策划线路28次', '去过的地方：日本、韩国、台湾、泰国、巴厘岛、柬埔寨、德国、比利时、荷兰、法国'],
+            img: 'http://www.imyway.cn/assets/img/planner/planner_5.png',
+            qrCode: 'http://www.imyway.cn/assets/img/planner/planner_qrcode_5.png',
+            marginLeft: '0.1rem'
+        }, {
+            introduce: ['喜欢旅游，希望能一直', '在路上，和朋友，和家人~', '旅行策划师：QUEENIE', '狮子座 ：一颗菠菜（一烫就熟）', '擅长澳新、迪拜等路线', '累计策划线路102次', '去过的地方:台湾、日本、新加坡、马来西亚、韩国'],
+            img: 'http://www.imyway.cn/assets/img/planner/planner_11.png',
+            qrCode: 'http://www.imyway.cn/assets/img/planner/planner_qrcode_11.png'
+        }];
+        $.each(planners, function (index, planner) {
+            var introduce = planner.introduce;
+            var html = "<section class=\"planner_item\">\n" +
+                    "    <div class=\"planner_item_left\">\n" +
+                    "            <div class=\"bold\">" + introduce[0] + "</div>\n" +
+                    "            <div class=\"bold\" style='margin-bottom: 0.5rem;margin-top: 0.2rem'>" + introduce[1] + "</div>\n" +
+                    "    <div class=\"planner_item_img\">\n" +
+                    "        <img" + (planner.marginLeft ? " style='margin-left:" + planner.marginLeft + "'" : "" ) + " src =\"" + planner.img + "\">\n" +
+                    "        <div class=\"contact_planner\">\n" +
+                    "                <img style='margin-top: 0.4rem;width: 1rem;' src=\"http://www.imyway.cn/assets/img/arrow_down_black.png\">\n" +
+                    "                <div style=\"margin: 0.3rem 0;font-weight: bold;\">长按二维码,联系TA</div>\n" +
+                    "                <img style=\"width: 3rem;\" src=\"" + planner.qrCode + "\">\n" +
+                    "        </div>\n" +
+                    "    </div>\n" +
+                    "            <div class=\"cus_1\" style=\"font-weight: bold;\">" + introduce[2] + "</div>\n" +
+                    "            <div style=\"color: #999999;\" class=\"cus_2\">\n" +
+                    "                <div>" + introduce[3] + "</div>\n" +
+                    "                <div>" + introduce[4] + "</div>\n" +
+                    "                <div>" + introduce[5] + "</div>\n" +
+                    "                <div>" + introduce[6] + "</div>\n" +
+                    "            </div>\n" +
+                    "            <div class=\"button_div\" flag=\"" + flagIndex + "\">\n" +
+                    "                <a>钦点TA</a>\n" +
+                    "            </div>\n" +
+                    "        </div>\n" +
+                    "</section>";
+            $("#planner").append(html);
+            flagIndex++;
+        });
+
+        var managers = [{
+            introduce: ["旅行管家：SUSAN", "逗逼女汉子，直率不服输，爱玩爱吃爱唱歌，<br>有问题就掏出手机找到我，让你的旅行更舒心哦！"],
+            img: "http://www.imyway.cn/assets/img/planner/manager_1.png",
+            qrCode: "http://www.imyway.cn/assets/img/planner/manager_qrcode_1.png",
+            marginLeft: "-2rem"
+        }, {
+            introduce: ["旅行管家：莎莎", "阳光积极，负责认真，热情快速<br>服务只有更好，没有最好，满意只有起点，<br>没有终点，尽我所能，解你之忧！"],
+            img: "http://www.imyway.cn/assets/img/planner/manager_2.png",
+            qrCode: "http://www.imyway.cn/assets/img/planner/manager_qrcode_2.png"
+        }, {
+            introduce: ["旅行管家：路路", "有耐心、有责任心<br>用心服务、服务到心、放心旅行！"],
+            img: "http://www.imyway.cn/assets/img/planner/manager_3.png",
+            qrCode: "http://www.imyway.cn/assets/img/planner/manager_qrcode_3.png",
+            marginLeft: "-1rem"
+        }];
+        $.each(managers, function (index, manager) {
+            var introduce = manager.introduce;
+            var html = "    <div class=\"manager_item\">\n" +
+                    "        <div class=\"shadow\">\n" +
+                    "            <img" + (manager.marginLeft ? " style='height: 100%;margin-left:" + manager.marginLeft + "'" : " style='height: 100%;'" ) + " src=\"" + manager.img + "\">\n" +
+                    "            <div class=\"contact_planner\">\n" +
+                    "                    <img style='margin-top: 0.4rem;width: 1rem;' src=\"http://www.imyway.cn/assets/img/arrow_down_black.png\">\n" +
+                    "                    <div style=\"margin: 0.3rem 0;font-weight: bold;\">长按二维码,联系TA</div>\n" +
+                    "                    <img style=\"width: 3rem;\" src=\"" + manager.qrCode + "\">\n" +
+                    "            </div>\n" +
+                    "        </div>\n" +
+                    "        <div style=\"font-size: 0.4rem;margin: 0.55rem 0;\">" + introduce[0] + "</div>\n" +
+                    "        <div style='font-weight: normal;font-size: 0.25rem;line-height: 0.45rem;'>" + introduce[1] + "</div>\n" +
+                    "        <div class=\"button_div\" flag=\"" + flagIndex + "\">\n" +
+                    "            <a>联系TA</a>\n" +
+                    "        </div>\n" +
+                    "    </div>";
+            $("#manager").append(html);
+            flagIndex++;
+        });
+
+        var visaSpecialists = [{
+            introduce: ["签证专员： Katrina", "处女座：追求完美", "做更好的自己，让自己和身边的人更幸福！"],
+            img: "http://www.imyway.cn/assets/img/planner/visaSpecialist_2.png",
+            qrCode: "http://www.imyway.cn/assets/img/planner/visaSpecialist_qrcode_2.png",
+            marginLeft: "-6rem"
+        }, {
+            introduce: ["签证专员：Vicky", "射手座：认真负责", "您的满意就是我的动力！"],
+            img: "http://www.imyway.cn/assets/img/planner/visaSpecialist_1.png",
+            qrCode: "http://www.imyway.cn/assets/img/planner/visaSpecialist_qrcode_1.png",
+            marginLeft: " -3.3rem"
+        }];
+        $.each(visaSpecialists, function (index, visaSpecialist) {
+            var introduce = visaSpecialist.introduce;
+            var html = "    <div class=\"visaSpecialist_item\">\n" +
+                    "        <div class=\"shadow\">\n" +
+                    "            <img " + (visaSpecialist.marginLeft ? " style='height: 100%;margin-left:" + visaSpecialist.marginLeft + "'" : " style='height: 100%;'" ) + " src=\"" + visaSpecialist.img + "\">\n" +
+                    "            <div class=\"contact_planner\">\n" +
+                    "                    <img style='margin-top: 0.4rem;width: 1rem;' src=\"http://www.imyway.cn/assets/img/arrow_down_black.png\">\n" +
+                    "                    <div style=\"margin: 0.3rem 0;font-weight: bold;\">长按二维码,联系TA</div>\n" +
+                    "                    <img style=\"width: 3rem;\" src=\"" + visaSpecialist.qrCode + "\">\n" +
+                    "            </div>\n" +
+                    "        </div>\n" +
+                    "        <div style=\"font-size: 0.4rem;margin: 0.55rem 0;\">" + introduce[0] + "</div>\n" +
+                    "        <div style='font-size: 0.25rem;line-height: 0.5rem;'>" + introduce[1] + "<br><span style='font-weight:normal'>" + introduce[2] + "</span></div>\n" +
+                    "        <div class=\"button_div\" flag=\"" + flagIndex + "\">\n" +
+                    "            <a>联系TA</a>\n" +
+                    "        </div>\n" +
+                    "    </div>";
+            $("#visaSpecialist").append(html);
+            flagIndex++;
+        });
+    }
+
+    function doActive($this) {
+        if ($this.hasClass("active")) {
+            $this.removeClass("active");
+        } else {
+            $this.addClass("active");
+        }
+    }
+
+    $(function () {
+        init();
+        buildHtml();
+        var lastActive = null;
+        $(".button_div>a").click(function () {
+            var $this = $(this).parent();
+            if ($this.hasClass("active")) {
+                $this.removeClass("active");
+                lastActive.removeClass("in");
+                lastActive.addClass("out");
+            } else {
+                $(".button_div").removeClass("active");
+                $this.addClass("active");
+
+                if (lastActive != null) {
+                    lastActive.removeClass("in");
+                    lastActive.addClass("out");
+                }
+                lastActive = $(".contact_planner").eq(parseInt($this.attr("flag")) - 1);
+                lastActive.removeClass("out");
+                lastActive.addClass("in");
+            }
+        });
+        window.onresize = function () {
+            init();
+        };
+    })
+</script>
+</body>
+</html>

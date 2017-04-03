@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.rockies.mapper.ISuppliersMapper">
+    
+    <select id="getSuppliersBeanList"  resultType="Map" parameterType="Map" >
+		SELECT s.sid,s.s_name, s.s_status,sc.cityName,s.s_remark,s.currency_type,sp.payName,s.pay_account,s.del_flg,s.ctdt,s.ctuser,s.updt,s.upuser ,m.c_name,m.c_email FROM suppliers s
+		 LEFT JOIN city sc ON s.s_country=sc.id
+		LEFT JOIN s_pay sp ON s.pay_type=sp.pid
+		LEFT JOIN (SELECT sid,c_name,c_email,max(updt) from suppliers_contractor where is_primary = 1  group by sid) m ON m.sid = s.sid
+		where s.del_flg=0
+		<if test="s_name!=null">
+		  and s.s_name like "%${s_name}%" 
+		</if>
+		limit #{offset},#{limit};
+    </select>
+    
+     <select id="getCount"  parameterType="Map" resultType="java.lang.Integer" >
+		SELECT count(*) FROM suppliers where del_flg=0
+		<if test="s_name!=null">
+		  and s_name like "%"#{s_name}"%" 
+		</if>
+    </select>
+    
+    <select id="getAllList"  resultType="com.rockies.model.SuppliersBean" >
+		SELECT * FROM suppliers where del_flg=0
+    </select>
+    
+    
+    
+    <select id="getSuppliersVO" parameterType="java.lang.Integer" resultType="com.rockies.vo.SuppliersVO">
+		<!-- select * from suppliers where sid=#{sid} -->
+		select s.*,sc.cityName,sp.payName from suppliers s LEFT JOIN city sc on s.s_country=sc.id LEFT JOIN s_pay sp on s.pay_type=sp.payType
+		where s.sid=#{sid}
+	</select>
+	
+	<insert id="save" parameterType="com.rockies.model.SuppliersBean" >
+		insert into suppliers values(
+		null,
+		#{s_name},
+		#{s_status},
+		#{s_country},
+		#{s_remark},
+		#{currency_type},
+		#{pay_type},
+		#{pay_account},
+		0,
+		#{ctdt},
+		#{ctuser},
+		#{updt},
+		#{upuser}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.rockies.model.SuppliersBean" >
+		update suppliers 
+		<set>
+			<if test="s_name!=null">
+				s_name=#{s_name},
+			</if>
+			<if test="s_status!=null">
+				s_status=#{s_status},
+			</if>
+			<if test="s_country!=null">
+				s_country=#{s_country},
+			</if>
+			<if test="s_remark!=null">
+				s_remark=#{s_remark},
+			</if>
+			<if test="currency_type!=null">
+				currency_type=#{currency_type},
+			</if>
+			<if test="pay_type!=null">
+				pay_type=#{pay_type},
+			</if>
+			<if test="pay_account!=null">
+				pay_account=#{pay_account},
+			</if>
+			<if test="del_flg==1">
+				del_flg=#{del_flg},
+			</if>
+			<if test="ctdt!=null">
+				ctdt=#{ctdt},
+			</if>
+			<if test="ctuser!=null">
+				ctuser=#{ctuser},
+			</if>
+			<if test="upuser!=null">
+				upuser=#{upuser},
+			</if>
+			<if test="updt!=null">
+				updt=#{updt}
+			</if>
+			where sid=#{sid}
+		</set>
+	</update>
+    
+</mapper>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.rockies.mapper.ThemeProductMapper">
+    
+    <!-- 添加 返回主键id -->
+    <insert id="insert" parameterType="com.rockies.model.ThemeProduct" useGeneratedKeys="true" keyProperty="id">
+    	INSERT INTO themeproduct(themeId,productId,isHomeShow,isThemeHomeShow,themeCatalogId,ctdt,ctuser,updt,upuser) 
+    	values(#{themeId},#{productId},#{isHomeShow},#{isThemeHomeShow},#{themeCatalogId},#{ctdt},#{ctuser},#{updt},#{upuser})
+    	
+   		
+    </insert>
+    
+    <!-- 根据主键删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    	delete from themeproduct where id=#{id}
+    </delete>
+    
+    <!-- 获取对象集合 -->
+    <select id="getAllList" resultType="com.rockies.model.ThemeProduct">
+    	select * from themeproduct
+    </select>
+    
+    <!-- 获取对象集合 parameterType="Map" 选择是否分页-->
+    <select id="getAllListByMap" resultType="com.rockies.model.ThemeProduct" parameterType="Map">
+    	select * from themeproduct
+    	<where>
+    		1=1
+			<if test="themeId!=null and themeId!=''">
+		  		and themeId=#{themeId}
+			</if>
+			<if test="productId!=null and productId!=''">
+		  		and productId=#{productId}
+			</if>
+			<if test="themeCatalogId!=null and themeCatalogId!=''">
+		  		and themeCatalogId=#{themeCatalogId}
+			</if>
+			<if test="isHomeShow!=null and isHomeShow!=''">
+		  		and isHomeShow=#{isHomeShow}
+			</if>
+			<if test=" isThemeHomeShow !=null and isThemeHomeShow !=''">
+		  		and isThemeHomeShow=#{isThemeHomeShow},
+			</if>
+			<if test="ctdt!=null and ctdd!=''">
+				and ctdt=#{ctdt}
+			</if>
+			<if test="ctuser!=null and ctuser!=''">
+				and ctuser=#{ctuser}
+			</if>
+			<if test="upuser!=null">
+				and upuser=#{upuser}
+			</if>
+			<if test="updt!=null and updt!=''">
+				and updt=#{updt}
+			</if>
+    	</where>
+		<if test="offset!=null and limit!=null">
+			limit #{offset},#{limit}
+		</if>
+    </select>
+    
+    
+    <!-- 获取map集合  parameterType="Map" 分页-->
+    <select id="getAllListMap" resultType="Map" parameterType="Map">
+    	select * from themeproduct
+    	<where>
+    		1=1
+			<if test="themeId!=null and themeId!=''">
+		  		and themeId=#{themeId}
+			</if>
+			<if test="themeCatalogId!=null and themeCatalogId!=''">
+		  		and themeCatalogId=#{themeCatalogId}
+			</if>
+			<if test="productId!=null and productId!=''">
+		  		and productId=#{productId}
+			</if>
+			<if test="isHomeShow!=null and isHomeShow!=''">
+		  		and isHomeShow=#{isHomeShow}
+			</if>
+			<if test=" isThemeHomeShow !=null and isThemeHomeShow !=''">
+		  		and isThemeHomeShow=#{isThemeHomeShow},
+			</if>
+			<if test="ctdt!=null and ctdt!=''">
+				and ctdt=#{ctdt}
+			</if>
+			<if test="ctuser!=null and ctuser!=''">
+				and ctuser=#{ctuser}
+			</if>
+			<if test="upuser!=null and upuser!=''">
+				and upuser=#{upuser}
+			</if>
+			<if test="updt!=null and updt!=''">
+				and updt=#{updt}
+			</if>
+    	</where>
+		<if test="offset!=null and limit!=null">
+			limit #{offset},#{limit}
+		</if>
+    </select>
+    
+    <!-- 根据主键获取一个对象-->
+    <select id="getOneByPrimaryKey" resultType="com.rockies.model.ThemeProduct" parameterType="java.lang.Integer">
+    	select * from themeproduct where id=#{id}
+    </select>
+    
+    <!-- 总记录数-->
+    <select id="getCount" resultType="java.lang.Long" parameterType="Map">
+    	select count(*) from themeproduct 
+    	<where>
+    		1=1
+			<if test="themeId!=null and themeId!=''">
+		  		and themeId=#{themeId}
+			</if>
+			<if test="themeCatalogId!=null and themeCatalogId!=''">
+		  		and themeCatalogId=#{themeCatalogId}
+			</if>
+			<if test="productId!=null and productId!=''">
+		  		and productId=#{productId}
+			</if>
+			<if test="isHomeShow!=null and isHomeShow!=''">
+		  		and isHomeShow=#{isHomeShow}
+			</if>
+			<if test=" isThemeHomeShow !=null and isThemeHomeShow !=''">
+		  		and isThemeHomeShow=#{isThemeHomeShow},
+			</if>
+			<if test="ctdt!=null and ctdt!=''">
+				and ctdt=#{ctdt}
+			</if>
+			<if test="ctuser!=null and ctuser!=''">
+				and ctuser=#{ctuser}
+			</if>
+			<if test="upuser!=null and upuser!=''">
+				and upuser=#{upuser}
+			</if>
+			<if test="updt!=null and updt!=''">
+				and updt=#{updt}
+			</if>
+    	</where>
+    </select>
+    
+    <update id="updateObject"  parameterType="Map">
+    	update themeproduct 
+		<set>
+			<if test="themeId!=null and themeId!=''">
+		  		 themeId=#{themeId},
+			</if>
+			<if test="themeCatalogId!=null">
+		  		 themeCatalogId=#{themeCatalogId},
+			</if>
+			<if test="productId!=null">
+		  		 productId=#{productId},
+			</if>
+			<if test="isHomeShow!=null">
+		  		 isHomeShow=#{isHomeShow},
+			</if>
+			<if test=" isThemeHomeShow !=null">
+		  		 isThemeHomeShow=#{isThemeHomeShow},
+			</if>
+			<if test="ctdt!=null">
+				ctdt=#{ctdt},
+			</if>
+			<if test="ctuser!=null">
+				ctuser=#{ctuser},
+			</if>
+			<if test="upuser!=null">
+				upuser=#{upuser},
+			</if>
+			<if test="updt!=null">
+				updt=#{updt}
+			</if>
+		</set>
+		where id=#{id}
+    </update>
+    
+    
+     <select id="checkProductExist" resultType="java.lang.Integer" parameterType="Map">
+    	SELECT COUNT(*) FROM themeproduct t  WHERE t.`productId`= #{productId} AND t.`themeId`=#{themeId} AND t.`themeCatalogId`=#{themeCatalogId}
+    </select>
+    
+     <select id="checkHasProduct" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+    	SELECT COUNT(*) FROM themeproduct t  WHERE t.`themeCatalogId`=#{themeCatalogId}
+    </select>
+    
+        <!-- 主题对应的商品 -->
+    <select id="getThemeproductListMapBythemeId" resultType="Map" parameterType="Map">
+    	select * from themeproduct as themeproduct
+		left join product as product on themeproduct.productId = product.pid
+    	<where>
+    		themeproduct.themeId = #{themeId}
+    	</where>
+    </select>
+    <!-- 主题对应的商品 -->
+    <select id="getThemeproductListMapBythemeId2" resultType="Map" parameterType="Map">
+    	select themeproduct.*,product.*,country.cityName as countryName,c.cityName as cityName from themeproduct as themeproduct
+		left join product as product on themeproduct.productId = product.pid
+		LEFT JOIN city as country on (product.country = country.id)
+		LEFT JOIN city as c on (product.city = c.id)
+    	<where>
+    	isHomeShow =0 and
+    		themeproduct.themeId = #{themeId}
+    	</where>
+    	order by themeproduct.updt asc
+    </select>
+    
+    <!-- 主题首页显示的主题商品详情 -->
+	<select id="getThemeProductDetailListMap" resultType="Map" parameterType="Map">
+		select * from themeproduct as themeproduct
+		left join product as product on product.pid = themeproduct.productId
+		where themeproduct.isThemeHomeShow = 0
+		and themeproduct.themeId = #{themeId}
+    </select>
+    
+    <!-- 主题首页显示的主题国家列表 -->
+	<select id="getThemeProductCityList" resultType="Map" parameterType="Map">
+		select city.* from themeproduct as themeproduct
+		left join product as product on product.pid = themeproduct.productId
+		left join city as city on city.id = product.country
+		where themeproduct.isThemeHomeShow = 0
+		and themeproduct.themeId = #{themeId}
+		group by city.id
+    </select>
+    
+</mapper>

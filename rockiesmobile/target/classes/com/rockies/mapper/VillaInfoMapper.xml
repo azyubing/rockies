@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rockies.mapper.VillaInfoMapper" >
+
+  <sql id="selectVillaList">
+        from villa as v
+		left join product as p on v.pid = p.pid
+		left join city as c on p.country = c.id
+		left join city as city on p.city = city.id
+		/* left join villa_detailprice as vd on vd.pid = p.pid */
+		/* left join (select pid,sum(if(ordercnt=null,0,ordercnt)) cnt from product_order_detail group by pid) as pod on pod.pid = p.pid */
+		<if test="themeIds !=null and themeIds != ''">
+			 left join themeproduct as tp on tp.productId = p.pid
+		</if>
+	    <where>
+	    	p.del_flg=0 and p.pstatus = 1
+	    	<if test="pid != null and pid != ''">
+			  and p.pid = #{pid,jdbcType=VARCHAR}
+			</if>
+	    	<if test="pname !=null and pname != ''">
+			  and (
+			  	match(pname,tags) against(#{pname,jdbcType=VARCHAR})
+				or match(c.cityname) against(#{pname,jdbcType=VARCHAR})
+				or match(city.cityname) against(#{pname,jdbcType=VARCHAR})
+			  ) 
+			</if>
+			<if test="country !=null and country != ''">
+			  and p.country = #{country,jdbcType=VARCHAR}
+			</if>
+			<if test="city !=null and city != ''">
+			  and p.city = #{city,jdbcType=VARCHAR}
+			</if>
+			<if test="tags !=null and tags != ''">
+			  and match(tags) against(#{tags,jdbcType=VARCHAR})
+			</if>
+			<if test="themeIds !=null and themeIds != ''">
+			  and tp.themeId in 
+				<foreach item="item" index="index" collection="themeIds"
+						 open="(" separator="," close=")">
+						#{item}
+				</foreach>
+			</if>
+			<if test="startTime !=null and startTime != ''">
+			  and p.startdate >= #{startTime,jdbcType=VARCHAR}
+			</if>
+			<choose>
+				<when test="endTime !=null and endTime != ''">
+					and	p.enddate <![CDATA[   >=  ]]>  #{endTime,jdbcType=VARCHAR} and p.enddate <![CDATA[   >=  ]]> date_format(SYSDATE(),'%Y-%m-%d')
+				</when>
+				<when test="endTime ==null or endTime == ''">
+					and p.enddate <![CDATA[   >=  ]]> curdate()
+				</when>
+			</choose>
+			<if test="roomCnt !=null and roomCnt != ''">
+			/*  and vd.room_cnt = #{roomCnt,jdbcType=VARCHAR} */
+			</if>
+			<if test="area !=null and area != ''">
+			  and v.area = #{area,jdbcType=VARCHAR}
+			</if>
+			<if test="geography !=null and geography != ''">
+			  and v.geography = #{geography,jdbcType=VARCHAR}
+			</if>
+			<choose>
+				<when test="minPrice !=null and minPrice != '' and ( maxPrice ==null or maxPrice == '' ) ">
+					and p.start_price = #{minPrice,jdbcType=VARCHAR}
+				</when>
+				<when test="maxPrice !=null and maxPrice != '' and ( minPrice ==null or minPrice == '' ) ">
+					and p.start_price = #{maxPrice,jdbcType=VARCHAR}
+				</when>
+				<when test="maxPrice !=null and maxPrice != '' and minPrice !=null and minPrice != '' ">
+					and p.start_price between #{minPrice,jdbcType=VARCHAR} and #{maxPrice,jdbcType=VARCHAR} 
+				</when>
+			</choose>
+			<if test="ptype !=null and ptype != ''">
+			  and p.ptype = #{ptype,jdbcType=VARCHAR}
+			</if>
+	    </where>
+	    group by p.pid
+			<if test="cnt == 1">
+			  order by p.sale_cnt
+			</if>
+			<if test="cnt == 2">
+			  order by p.sale_cnt desc
+			</if>
+			<if test="orderPrice == 1">
+			  order by start_price
+			</if>
+			<if test="orderPrice == 2">
+			  order by start_price desc
+			</if>
+	    	<if test="offset!=null and limit != ''">
+			  limit #{offset},#{limit};
+			</if>
+  </sql>
+
+  <select id="selectByPrimaryKey" resultType="com.rockies.model.VillaInfo" parameterType="java.lang.String" >
+    select 
+    *
+    from villa
+    where pid = #{pid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllListByParam" resultType="com.rockies.model.VillaInfo" parameterType="Map" >
+    select v.*,
+    	   p.*,
+    	   c.cityName 
+    from villa as v
+	left join product as p on v.pid = p.pid
+	left join city as c on p.country = c.id
+    <where>
+    	v.del_flg=0
+    	<if test="pid != null and pid != ''">
+		  and p.pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    	<if test="pname!=null and pname != ''">
+		  and p.pname like "%"#{pname,jdbcType=VARCHAR}"%" 
+		</if>
+    </where>
+    order by v.ctdt desc
+    	<if test="offset!=null and limit != ''">
+		  limit #{offset},#{limit};
+		</if>
+	
+  </select>
+  <select id="getCount"  parameterType="Map" resultType="java.lang.Integer" >
+	select  count(*) from villa as v
+	left join product as p on v.pid = p.pid
+	<where>
+		v.del_flg=0
+    	<if test="pid != null and pid != ''">
+		  and p.pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    	<if test="pname!=null and pname != ''">
+		  and p.pname like "%"#{pname,jdbcType=VARCHAR}"%" 
+		</if>
+    </where>
+  </select>
+  
+  <select id="getVillaCount" resultType="java.lang.Integer" >
+  	select  count(*) from villa as v
+		LEFT JOIN product as p on(v.pid = p.pid)
+		where
+			v.del_flg=0
+	    and p.del_flg = 0	
+		and p.pstatus = 1
+		and p.enddate >= DATE_FORMAT(NOW(),'%Y-%m-%d')
+  </select>
+  
+  <select id="selectVillaInfoByParam" resultType="com.rockies.model.VillaInfo" parameterType="Map" >
+    select * from villa as v
+	left join product as p on v.pid = p.pid
+    <where>
+    	<if test="pid != null and pid != ''">
+		  and p.pid = #{pid,jdbcType=VARCHAR}
+		</if>
+    </where>
+  </select>
+  <select id="selectVillaListByParam" resultType="Map" parameterType="Map" >
+    select /* if(pod.cnt=null,0,pod.cnt) cnt, */
+    	   v.*,
+    	   p.*,
+    	   /* vd.*, */
+    	   c.cityName as countryName ,
+		   city.cityName as cityName
+  	<include refid="selectVillaList"></include>
+  </select>
+  
+  <select id="getVillaListCount" parameterType="Map" resultType="java.lang.Integer" >
+      select count(DISTINCT p.pid)
+       from villa as v
+		left join product as p on v.pid = p.pid
+		left join city as c on p.country = c.id
+		left join city as city on p.city = city.id
+		/* left join villa_detailprice as vd on vd.pid = p.pid */
+		/* left join (select pid,sum(if(ordercnt=null,0,ordercnt)) cnt from product_order_detail group by pid) as pod on pod.pid = p.pid */
+		<if test="themeIds !=null and themeIds != ''">
+			 left join themeproduct as tp on tp.productId = p.pid
+		</if>
+	    <where>
+	    	p.del_flg=0 and p.pstatus = 1
+	    	<if test="pid != null and pid != ''">
+			  and p.pid = #{pid,jdbcType=VARCHAR}
+			</if>
+	    	<if test="pname !=null and pname != ''">
+			  and (
+			  	match(pname,tags) against(#{pname,jdbcType=VARCHAR})
+				or match(c.cityname) against(#{pname,jdbcType=VARCHAR})
+				or match(city.cityname) against(#{pname,jdbcType=VARCHAR})
+			  ) 
+			</if>
+			<if test="country !=null and country != ''">
+			  and p.country = #{country,jdbcType=VARCHAR}
+			</if>
+			<if test="city !=null and city != ''">
+			  and p.city = #{city,jdbcType=VARCHAR}
+			</if>
+			<if test="tags !=null and tags != ''">
+			  and match(tags) against(#{tags,jdbcType=VARCHAR})
+			</if>
+			<if test="themeIds !=null and themeIds != ''">
+			  and tp.themeId in 
+				<foreach item="item" index="index" collection="themeIds"
+						 open="(" separator="," close=")">
+						#{item}
+				</foreach>
+			</if>
+			<if test="startTime !=null and startTime != ''">
+			  and p.startdate >= #{startTime,jdbcType=VARCHAR}
+			</if>
+			<choose>
+				<when test="endTime !=null and endTime != ''">
+					and	p.enddate <![CDATA[   >=  ]]>  #{endTime,jdbcType=VARCHAR} and p.enddate <![CDATA[   >=  ]]> date_format(SYSDATE(),'%Y-%m-%d')
+				</when>
+				<when test="endTime ==null or endTime == ''">
+					and p.enddate <![CDATA[   >=  ]]> curdate()
+				</when>
+			</choose>
+			<if test="roomCnt !=null and roomCnt != ''">
+			/*  and vd.room_cnt = #{roomCnt,jdbcType=VARCHAR} */
+			</if>
+			<if test="area !=null and area != ''">
+			  and v.area = #{area,jdbcType=VARCHAR}
+			</if>
+			<if test="geography !=null and geography != ''">
+			  and v.geography = #{geography,jdbcType=VARCHAR}
+			</if>
+			<choose>
+				<when test="minPrice !=null and minPrice != '' and ( maxPrice ==null or maxPrice == '' ) ">
+					and p.start_price = #{minPrice,jdbcType=VARCHAR}
+				</when>
+				<when test="maxPrice !=null and maxPrice != '' and ( minPrice ==null or minPrice == '' ) ">
+					and p.start_price = #{maxPrice,jdbcType=VARCHAR}
+				</when>
+				<when test="maxPrice !=null and maxPrice != '' and minPrice !=null and minPrice != '' ">
+					and p.start_price between #{minPrice,jdbcType=VARCHAR} and #{maxPrice,jdbcType=VARCHAR} 
+				</when>
+			</choose>
+			<if test="ptype !=null and ptype != ''">
+			  and p.ptype = #{ptype,jdbcType=VARCHAR}
+			</if>
+	    </where>
+	     
+  </select>
+  
+  <select id="countVillaListByParam" resultType="java.lang.Integer" parameterType="Map" >
+    select count(*) from (
+	   select p.pid 
+  		<include refid="selectVillaList"></include>
+    ) as t1 
+  </select>
+  <!-- 所在区域 -->
+  <select id="selectArea" resultType="Map" parameterType="Map" >
+  	select distinct villa.area from villa as villa
+	inner join product as product on product.pid = villa.pid and product.pstatus = 1
+	left join city as c on product.country = c.id
+	left join city as city on product.city = city.id
+	<where>
+		villa.del_flg=0
+    	<if test="pname !=null and pname != ''">
+		  and (
+		  	match(pname,tags) against(#{pname,jdbcType=VARCHAR})
+			or match(c.cityname) against(#{pname,jdbcType=VARCHAR})
+			or match(city.cityname) against(#{pname,jdbcType=VARCHAR})
+		  ) 
+		</if>
+		<if test="endTime !=null and endTime != ''">
+			and	product.enddate <![CDATA[   >=  ]]>  #{endTime,jdbcType=VARCHAR} and product.enddate <![CDATA[   >=  ]]> date_format(SYSDATE(),'%Y-%m-%d')
+		</if>
+		<if test="endTime ==null or endTime == ''">
+			and product.enddate <![CDATA[   >=  ]]> curdate()
+		</if>
+		<if test="country != null and country != ''">
+		  and product.country = #{country,jdbcType=VARCHAR}
+		</if>
+		<if test="city != null and city != ''">
+		  and product.city = #{city,jdbcType=VARCHAR} 
+		</if>
+	</where>
+	order by villa.area
+  </select>
+  <!-- 地理特征-->
+  <select id="selectGeography" resultType="Map" parameterType="Map" >
+  	select distinct geography from villa  
+  </select>
+  <!-- 卧室数-->
+  <select id="selectRoomCnt" resultType="Map" parameterType="Map" >
+  	select distinct room_cnt from villa_detailprice  
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from villa
+    where pid = #{pid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.rockies.model.VillaInfo" >
+    insert into villa (pid, description, del_flg, 
+      service, area, minroomcnt, 
+      maxroomcnt, geography, ctdt, 
+      ctuser, updt, upuser
+      )
+    values (#{pid,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{del_flg,jdbcType=VARCHAR}, 
+      #{service,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{minroomcnt,jdbcType=INTEGER}, 
+      #{maxroomcnt,jdbcType=INTEGER}, #{geography,jdbcType=VARCHAR}, #{ctdt,jdbcType=TIMESTAMP}, 
+      #{ctuser,jdbcType=VARCHAR}, #{updt,jdbcType=TIMESTAMP}, #{upuser,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.rockies.model.VillaInfo" >
+    insert into villa
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="del_flg != null" >
+        del_flg,
+      </if>
+      <if test="service != null" >
+        service,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="minroomcnt != null" >
+        minroomcnt,
+      </if>
+      <if test="maxroomcnt != null" >
+        maxroomcnt,
+      </if>
+      <if test="geography != null" >
+        geography,
+      </if>
+      <if test="ctdt != null" >
+        ctdt,
+      </if>
+      <if test="ctuser != null" >
+        ctuser,
+      </if>
+      <if test="updt != null" >
+        updt,
+      </if>
+      <if test="upuser != null" >
+        upuser,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="del_flg != null" >
+        #{del_flg,jdbcType=VARCHAR},
+      </if>
+      <if test="service != null" >
+        #{service,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="minroomcnt != null" >
+        #{minroomcnt,jdbcType=INTEGER},
+      </if>
+      <if test="maxroomcnt != null" >
+        #{maxroomcnt,jdbcType=INTEGER},
+      </if>
+      <if test="geography != null" >
+        #{geography,jdbcType=VARCHAR},
+      </if>
+      <if test="ctdt != null" >
+        #{ctdt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctuser != null" >
+        #{ctuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updt != null" >
+        #{updt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upuser != null" >
+        #{upuser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rockies.model.VillaInfo" >
+    update villa
+    <set >
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="del_flg != null" >
+        del_flg = #{del_flg,jdbcType=VARCHAR},
+      </if>
+      <if test="service != null" >
+        service = #{service,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="minroomcnt != null" >
+        minroomcnt = #{minroomcnt,jdbcType=INTEGER},
+      </if>
+      <if test="maxroomcnt != null" >
+        maxroomcnt = #{maxroomcnt,jdbcType=INTEGER},
+      </if>
+      <if test="geography != null" >
+        geography = #{geography,jdbcType=VARCHAR},
+      </if>
+      <if test="ctdt != null" >
+        ctdt = #{ctdt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctuser != null" >
+        ctuser = #{ctuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updt != null" >
+        updt = #{updt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upuser != null" >
+        upuser = #{upuser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rockies.model.VillaInfo" >
+    update villa
+    set description = #{description,jdbcType=VARCHAR},
+      del_flg = #{del_flg,jdbcType=VARCHAR},
+      service = #{service,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      minroomcnt = #{minroomcnt,jdbcType=INTEGER},
+      maxroomcnt = #{maxroomcnt,jdbcType=INTEGER},
+      geography = #{geography,jdbcType=VARCHAR},
+      ctdt = #{ctdt,jdbcType=TIMESTAMP},
+      ctuser = #{ctuser,jdbcType=VARCHAR},
+      updt = #{updt,jdbcType=TIMESTAMP},
+      upuser = #{upuser,jdbcType=VARCHAR}
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+</mapper>

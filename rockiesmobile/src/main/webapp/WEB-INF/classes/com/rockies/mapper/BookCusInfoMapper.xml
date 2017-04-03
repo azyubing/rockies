@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.rockies.mapper.BookCusInfoMapper">
+    <resultMap id="bookCusInfo" type="com.rockies.model.BookCusInfo" >
+	    <id column="id" property="id" jdbcType="INTEGER" />
+	    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+	    <result column="cus_no" property="cusNo" jdbcType="VARCHAR" />
+	    <result column="imgPath" property="imgPath" jdbcType="VARCHAR" />
+	    <result column="ctdt" property="ctdt" jdbcType="TIMESTAMP" />
+	    <result column="ctuser" property="ctuser" jdbcType="VARCHAR" />
+	    <result column="updt" property="updt" jdbcType="TIMESTAMP" />
+	    <result column="upuser" property="upuser" jdbcType="VARCHAR" />
+	    <result column="type" property="type" jdbcType="INTEGER" />
+	</resultMap>
+    <sql id="Base_Column_List" >
+	    `order_no`, `cus_no`,imgPath,
+         `ctdt`,`ctuser`,`updt`,`upuser`,`type`
+   </sql>
+   
+   <insert id="saveBookCusInfo" parameterType="com.rockies.model.BookCusInfo" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO book_cus_info (<include refid="Base_Column_List" />)
+	VALUES (#{orderNo}, #{cusNo},#{imgPath},
+         	#{ctdt},#{ctuser},#{updt},#{upuser},#{type}
+         );   
+   </insert>
+   <update id="updateBookCusInfo" parameterType="com.rockies.model.BookCusInfo">
+   	update book_cus_info 
+   	<set>
+   		<if test="cusNo!=null and cusNo!=''">
+   			cus_no=#{cusNo},
+   		</if>
+   		<if test="imgPath!=null and imgPath!=''">
+   			imgPath=#{imgPath},
+   		</if>
+   		<if test="upuser!=null and upuser!=''">
+   			upuser=#{upuser},
+   		</if>
+   		<if test="type!=null">
+   			type=#{type},
+   		</if>
+   		<if test="updt!=null">
+   			updt=#{updt}
+   		</if>
+   	</set>
+   	where order_no=#{orderNo} and id=#{id}
+   </update>
+   
+   <delete id="deleteBookCusInfoById" parameterType="java.lang.Integer">
+   	delete from book_cus_info where id = #{id}
+   </delete>
+   <delete id="deleteBookCusInfoByParams" parameterType="Map">
+   	delete from book_cus_info where cus_no = #{cusNo} and order_no=#{orderNo}
+   </delete>
+   
+   <select id="getBabyCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+   <![CDATA[ 
+		SELECT COUNT(*) FROM book_cus_info bc  LEFT JOIN customer c ON bc.`cus_no` = c.`id` 
+		WHERE bc.order_no =#{orderNo}  AND NOW()<=c.`birthday`+INTERVAL 2 YEAR
+	]]>  
+   </select>
+   <select id="getChildCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+   <![CDATA[ 
+		SELECT COUNT(*) FROM book_cus_info bc  LEFT JOIN customer c ON bc.`cus_no` = c.`id` 
+		WHERE bc.order_no =#{orderNo}  AND NOW()>=c.`birthday`+INTERVAL 2 YEAR AND NOW()<c.`birthday`+INTERVAL 12 YEAR
+	]]>  
+   </select>
+   <select id="getAdultCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+   <![CDATA[ 
+		SELECT COUNT(*) FROM book_cus_info bc  LEFT JOIN customer c ON bc.`cus_no` = c.`id` 
+		WHERE bc.order_no =#{orderNo}  AND NOW()>=c.`birthday`+INTERVAL 12 YEAR 
+	]]>  
+   </select>
+</mapper>

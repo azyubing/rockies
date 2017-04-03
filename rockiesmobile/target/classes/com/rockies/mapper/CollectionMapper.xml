@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rockies.mapper.CollectionMapper">
+	<resultMap id="BaseResultMap" type="com.rockies.model.Collection">
+		<id column="cid" property="cid" jdbcType="BIGINT" />
+		<result column="pid" property="pid" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="startplace" property="startplace" jdbcType="VARCHAR" />
+		<result column="endplace" property="endplace" jdbcType="VARCHAR" />
+		<result column="ctdt" property="ctdt" jdbcType="TIMESTAMP" />
+		<result column="ctuser" property="ctuser" jdbcType="VARCHAR" />
+		<result column="updt" property="updt" jdbcType="TIMESTAMP" />
+		<result column="upuser" property="upuser" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		cid, pid, user_id, startplace, endplace, ctdt, ctuser,
+		updt, upuser
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from collection
+		where cid = #{cid,jdbcType=BIGINT}
+	</select>
+	<select id="selectByPid" resultType="java.lang.Integer"
+		parameterType="com.rockies.model.Collection">
+		select
+		count(*)
+		from collection
+		where pid =
+		#{pid,jdbcType=VARCHAR} and user_id =
+		#{userId,jdbcType=INTEGER}
+	</select>
+	<select id="selectAllListByParam" resultType="com.rockies.model.Collection"
+		parameterType="Map">
+
+	</select>
+	<select id="selectCollectionProductListByParam" resultType="Map"
+		parameterType="Map">
+		select collection.*,
+		product.*,
+		c.cityName as countryName ,
+		city.cityName as cityName
+		from collection as collection
+		left join
+		product as product on product.pid = collection.pid
+		left join city as c
+		on product.country = c.id
+		left join
+		city as city on product.city = city.id
+
+		<where>
+			collection.user_id = #{userId}
+			<if test="ptype != null and ptype != '' ">
+				and product.ptype = #{ptype}
+			</if>
+			<if test="destination != null and destination != '' ">
+				and c.id = #{destination}
+			</if>
+		</where>
+		limit #{offset},#{limit};
+	</select>
+	
+	<select id="getCount" parameterType="Map" resultType="java.lang.Integer">
+		select count(1)
+		from collection as collection
+		left join
+		product as product on product.pid = collection.pid
+		left join city as c
+		on product.country = c.id
+		left join
+		city as city on product.city = city.id
+		<where>
+			collection.user_id = #{userId}
+			<if test="ptype != null and ptype != '' ">
+				and product.ptype = #{ptype}
+			</if>
+			<if test="destination != null and destination != '' ">
+				and c.id = #{destination}
+			</if>
+		</where>
+	</select>
+
+	<delete id="delete" parameterType="com.rockies.model.Collection">
+		delete from collection
+		where 1=1
+		<if test="pid != null and pid != '' ">
+			and pid = #{pid}
+		</if>
+		<if test="userId != null and userId != '' ">
+			and user_id = #{userId}
+		</if>
+	</delete>
+
+
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		collection
+		where cid = #{cid,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.rockies.model.Collection">
+		insert into collection (cid,
+		pid, user_id,
+		startplace, endplace,roomcnt,staylvl, ctdt,
+		ctuser, updt,
+		upuser
+		)
+		values (#{cid,jdbcType=BIGINT}, #{pid,jdbcType=VARCHAR},
+		#{userId,jdbcType=INTEGER},
+		#{startplace,jdbcType=VARCHAR},
+		#{endplace,jdbcType=VARCHAR}, #{roomcnt,jdbcType=VARCHAR},
+		#{staylvl,jdbcType=VARCHAR},
+		#{ctdt,jdbcType=TIMESTAMP},
+		#{ctuser,jdbcType=VARCHAR}, #{updt,jdbcType=TIMESTAMP},
+		#{upuser,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.rockies.model.Collection">
+		insert into collection
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				cid,
+			</if>
+			<if test="pid != null">
+				pid,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="startplace != null">
+				startplace,
+			</if>
+			<if test="endplace != null">
+				endplace,
+			</if>
+			<if test="roomcnt != null">
+				roomcnt,
+			</if>
+			<if test="staylvl != null">
+				staylvl,
+			</if>
+			<if test="ctdt != null">
+				ctdt,
+			</if>
+			<if test="ctuser != null">
+				ctuser,
+			</if>
+			<if test="updt != null">
+				updt,
+			</if>
+			<if test="upuser != null">
+				upuser,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				#{cid,jdbcType=BIGINT},
+			</if>
+			<if test="pid != null">
+				#{pid,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="startplace != null">
+				#{startplace,jdbcType=VARCHAR},
+			</if>
+			<if test="endplace != null">
+				#{endplace,jdbcType=VARCHAR},
+			</if>
+			<if test="roomcnt != null">
+				#{roomcnt,jdbcType=VARCHAR},
+			</if>
+			<if test="staylvl != null">
+				#{staylvl,jdbcType=VARCHAR},
+			</if>
+			<if test="ctdt != null">
+				#{ctdt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="ctuser != null">
+				#{ctuser,jdbcType=VARCHAR},
+			</if>
+			<if test="updt != null">
+				#{updt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="upuser != null">
+				#{upuser,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.rockies.model.Collection">
+		update collection
+		<set>
+			<if test="pid != null">
+				pid = #{pid,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="startplace != null">
+				startplace = #{startplace,jdbcType=VARCHAR},
+			</if>
+			<if test="endplace != null">
+				endplace = #{endplace,jdbcType=VARCHAR},
+			</if>
+			<if test="roomcnt != null">
+				roomcnt = #{roomcnt,jdbcType=VARCHAR},
+			</if>
+			<if test="staylvl != null">
+				staylvl = #{staylvl,jdbcType=VARCHAR},
+			</if>
+			<if test="ctdt != null">
+				ctdt = #{ctdt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="ctuser != null">
+				ctuser = #{ctuser,jdbcType=VARCHAR},
+			</if>
+			<if test="updt != null">
+				updt = #{updt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="upuser != null">
+				upuser = #{upuser,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where cid = #{cid,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.rockies.model.Collection">
+		update collection
+		set pid = #{pid,jdbcType=VARCHAR},
+		user_id =
+		#{userId,jdbcType=INTEGER},
+		startplace =
+		#{startplace,jdbcType=VARCHAR},
+		endplace =
+		#{endplace,jdbcType=VARCHAR},
+		roomcnt = #{roomcnt,jdbcType=VARCHAR},
+		staylvl = #{staylvl,jdbcType=VARCHAR},
+		ctdt =
+		#{ctdt,jdbcType=TIMESTAMP},
+		ctuser = #{ctuser,jdbcType=VARCHAR},
+		updt =
+		#{updt,jdbcType=TIMESTAMP},
+		upuser = #{upuser,jdbcType=VARCHAR}
+		where
+		cid = #{cid,jdbcType=BIGINT}
+	</update>
+</mapper>

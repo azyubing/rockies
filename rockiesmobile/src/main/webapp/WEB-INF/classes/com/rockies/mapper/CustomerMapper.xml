@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rockies.mapper.CustomerMapper">
+
+	<!-- 添加 返回主键id -->
+	<insert id="insert" parameterType="com.rockies.model.Customer"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+		customer(customerName,realName,email,tel,birthday,idCard,passportNumber,countryId,provinceId,cityId,isUse,userId,passportImg,ctdt,ctuser,updt,upuser,countryName,provinceName,cityName,address,cardType,cardNumber)
+		values(#{customerName},#{realName},#{email},#{tel},#{birthday},#{idCard},#{passportNumber},#{countryId},#{provinceId},#{cityId},#{isUse},#{userId},#{passportImg},#{ctdt},#{ctuser},#{updt},#{upuser},#{countryName},#{provinceName},#{cityName},#{address},#{cardType},#{cardNumber})
+	</insert>
+
+	<!-- 根据主键删除 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		customer where id=#{id}
+	</delete>
+
+
+	<update id="updateObject" parameterType="Map">
+		update customer
+		<set>
+			<if test="customerName!=null and customerName!=''">
+				customerName=#{customerName},
+			</if>
+			<if test="realName!=null and realName!=''">
+				realName=#{realName},
+			</if>
+			<if test="email!=null and email!=''">
+				email=#{email},
+			</if>
+			<if test="tel!=null and tel!=''">
+				tel=#{tel},
+			</if>
+			<if test="birthday!=null and birthday!=''">
+				birthday=#{birthday},
+			</if>
+			<if test="idCard!=null and idCard!=''">
+				idCard=#{idCard},
+			</if>
+			<if test="passportNumber!=null and passportNumber!=''">
+				passportNumber=#{passportNumber},
+			</if>
+			<if test="countryId!=null and countryId!=''">
+				countryId=#{countryId},
+			</if>
+			<if test="provinceId!=null and provinceId!=''">
+				provinceId=#{provinceId},
+			</if>
+			<if test="cityId!=null and cityId!=''">
+				cityId=#{cityId},
+			</if>
+			<if test="isUse!=null">
+				isUse=#{isUse},
+			</if>
+			<if test="ctdt!=null">
+				ctdt=#{ctdt},
+			</if>
+			<if test="ctuser!=null">
+				ctuser=#{ctuser},
+			</if>
+			<if test="upuser!=null">
+				upuser=#{upuser},
+			</if>
+			<if test="userId!=null and updt!=''">
+				userId=#{userId},
+			</if>
+			<if test="passportImg!=null and passportImg!=''">
+				passportImg=#{passportImg},
+			</if>
+			<if test="countryName!=null and countryName!=''">
+				countryName = #{countryName},
+			</if>
+			<if test="provinceName!=null and provinceName!=''">
+				provinceName = #{provinceName},
+			</if>
+			<if test="cityName!=null and cityName!=''">
+				cityName = #{cityName},
+			</if>
+			<if test="address!=null and address!=''">
+				address = #{address},
+			</if>
+			<if test="cardType!=null and cardType!=''">
+				cardType = #{cardType},
+			</if>
+			<if test="cardNumber!=null and cardNumber!=''">
+				cardNumber = #{cardNumber},
+			</if>
+			<if test="updt!=null">
+				updt=#{updt}
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+
+	<!-- 获取map集合 parameterType="Map" 分页 -->
+	<select id="getAllListMap" resultType="Map" parameterType="Map">
+		select c.*, t1.`cityName` AS countryName, t2.`cityName` AS
+		provinceName, t3.`cityName` AS cityName from
+		customer c
+		LEFT JOIN city
+		t1
+		ON c.`countryId` = t1.`id`
+		LEFT JOIN city t2
+		ON c.`provinceId` =
+		t2.`id`
+		LEFT JOIN city t3
+		ON c.`cityId` = t3.`id`
+		<where>
+			isUse = 0
+			<if test="customerName!=null">
+				and c.customerName like "%${customerName}%"
+			</if>
+			<if test="realName!=null and realName!=''">
+				and c.realName=#{realName}
+			</if>
+			<if test="email!=null and email!=''">
+				and c.email=#{email}
+			</if>
+			<if test="tel!=null and tel!=''">
+				and c.tel=#{tel}
+			</if>
+			<if test="birthday!=null and birthday!=''">
+				and c.birthday=#{birthday}
+			</if>
+			<if test="idCard!=null and idCard!=''">
+				and c.idCard=#{idCard}
+			</if>
+			<if test="passportNumber!=null and passportNumber!=''">
+				and c.passportNumber=#{passportNumber}
+			</if>
+			<if test="ctdt!=null and ctdd!=''">
+				and c.ctdt=#{ctdt}
+			</if>
+			<if test="ctuser!=null and ctuser!=''">
+				and c.ctuser=#{ctuser}
+			</if>
+			<if test="upuser!=null">
+				and c.upuser=#{upuser}
+			</if>
+			<if test="updt!=null and updt!=''">
+				and c.updt=#{updt}
+			</if>
+			<if test="userId!=null and updt!=''">
+				and c.userId=#{userId}
+			</if>
+		</where>
+		<if test="offset!=null and limit!=null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+	<!-- 根据主键获取一个对象 -->
+	<select id="getOneByPrimaryKey" resultType="com.rockies.model.Customer"
+		parameterType="java.lang.Integer">
+		select * from customer where id=#{id}
+	</select>
+
+	<!-- 总记录数 -->
+	<select id="getCount" resultType="java.lang.Long" parameterType="Map">
+		select count(*) from customer
+		<where>
+			1=1
+			<if test="customerName!=null">
+				and customerName like "%${customerName}%"
+			</if>
+			<if test="realName!=null and realName!=''">
+				and realName=#{realName}
+			</if>
+			<if test="email!=null and email!=''">
+				and email=#{email}
+			</if>
+			<if test="tel!=null and tel!=''">
+				and tel=#{tel}
+			</if>
+			<if test="birthday!=null and birthday!=''">
+				and birthday=#{birthday}
+			</if>
+			<if test="idCard!=null and idCard!=''">
+				and idCard=#{idCard}
+			</if>
+			<if test="passportNumber!=null and passportNumber!=''">
+				and passportNumber=#{passportNumber}
+			</if>
+			<if test="ctdt!=null and ctdd!=''">
+				and ctdt=#{ctdt}
+			</if>
+			<if test="ctuser!=null and ctuser!=''">
+				and ctuser=#{ctuser}
+			</if>
+			<if test="upuser!=null">
+				and upuser=#{upuser}
+			</if>
+			<if test="updt!=null and updt!=''">
+				and updt=#{updt}
+			</if>
+			<if test="userId!=null and updt!=''">
+				and userId=#{userId}
+			</if>
+		</where>
+	</select>
+
+	<delete id="deleteBucthCustomer">
+		delete from customer where id in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<select id="getTravelPartnersByOrderNo" resultType="Map"
+		parameterType="Map">
+		select c.*, b.order_no from customer c, book_cus_info b
+		<where>
+			c.id = b.cus_no
+			<if test="orderNo != null and orderNo != ''">
+				and b.order_no =
+				#{orderNo}
+			</if>
+			<if test="cardNumber != null and cardNumber != ''">
+				and c.cardNumber = #{cardNumber}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getTravelPartners" resultType="Map"
+		parameterType="Map">
+		select c.* from customer c
+		<where>
+			1 =1 
+			<if test="cardNumber != null and cardNumber != ''">
+				and c.cardNumber = #{cardNumber}
+			</if>
+		</where>
+		order by updt, ctdt DESC
+	</select>
+</mapper>

@@ -1,0 +1,14 @@
+@CHARSET "UTF-8";
+#login_main{max-width:1600px;min-width: 1180px;border-top: 2px solid #cecece;background-repeat: no-repeat;height: 500px;margin-bottom: -28px;}
+#login_main #main{width: 380px;padding:30px; margin: 38px auto 40px auto;text-align: left;height: 400px;background-color: #fff;box-shadow: 0px 0px 5px #DBDBDB;color: #666;}
+#login_main #main .txt{height: 40px;width: 320px;margin: 0 auto;text-align: left;line-height: 40px;}
+#login_main #main input{border: 1px solid #dfdfdf;line-height: 38px;vertical-align: middle;height: 38px;color: #666;margin:10px 0; width: 318px;padding-left: 10px;}
+#login_main #main .p{margin-top: 30px;}
+#login_main #main .l{border-top: 0;margin-bottom: 20px;}
+#login_main #main .inf{width: 320px;margin: 0 auto;}
+#login_main #main .inf img{margin-top: -2px;}
+#login_main #main .inf a{color: #529bff;}
+#confirmBtn{width: 320px;height: 38px;background-color: #529bff;color: #fff;border-radius: 0px; }
+#login_main #main .other{font-size: 12px;width: 318px;margin: 20px auto;}
+
+#login_main #main .e_title{color:#529bff;font-size: 18px;text-align: left; margin-bottom: 25px;}

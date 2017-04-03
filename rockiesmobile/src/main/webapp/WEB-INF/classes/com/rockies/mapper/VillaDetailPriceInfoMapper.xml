@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rockies.mapper.VillaDetailPriceInfoMapper">
+	<resultMap id="BaseResultMap" type="com.rockies.model.VillaDetailPriceInfo">
+		<id column="pid" property="pid" jdbcType="VARCHAR" />
+		<id column="starttime" property="starttime" jdbcType="TIMESTAMP" />
+		<id column="villa_nm" property="villaNm" jdbcType="VARCHAR" />
+		<result column="room_cnt" property="roomCnt" jdbcType="INTEGER" />
+		<result column="enddate" property="enddate" jdbcType="TIMESTAMP" />
+		<result column="people_cnt" property="peopleCnt" jdbcType="INTEGER" />
+		<result column="room_price" property="roomPrice" jdbcType="DECIMAL" />
+		<result column="prepay" property="prepay" jdbcType="DECIMAL" />
+		<result column="mindays" property="mindays" jdbcType="INTEGER" />
+		<result column="show_page" property="showPage" jdbcType="VARCHAR" />
+		<result column="extrabedflg" property="extrabedflg" jdbcType="VARCHAR" />
+		<result column="extra_cnt" property="extraCnt" jdbcType="INTEGER" />
+		<result column="add_price" property="addPrice" jdbcType="DECIMAL" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="del_flg" property="delFlg" jdbcType="VARCHAR" />
+		<result column="order_num" property="orderNum" jdbcType="INTEGER" />
+		<result column="max_cnt" property="maxCnt" jdbcType="INTEGER" />
+		<result column="ctdt" property="ctdt" jdbcType="TIMESTAMP" />
+		<result column="ctuser" property="ctuser" jdbcType="VARCHAR" />
+		<result column="updt" property="updt" jdbcType="TIMESTAMP" />
+		<result column="upuser" property="upuser" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		pid, starttime, villa_nm, room_cnt, enddate, people_cnt,
+		room_price,
+		prepay, mindays,
+		show_page, extrabedflg, extra_cnt,
+		add_price, description, del_flg, order_num,
+		ctdt,
+		ctuser, updt,
+		upuser,id,max_cnt
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="com.rockies.model.VillaDetailPriceInfo">
+		select
+		<include refid="Base_Column_List" />
+		from villa_detailprice
+		where pid = #{pid,jdbcType=VARCHAR}
+		and starttime
+		= #{starttime,jdbcType=TIMESTAMP}
+		and villa_nm =
+		#{villaNm,jdbcType=VARCHAR}
+	</select>
+	<select id="selectAllListByParam" resultMap="BaseResultMap"
+		parameterType="Map">
+		select
+		<include refid="Base_Column_List" />
+		from villa_detailprice
+		<where>
+			del_flg=0
+			<if test="villaNm !=null  and villaNm != ''">
+				and villa_nm like "%"#{villaNm,jdbcType=VARCHAR}"%"
+			</if>
+			<if test="pid !=null and pid != ''">
+				and pid = #{pid,jdbcType=VARCHAR}
+			</if>
+			<if test="show_page !=null and show_page != ''">
+				and show_page = #{show_page,jdbcType=INTEGER}
+			</if>
+			<if test="date !=null and date != ''">
+		<![CDATA[ 
+		and starttime <=#{date,jdbcType=TIMESTAMP}
+		  and enddate >=#{date,jdbcType=TIMESTAMP}
+		]]>
+			</if>
+		</where>
+		order by order_num
+		<if test="offset!=null and limit != ''">
+			limit #{offset},#{limit};
+		</if>
+	</select>
+	<select id="getCount" parameterType="Map" resultType="java.lang.Integer">
+		select count(*) from villa_detailprice
+		<where>
+			del_flg=0
+			<if test="villaNm !=null  and villaNm != ''">
+				and villa_nm like "%"#{villaNm,jdbcType=VARCHAR}"%"
+			</if>
+			<if test="pid !=null and pid != ''">
+				and pid = #{pid,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="com.rockies.model.VillaDetailPriceInfo">
+		delete from
+		villa_detailprice
+		where pid = #{pid,jdbcType=VARCHAR}
+		and starttime =
+		#{starttime,jdbcType=TIMESTAMP}
+		and villa_nm =
+		#{villaNm,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.rockies.model.VillaDetailPriceInfo">
+		insert into villa_detailprice
+		(pid, starttime, villa_nm,
+		room_cnt, enddate, people_cnt,
+		room_price,
+		prepay, mindays,
+		show_page, extrabedflg, extra_cnt,
+		add_price,
+		description, del_flg,
+		order_num, ctdt, ctuser,
+		updt, upuser)
+		values
+		(#{pid,jdbcType=VARCHAR}, #{starttime,jdbcType=TIMESTAMP},
+		#{villaNm,jdbcType=VARCHAR},
+		#{roomCnt,jdbcType=INTEGER},
+		#{enddate,jdbcType=TIMESTAMP}, #{peopleCnt,jdbcType=INTEGER},
+		#{roomPrice,jdbcType=DECIMAL}, #{prepay,jdbcType=DECIMAL},
+		#{mindays,jdbcType=INTEGER},
+		#{showPage,jdbcType=VARCHAR},
+		#{extrabedflg,jdbcType=VARCHAR}, #{extraCnt,jdbcType=INTEGER},
+		#{addPrice,jdbcType=DECIMAL}, #{description,jdbcType=VARCHAR},
+		#{delFlg,jdbcType=VARCHAR},
+		#{orderNum,jdbcType=INTEGER},
+		#{ctdt,jdbcType=TIMESTAMP}, #{ctuser,jdbcType=VARCHAR},
+		#{updt,jdbcType=TIMESTAMP}, #{upuser,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.rockies.model.VillaDetailPriceInfo">
+		insert into villa_detailprice
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="pid != null">
+				pid,
+			</if>
+			<if test="starttime != null">
+				starttime,
+			</if>
+			<if test="villaNm != null">
+				villa_nm,
+			</if>
+			<if test="roomCnt != null">
+				room_cnt,
+			</if>
+			<if test="enddate != null">
+				enddate,
+			</if>
+			<if test="peopleCnt != null">
+				people_cnt,
+			</if>
+			<if test="roomPrice != null">
+				room_price,
+			</if>
+			<if test="prepay != null">
+				prepay,
+			</if>
+			<if test="mindays != null">
+				mindays,
+			</if>
+			<if test="showPage != null">
+				show_page,
+			</if>
+			<if test="extrabedflg != null">
+				extrabedflg,
+			</if>
+			<if test="extraCnt != null">
+				extra_cnt,
+			</if>
+			<if test="addPrice != null">
+				add_price,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="delFlg != null">
+				del_flg,
+			</if>
+			<if test="orderNum != null">
+				order_num,
+			</if>
+			<if test="ctdt != null">
+				ctdt,
+			</if>
+			<if test="ctuser != null">
+				ctuser,
+			</if>
+			<if test="updt != null">
+				updt,
+			</if>
+			<if test="upuser != null">
+				upuser,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="pid != null">
+				#{pid,jdbcType=VARCHAR},
+			</if>
+			<if test="starttime != null">
+				#{starttime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="villaNm != null">
+				#{villaNm,jdbcType=VARCHAR},
+			</if>
+			<if test="roomCnt != null">
+				#{roomCnt,jdbcType=INTEGER},
+			</if>
+			<if test="enddate != null">
+				#{enddate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="peopleCnt != null">
+				#{peopleCnt,jdbcType=INTEGER},
+			</if>
+			<if test="roomPrice != null">
+				#{roomPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="prepay != null">
+				#{prepay,jdbcType=DECIMAL},
+			</if>
+			<if test="mindays != null">
+				#{mindays,jdbcType=INTEGER},
+			</if>
+			<if test="showPage != null">
+				#{showPage,jdbcType=VARCHAR},
+			</if>
+			<if test="extrabedflg != null">
+				#{extrabedflg,jdbcType=VARCHAR},
+			</if>
+			<if test="extraCnt != null">
+				#{extraCnt,jdbcType=INTEGER},
+			</if>
+			<if test="addPrice != null">
+				#{addPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlg != null">
+				#{delFlg,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNum != null">
+				#{orderNum,jdbcType=INTEGER},
+			</if>
+			<if test="ctdt != null">
+				#{ctdt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="ctuser != null">
+				#{ctuser,jdbcType=VARCHAR},
+			</if>
+			<if test="updt != null">
+				#{updt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="upuser != null">
+				#{upuser,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.rockies.model.VillaDetailPriceInfo">
+		update villa_detailprice
+		<set>
+			<if test="roomCnt != null">
+				room_cnt = #{roomCnt,jdbcType=INTEGER},
+			</if>
+			<if test="enddate != null">
+				enddate = #{enddate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="peopleCnt != null">
+				people_cnt = #{peopleCnt,jdbcType=INTEGER},
+			</if>
+			<if test="roomPrice != null">
+				room_price = #{roomPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="prepay != null">
+				prepay = #{prepay,jdbcType=DECIMAL},
+			</if>
+			<if test="mindays != null">
+				mindays = #{mindays,jdbcType=INTEGER},
+			</if>
+			<if test="showPage != null">
+				show_page = #{showPage,jdbcType=VARCHAR},
+			</if>
+			<if test="extrabedflg != null">
+				extrabedflg = #{extrabedflg,jdbcType=VARCHAR},
+			</if>
+			<if test="extraCnt != null">
+				extra_cnt = #{extraCnt,jdbcType=INTEGER},
+			</if>
+			<if test="addPrice != null">
+				add_price = #{addPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlg != null">
+				del_flg = #{delFlg,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNum != null">
+				order_num = #{orderNum,jdbcType=INTEGER},
+			</if>
+			<if test="ctdt != null">
+				ctdt = #{ctdt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="ctuser != null">
+				ctuser = #{ctuser,jdbcType=VARCHAR},
+			</if>
+			<if test="updt != null">
+				updt = #{updt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="upuser != null">
+				upuser = #{upuser,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where pid = #{pid,jdbcType=VARCHAR}
+		and starttime =
+		#{starttime,jdbcType=TIMESTAMP}
+		and villa_nm =
+		#{villaNm,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.rockies.model.VillaDetailPriceInfo">
+		update
+		villa_detailprice
+		set room_cnt = #{roomCnt,jdbcType=INTEGER},
+		enddate =
+		#{enddate,jdbcType=TIMESTAMP},
+		people_cnt =
+		#{peopleCnt,jdbcType=INTEGER},
+		room_price =
+		#{roomPrice,jdbcType=DECIMAL},
+		prepay = #{prepay,jdbcType=DECIMAL},
+		mindays = #{mindays,jdbcType=INTEGER},
+		show_page =
+		#{showPage,jdbcType=VARCHAR},
+		extrabedflg =
+		#{extrabedflg,jdbcType=VARCHAR},
+		extra_cnt =
+		#{extraCnt,jdbcType=INTEGER},
+		add_price = #{addPrice,jdbcType=DECIMAL},
+		description = #{description,jdbcType=VARCHAR},
+		del_flg =
+		#{delFlg,jdbcType=VARCHAR},
+		order_num = #{orderNum,jdbcType=INTEGER},
+		ctdt = #{ctdt,jdbcType=TIMESTAMP},
+		ctuser = #{ctuser,jdbcType=VARCHAR},
+		updt = #{updt,jdbcType=TIMESTAMP},
+		upuser = #{upuser,jdbcType=VARCHAR}
+		where pid = #{pid,jdbcType=VARCHAR}
+		and starttime =
+		#{starttime,jdbcType=TIMESTAMP}
+		and villa_nm =
+		#{villaNm,jdbcType=VARCHAR}
+	</update>
+
+	<select id="selectVillaDetailPriceInfoById" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from villa_detailprice
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="getVillaPriceCal" resultType="Map" parameterType="Map">
+		SELECT "1" as status, p.`idate` as start,p.minprice as feeTotal,p.pid
+		FROM villa_price_cal p WHERE p.`idate` BETWEEN
+		#{beginDate,jdbcType=TIMESTAMP} AND #{endDate,jdbcType=TIMESTAMP} and
+		pid=#{pid,jdbcType=VARCHAR}
+	</select>
+</mapper>
