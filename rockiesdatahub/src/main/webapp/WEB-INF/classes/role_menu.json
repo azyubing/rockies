@@ -1,0 +1,632 @@
+[
+  {
+    "id": "0_1", 
+    "role": "P", 
+    "link": "#", 
+    "name": "平台管理", 
+    "children": [
+      {
+        "id": "0_1_1", 
+        "role": "P", 
+        "link": "#", 
+        "name": "管理商圈", 
+        "children": [
+          {
+            "id": "0_1_1_1", 
+            "role": "P", 
+            "link": "adminSiteApply.html", 
+            "name": "创建商圈", 
+            "children": []
+          }, 
+          {
+            "id": "0_1_1_2", 
+            "role": "P", 
+            "link": "adminSiteApplyList.html", 
+            "name": "审批入驻", 
+            "children": []
+          }, 
+          {
+            "id": "0_1_1_3", 
+            "role": "P", 
+            "link": "siteList.html", 
+            "name": "商圈列表", 
+            "children": []
+          }
+        ]
+      }, 
+      {
+        "id": "0_1_2", 
+        "role": "P", 
+        "link": "#", 
+        "name": "角色和权限", 
+        "children": [
+          {
+            "id": "0_1_2_1", 
+            "role": "P", 
+            "link": "ecAdminRoleList.html", 
+            "name": "角色列表", 
+            "children": []
+          }, 
+          {
+            "id": "0_1_2_2", 
+            "role": "P", 
+            "link": "ecAdminList.html", 
+            "name": "管理员列表", 
+            "children": []
+          }
+        ]
+      }, 
+      {
+        "id": "0_1_3", 
+        "role": "P", 
+        "link": "defaultSpecificationList.html", 
+        "name": "管理系统规格", 
+        "children": []
+      }, 
+      {
+        "id": "0_1_4", 
+        "role": "P", 
+        "link": "shippingAddress.html", 
+        "name": "管理快递公司", 
+        "children": []
+      }
+    ]
+  }, 
+  {
+    "id": "0_2", 
+    "role": "W", 
+    "link": "#", 
+    "name": "商圈管理", 
+    "children": [
+      {
+        "id": "0_2_1", 
+        "role": "W", 
+        "link": "#", 
+        "name": "管理商户", 
+        "children": [
+          {
+            "id": "0_2_1_1", 
+            "role": "W", 
+            "link": "adminStoreApply.html", 
+            "name": "创建商户", 
+            "children": []
+          }, 
+          {
+            "id": "0_2_1_2", 
+            "role": "W", 
+            "link": "adminStoreApplyList.html", 
+            "name": "审批入驻", 
+            "children": []
+          }, 
+          {
+            "id": "0_2_1_3", 
+            "role": "W", 
+            "link": "storeList.html", 
+            "name": "商户列表", 
+            "children": []
+          }
+        ]
+      }, 
+      {
+        "id": "0_2_2", 
+        "role": "W", 
+        "link": "#", 
+        "name": "基础配置信息", 
+        "children": [
+          {
+            "id": "0_2_2_1", 
+            "role": "W", 
+            "link": "shopMall.html", 
+            "name": "商圈运营信息", 
+            "children": []
+          }, 
+          {
+            "id": "0_2_2_5", 
+            "role": "W", 
+            "link": "siteCatalogAdmin.html", 
+            "name": "定义商品分类", 
+            "children": []
+          }, 
+          {
+            "id": "0_2_2_2", 
+            "role": "W", 
+            "link": "customSpecificationList.html", 
+            "name": "属性管理", 
+            "children": []
+          },
+          {
+            "id": "0_2_2_3",
+            "role": "W",
+            "link": "productAttributeAdmin.html",
+            "name": "规格管理",
+            "children": []
+          },
+          {
+            "id": "0_2_2_4", 
+            "role": "W", 
+            "link": "alipayList.html", 
+            "name": "配置支付", 
+            "children": []
+          }
+        ]
+      }, 
+      {
+        "id": "0_2_3", 
+        "role": "W", 
+        "link": "#", 
+        "name": "业务运营", 
+        "children": [
+          {
+            "id": "0_2_3_1", 
+            "role": "W", 
+            "link": "ecSiteAdminList.html", 
+            "name": "商圈管理员列表", 
+            "children": []
+          }, 
+          {
+            "id": "0_2_3_2", 
+            "role": "W", 
+            "link": "productCatalogVerifyList.html", 
+            "name": "审核商品", 
+            "children": []
+          }, 
+          {
+            "id": "0_2_3_3", 
+            "role": "W", 
+            "link": "siteEvaluationAndConsultingList.html", 
+            "name": "评价/咨询管理", 
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "0_2_5", 
+        "role": "W", 
+        "link": "#", 
+        "name": "推荐管理", 
+        "children": [
+          {
+            "id": "0_2_5_1", 
+            "role": "W", 
+            "link": "eventsAdminList.html", 
+            "name": "管理专题页", 
+            "children": []
+          }, 
+          {
+            "id": "0_2_5_2", 
+            "role": "W", 
+            "link": "recommendAdminList.html", 
+            "name": "管理推荐位", 
+            "children": []
+          }, 
+          {
+            "id": "0_2_5_3", 
+            "role": "W", 
+            "link": "recommendBindingProduct.html", 
+            "name": "推荐商品", 
+            "children": []
+          }, 
+          {
+            "id": "0_2_5_4", 
+            "role": "W", 
+            "link": "recommendProductList.html", 
+            "name": "管理推荐位商品", 
+            "children": []
+          }
+        ]
+      }, 
+      {
+        "id": "0_2_4", 
+        "role": "W", 
+        "link": "#", 
+        "name": "会员管理", 
+        "children": [
+	        {
+	        "id": "0_2_4_3", 
+	        "role": "W", 
+	        "link": "messageInfoList.html", 
+	        "name": "站内信息管理", 
+	        "children": [
+	          {
+	            "id": "0_2_4_3_2", 
+	            "role": "W", 
+	            "link": "messageInfoList.html", 
+	            "name": "消息管理", 
+	            "children": []
+	          },
+	          {
+	            "id": "0_2_4_3_1", 
+	            "role": "W", 
+	            "link": "sendMessage.html", 
+	            "name": "发送消息", 
+	            "children": []
+	          }
+	        ]
+	      },
+          {
+            "id": "0_2_4_1", 
+            "role": "W", 
+            "link": "customerInfoList.html", 
+            "name": "会员列表", 
+            "children": []
+          }, 
+          {
+            "id": "0_2_4_2", 
+            "role": "W", 
+            "link": "#", 
+            "name": "查询会员", 
+            "children": []
+          }
+        ]
+      }     
+    ]
+  }, 
+  {
+    "id": "0_3", 
+    "role": "S", 
+    "link": "#", 
+    "name": "商户管理", 
+    "children": [
+      {
+        "id": "0_3_1", 
+        "role": "S", 
+        "link": "#", 
+        "name": "商户运营", 
+        "children": [
+          {
+            "id": "0_3_1_1", 
+            "role": "S", 
+            "link": "storeConfiguration.html", 
+            "name": "运营信息", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_1_2", 
+            "role": "S", 
+            "link": "storeEvaluationAndConsultingList.html", 
+            "name": "评价/咨询", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_1_3", 
+            "role": "S", 
+            "link": "ecStoreAdminList.html", 
+            "name": "管理后台用户", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_1_4", 
+            "role": "S", 
+            "link": "#", 
+            "name": "运费模板", 
+            "children": []
+          }
+        ]
+      }, 
+      {
+        "id": "0_3_2", 
+        "role": "S", 
+        "link": "#", 
+        "name": "商品运营", 
+        "children": [
+          {
+            "id": "0_3_2_1", 
+            "role": "S", 
+            "link": "storeCatalogAdmin.html", 
+            "name": "维护分类", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_2_2", 
+            "role": "S", 
+            "link": "toAddProduct.html", 
+            "name": "创建简单商品", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_2_3", 
+            "role": "S", 
+            "link": "toAddMultiProduct.html",
+            "name": "创建可配置商品",
+            "children": []
+          }, 
+          {
+            "id": "0_3_2_4", 
+            "role": "S", 
+            "link": "storeProductStorageList.html",
+            "name": "仓库中的商品", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_2_5", 
+            "role": "S", 
+            "link": "storeProductPendingList.html",
+            "name": "待审批的商品", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_2_6", 
+            "role": "S", 
+            "link": "storeProductOnlineList.html",
+            "name": "上架的商品", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_2_7", 
+            "role": "S", 
+            "link": "storeProductOperating.html", 
+            "name": "运营商品", 
+            "children": []
+          }
+        ]
+      }, 
+      {
+        "id": "0_3_3", 
+        "role": "S", 
+        "link": "#", 
+        "name": "处理订单", 
+        "children": [
+          {
+            "id": "0_3_3_1", 
+            "role": "S", 
+            "link": "allOrderInfoList.html", 
+            "name": "订单列表", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_3_2", 
+            "role": "S", 
+            "link": "orderPaymentList.html", 
+            "name": "查看待付款", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_3_3", 
+            "role": "S", 
+            "link": "orderDeliveryList.html", 
+            "name": "处理待发货", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_3_4", 
+            "role": "S", 
+            "link": "orderReceiptList.html", 
+            "name": "查看已发货", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_3_5", 
+            "role": "S", 
+            "link": "orderFinalPaymentList.html", 
+            "name": "处理已收货", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_3_6", 
+            "role": "S", 
+            "link": "orderSuccessList.html", 
+            "name": "处理已成交", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_3_7", 
+            "role": "S", 
+            "link": "updateOrderInfo.html", 
+            "name": "查看订单详情", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_3_8", 
+            "role": "S", 
+            "link": "specialOrderInfo.html", 
+            "name": "处理例外订单", 
+            "children": []
+          }
+        ]
+      }, 
+      {
+        "id": "0_3_4", 
+        "role": "S", 
+        "link": "#", 
+        "name": "物流发货", 
+        "children": [
+          {
+            "id": "0_3_4_1", 
+            "role": "S", 
+            "link": "gotoShipmentList.html", 
+            "name": "运单列表", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_4_2", 
+            "role": "S", 
+            "link": "gotoShipmentList.html?status=0",
+            "name": "处理待发货", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_4_3", 
+            "role": "S", 
+            "link": "gotoShipmentList.html?status=1",
+            "name": "查看已发货", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_4_4", 
+            "role": "S", 
+            "link": "gotoShipmentList.html?status=2",
+            "name": "处理已收货", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_4_5", 
+            "role": "S", 
+            "link": "gotoShipmentList.html?status=3",
+            "name": "查看已完成", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_4_6", 
+            "role": "S", 
+            "link": "detailShipmentSearch.html", 
+            "name": "运单详情", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_4_7", 
+            "role": "S", 
+            "link": "specialShipment.html", 
+            "name": "处理例外运单", 
+            "children": []
+          }
+        ]
+      }, 
+      {
+        "id": "0_3_5", 
+        "role": "S", 
+        "link": "#", 
+        "name": "退货处理", 
+        "children": [
+          {
+            "id": "0_3_5_1", 
+            "role": "S", 
+            "link": "allSendBackList.html", 
+            "name": "退换货列表", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_5_2", 
+            "role": "S", 
+            "link": "allSendBackList.html?status=1",
+            "name": "审批退换货", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_5_3", 
+            "role": "S", 
+            "link": "allSendBackList.html?status=2",
+            "name": "查看待退货", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_5_4", 
+            "role": "S", 
+            "link": "allSendBackList.html?status=5",
+            "name": "接受退货", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_5_5", 
+            "role": "S", 
+            "link": "allSendBackList.html?status=6",
+            "name": "处理退款", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_5_6", 
+            "role": "S", 
+            "link": "allSendBackList.html?status=4",
+            "name": "查看已完成", 
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "0_3_6", 
+        "role": "S", 
+        "link": "#", 
+        "name": "推荐管理", 
+        "children": [
+          {
+            "id": "0_3_6_1", 
+            "role": "S", 
+            "link": "storeEventsAdminList.html", 
+            "name": "管理专题页", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_6_2", 
+            "role": "S", 
+            "link": "storeRecommendAdminList.html", 
+            "name": "管理推荐位", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_6_3", 
+            "role": "S", 
+            "link": "storeRecommendBindingProduct.html", 
+            "name": "推荐商品", 
+            "children": []
+          }, 
+          {
+            "id": "0_3_6_4", 
+            "role": "S", 
+            "link": "storeRecommendProductList.html", 
+            "name": "管理推荐位商品", 
+            "children": []
+          }
+        ]
+      }
+    ]
+  }, 
+  {
+    "id": "0_4", 
+    "role": "PWS", 
+    "link": "#", 
+    "name": "统计报表", 
+    "children": [
+      {
+        "id": "0_4_1", 
+        "role": "PW", 
+        "link": "#", 
+        "name": "经营概况", 
+        "children": [
+          {
+            "id": "0_4_1_1", 
+            "role": "P", 
+            "link": "platformHome.html", 
+            "name": "平台交易统计", 
+            "children": []
+          }, 
+          {
+            "id": "0_4_1_2", 
+            "role": "W", 
+            "link": "home.html", 
+            "name": "商圈交易统计", 
+            "children": []
+          }
+        ]
+      }, 
+      {
+        "id": "0_4_2", 
+        "role": "PWS", 
+        "link": "#", 
+        "name": "销售统计", 
+        "children": [
+          {
+            "id": "0_4_2_1", 
+            "role": "P", 
+            "link": "reportStatistic.html", 
+            "name": "平台订单统计", 
+            "children": []
+          }, 
+          {
+            "id": "0_4_2_2", 
+            "role": "W", 
+            "link": "reportStatistic.html", 
+            "name": "商圈订单统计", 
+            "children": []
+          }, 
+          {
+            "id": "0_4_2_3", 
+            "role": "S", 
+            "link": "reportStatistic.html", 
+            "name": "商户订单统计", 
+            "children": []
+          }
+        ]
+      }
+    ]
+  }
+]
+

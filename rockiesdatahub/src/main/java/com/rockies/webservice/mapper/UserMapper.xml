@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.rockies.webservice.mapper.UserMapper">
+    
+    <insert id="saveUser" parameterType="com.rockies.webservice.model.User">
+    	INSERT INTO r_user(`user_name`,`password`,`email`,`mobile_phone`,`telephone`,`status`,
+             `agree`,`photo`,`real_name`,`birthday`,`id_card`,`passport_number`,`passport_imagine`,
+             `country_id`,`province_id`,`city_id`,`active_code`,`weibo_id`,`qq_id`,`weichat_id`,`country_name`,
+             `province_name`,`city_name`,`address`,`default_contact_name`,`default_contact_phone`,`default_email_address`,
+             `registered_residence`,`create_date`,`update_date`)
+	VALUES (#{userName},#{password},#{email},#{mobilePhone},#{telephone},#{status},
+             #{agree},#{photo},#{realName},#{birthday},#{idCard},#{passportNumber},#{passportImagine},
+             #{countryId},#{provinceId},#{cityId},#{activeCode},#{createDate},#{updateDate},);
+    </insert>
+    
+    <update id="modifyUser" parameterType="com.rockies.webservice.model.User">
+    	update r_user
+    	<set>
+    		<if test="password!=null and password!=''">
+    			password = #{password},
+    		</if>
+    		<if test="email!=null and email!=''">
+    			email = #{email},
+    		</if>
+    		<if test="mobile_phone!=null and mobile_phone!=''">
+    			mobile_phone = #{mobilePhone},
+    		</if>
+    		<if test="photo!=null and photo!=''">
+    			photo = #{photo},
+    		</if>
+    		<if test="real_name!=null and real_name!=''">
+    			real_name = #{realName},
+    		</if>
+    		<if test="birthday!=null">
+    			birthday = #{birthday},
+    		</if>
+    		<if test="id_card!=null and id_card!=''">
+    			id_card = #{idCard},
+    		</if>
+    		<if test="passport_number!=null and passport_number!=''">
+    			passport_number = #{passportNumber},
+    		</if>
+    		<if test="passport_imagine!=null and passport_imagine!=''">
+    			passport_imagine = #{passportImg},
+    		</if>
+    		<if test="country_id!=null and country_id!=''">
+    			country_id = #{countryId},
+    		</if>
+    		<if test="city_id!=null and city_id!=''">
+    			city_id = #{cityId},
+    		</if>
+    		<if test="province_id!=null and province_id!=''">
+    			province_id = #{provinceId},
+    		</if>
+    		<if test="updt!=null and updt!=''">
+    			create_date = #{createDate}
+    		</if>
+    		<if test="updt!=null and updt!=''">
+    			update_date = #{updateDate}
+    		</if>
+    	</set>
+    	where id=#{id}
+    </update>
+    
+    <select id="getAllList" resultType="com.rockies.webservice.model.User">
+        	select * from r_user
+    </select>
+    
+    <select id="getUserById" resultType="com.rockies.webservice.model.User" parameterType="java.lang.Integer">
+    	select * from r_user where id=#{id}
+    </select>
+    
+    <select id="userNameExit" resultType="java.lang.Integer" parameterType="java.lang.String">
+    	SELECT COUNT(*) FROM r_user WHERE user_name = #{userName}
+    </select>
+    <select id="telExit" resultType="java.lang.Integer" parameterType="java.lang.String">
+    	SELECT COUNT(*) FROM r_user WHERE mobile_phone = #{mobilePhone}
+    </select>
+    <select id="emailExit" resultType="java.lang.Integer" parameterType="java.lang.String">
+    	SELECT COUNT(*) FROM r_user WHERE email = #{email}
+    </select>
+    
+    <select id="login" resultType="com.rockies.webservice.model.User" parameterType="Map">
+    	SELECT * FROM r_user WHERE user_name = #{userName} and password=#{password}
+    </select>
+    
+    <update id="activateUser" parameterType="Map">
+   	 update r_user set status=0 where user_name=#{userName} and active_code=#{activeCode}
+    
+    </update>
+       
+    <update id="updatePW" parameterType="com.rockies.webservice.model.User">
+    	update r_user set password = #{password} where id=#{id}
+    </update>
+    
+</mapper>
