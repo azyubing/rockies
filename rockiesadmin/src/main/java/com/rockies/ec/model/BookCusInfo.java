@@ -2,7 +2,6 @@ package com.rockies.ec.model;
 
 /**
  * 预定人信息
- * @author hyh
  *
  */
 public class BookCusInfo extends BaseModel {

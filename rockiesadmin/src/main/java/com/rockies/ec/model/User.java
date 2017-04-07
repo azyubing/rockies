@@ -4,7 +4,6 @@ import java.util.Date;
 
 /**
  * 用户
- * @author hyh
  *
  */
 public class User {

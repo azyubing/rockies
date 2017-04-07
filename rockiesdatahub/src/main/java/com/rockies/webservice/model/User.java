@@ -22,6 +22,13 @@ public class User {
 	private int provinceId;// 护照省份id
 	private int cityId;// 护照城市id
 	private String activeCode;
+	private String weiboId;
+	private String qqId;
+	private String wechatId;
+	private String countryName;
+	private String provinceName;
+	private String cityName;
+	private String address; 
 	private Date createDate;// 创建时间
 	private Date updateDate;// 修改时间
 
@@ -97,6 +104,10 @@ public class User {
 		this.status = status;
 	}
 
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
 	public int getAgree() {
 		return agree;
 	}
@@ -185,6 +196,58 @@ public class User {
 		this.activeCode = activeCode;
 	}
 
+	public String getWeiboId() {
+		return weiboId;
+	}
+
+	public void setWeiboId(String weiboId) {
+		this.weiboId = weiboId;
+	}
+
+	public String getQqId() {
+		return qqId;
+	}
+
+	public void setQqId(String qqId) {
+		this.qqId = qqId;
+	}
+
+	public String getWechatId() {
+		return wechatId;
+	}
+
+	public void setWechatId(String wechatId) {
+		this.wechatId = wechatId;
+	}
+
+	public String getCountryName() {
+		return countryName;
+	}
+
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
+	}
+
+	public String getProvinceName() {
+		return provinceName;
+	}
+
+	public void setProvinceName(String provinceName) {
+		this.provinceName = provinceName;
+	}
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+	
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + userName + ", password=" + password + ", email=" + email

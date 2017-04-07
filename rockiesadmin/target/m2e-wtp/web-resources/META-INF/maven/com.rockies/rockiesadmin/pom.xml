@@ -8,23 +8,33 @@
   <name>rockiesadmin Maven Webapp</name>
   <url>http://maven.apache.org</url>
    
+  <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.version>4.2.5.RELEASE</spring.version>
+        <jackson.version>2.5.3</jackson.version>
+  </properties>
+  
   <dependencies>   
         <dependency>
     		<groupId>org.apache.maven.plugins</groupId>
     		<artifactId>maven-resources-plugin</artifactId>
     		<version>2.6</version>
 		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
-  		<!--  
-  		<dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
-  		</dependency>
-        -->
         
+        <!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-mapper-asl -->
+		<dependency>
+   			 <groupId>org.codehaus.jackson</groupId>
+    		 <artifactId>jackson-mapper-asl</artifactId>
+    		 <version>1.9.13</version>
+		</dependency>
+		
+        <dependency>
+    		<groupId>com.fasterxml.jackson.core</groupId>
+    		<artifactId>jackson-databind</artifactId>
+    		<version>${jackson.version}</version>
+		</dependency>
+		
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->       
         <dependency>
     		<groupId>org.slf4j</groupId>
@@ -67,12 +77,6 @@
    			 <version>2.6.2</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-mapper-asl -->
-		<dependency>
-   			 <groupId>org.codehaus.jackson</groupId>
-    		 <artifactId>jackson-mapper-asl</artifactId>
-    		 <version>1.9.13</version>
-		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
 		<dependency>
@@ -144,6 +148,12 @@
     		<version>1.3</version>
 		</dependency>
 
+  		<dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+  		</dependency>
     
 		<!-- Spring dependencies -->
         <dependency>
@@ -214,14 +224,8 @@
         </dependency>
   </dependencies>
   
-  <properties>
-        <java.version>1.8</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>4.2.5.RELEASE</spring.version>
-  </properties>
-  
   <build>
-    <finalName>rockies-mobile</finalName>
+    <finalName>rockiesadmin</finalName>
     <defaultGoal>install</defaultGoal>  	
     
 	<plugins>
@@ -258,25 +262,6 @@
           		<failOnMissingWebXml>false</failOnMissingWebXml>       		
         	</configuration>
       	</plugin>
-
-        <!--  
-		<plugin>
-            <artifactId>maven-clean-plugin</artifactId>
-            <version>2.5</version>     
-            <configuration>
-                <filesets>
-                   <fileset>
-                      <directory>WebContent/WEB-INF</directory>
-                      <includes>
-                         <include>lib</include>
-                         <include>classes</include>
-                      </includes>
-                      <followSymlinks>false</followSymlinks>
-                   </fileset>
-                </filesets>
-            </configuration>
-         </plugin>
-         -->
          
 	  	<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
@@ -297,6 +282,28 @@
 				</execution>
 			</executions>
 		</plugin>		
+		
+		<plugin>
+            <artifactId>maven-clean-plugin</artifactId>
+            <version>2.5</version>     
+            <configuration>
+                <filesets>
+                   <fileset>
+                      <directory>${basedir}/src/main/webapp/WEB-INF</directory>
+                      <includes>
+                         <include>lib</include>
+                         <include>classes</include>
+                      </includes>
+                      <excludes>
+                         <exclude>*.properties</exclude>
+                         <exclude>*.xml</exclude>                       
+                      </excludes>
+                      <followSymlinks>false</followSymlinks>
+                   </fileset>
+                </filesets>
+            </configuration>
+         </plugin>
+         
      </plugins>
   </build>
   

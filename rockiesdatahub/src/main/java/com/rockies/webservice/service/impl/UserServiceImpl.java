@@ -1,6 +1,5 @@
 package com.rockies.webservice.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,11 +18,7 @@ public class UserServiceImpl implements IUserService {
 	
 	@Override
 	public List<User> getAllUsers() {
-		List<User> userList = new ArrayList<User>();
-		for(Object user: userMapper.getAllList()){
-			userList.add((User)user);
-		}	
-		return userList;
+		return userMapper.getAllList();
 	}
 	
 	@Override

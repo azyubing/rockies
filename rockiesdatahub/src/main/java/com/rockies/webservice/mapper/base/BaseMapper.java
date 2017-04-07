@@ -21,9 +21,10 @@ public interface BaseMapper {
 	public void deleteByPrimaryKey(int id);
 	/**
 	 * 获取对象集合
+	 * @param <T>
 	 * @return
 	 */
-	public List<Object> getAllList();
+	public <T> List<T> getAllList();
 	
 	/**
 	 * 获取对象集合
