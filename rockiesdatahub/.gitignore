@@ -2,4 +2,4 @@
 # http://git-scm.com/docs/gitignore
 
 target/
-
+src/main/webapp/WEB-INF/classes
