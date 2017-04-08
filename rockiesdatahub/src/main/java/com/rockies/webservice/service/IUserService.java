@@ -3,9 +3,10 @@ package com.rockies.webservice.service;
 import java.util.List;
 import java.util.Map;
 
+import com.rockies.webservice.service.base.BaseService;
 import com.rockies.webservice.model.User;
 
-public interface IUserService {
+public interface IUserService extends BaseService<User> {
 	/**
 	 * 添加用户 注册
 	 * @param user
@@ -27,6 +28,8 @@ public interface IUserService {
 
 	public List<User> getAllUsers();
 	
+	public List<User> queryUsers(User user);
+
 	public boolean userNameExit(String username);
 
 	public User login(Map<String, Object> resMap);
@@ -38,5 +41,6 @@ public interface IUserService {
 	public boolean activateUser(Map<String, Object> resMap);
 
 	public int updatePW(User user);
+	
 }
 

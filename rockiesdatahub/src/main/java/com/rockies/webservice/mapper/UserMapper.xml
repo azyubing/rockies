@@ -4,6 +4,30 @@
 	
 <mapper namespace="com.rockies.webservice.mapper.UserMapper">
     
+    <resultMap type="com.rockies.webservice.model.User" id="userResultMap">  
+        <id     property="id"        column="id" javaType="long" jdbcType="BIGINT"/>  
+        <result property="userName"  column="user_name" javaType="String" jdbcType="VARCHAR"/>  
+        <result property="mobilePhone"  column="mobile_phone" javaType="String" jdbcType="VARCHAR" />    
+        <result property="telephone"  column="telephone" javaType="String" jdbcType="VARCHAR" />  
+        <result property="realName"  column="real_name" javaType="String" jdbcType="VARCHAR" />   
+        <result property="idCard"  column="id_card" javaType="String" jdbcType="VARCHAR" />  
+        <result property="passportNumber"  column="passport_number" javaType="String" jdbcType="VARCHAR" />  
+        <result property="passportImagine"  column="passport_imagine" javaType="String" jdbcType="VARCHAR" />  
+        <result property="countryId"  column="country_id" javaType="int" jdbcType="INTEGER" />  
+        <result property="provinceId"  column="province_id" javaType="int" jdbcType="INTEGER" />  
+        <result property="cityId"  column="city_id" javaType="int" jdbcType="INTEGER" />  
+        <result property="activeCode"  column="active_code" javaType="String" jdbcType="VARCHAR" />  
+        <result property="weiboId"  column="weibo_id" javaType="String" jdbcType="VARCHAR" />  
+        <result property="qqId"  column="qq_id" javaType="String" jdbcType="VARCHAR" />  
+        <result property="weichatId"  column="weichat_id" javaType="String" jdbcType="VARCHAR" />  
+        <result property="countryName"  column="country_name" javaType="String" jdbcType="VARCHAR" />  
+        <result property="cityName"  column="city_name" javaType="String" jdbcType="VARCHAR" />  
+        <result property="provinceName"  column="province_name" javaType="String" jdbcType="VARCHAR" />  
+        <result property="cityName"  column="city_name" javaType="String" jdbcType="VARCHAR" />  
+        <result property="createDate"  column="create_date" javaType="Date" jdbcType="DATE" />  
+        <result property="updateDate"  column="update_date" javaType="Date" jdbcType="DATE" />           
+    </resultMap> 
+    
     <insert id="saveUser" parameterType="com.rockies.webservice.model.User">
     	INSERT INTO r_user(`user_name`,`password`,`email`,`mobile_phone`,`telephone`,`status`,
              `agree`,`photo`,`real_name`,`birthday`,`id_card`,`passport_number`,`passport_imagine`,
@@ -18,46 +42,49 @@
     <update id="modifyUser" parameterType="com.rockies.webservice.model.User">
     	update r_user
     	<set>
+    	    <if test="userName!=null and userName!=''">
+    			user_name = #{userName},
+    		</if>
     		<if test="password!=null and password!=''">
     			password = #{password},
     		</if>
     		<if test="email!=null and email!=''">
     			email = #{email},
     		</if>
-    		<if test="mobile_phone!=null and mobile_phone!=''">
+    		<if test="mobilePhone!=null and mobilePhone!=''">
     			mobile_phone = #{mobilePhone},
     		</if>
     		<if test="photo!=null and photo!=''">
     			photo = #{photo},
     		</if>
-    		<if test="real_name!=null and real_name!=''">
+    		<if test="realName!=null and realName!=''">
     			real_name = #{realName},
     		</if>
     		<if test="birthday!=null">
     			birthday = #{birthday},
     		</if>
-    		<if test="id_card!=null and id_card!=''">
+    		<if test="idCard!=null and idCard!=''">
     			id_card = #{idCard},
     		</if>
-    		<if test="passport_number!=null and passport_number!=''">
+    		<if test="passportNumber!=null and passportNumber!=''">
     			passport_number = #{passportNumber},
     		</if>
-    		<if test="passport_imagine!=null and passport_imagine!=''">
-    			passport_imagine = #{passportImg},
+    		<if test="passportImagine!=null and passportImagine!=''">
+    			passport_imagine = #{passportImagine},
     		</if>
-    		<if test="country_id!=null and country_id!=''">
+    		<if test="countryId!=null and countryId!=''">
     			country_id = #{countryId},
     		</if>
-    		<if test="city_id!=null and city_id!=''">
+    		<if test="cityId!=null and cityId!=''">
     			city_id = #{cityId},
     		</if>
-    		<if test="province_id!=null and province_id!=''">
+    		<if test="provinceId!=null and provinceId!=''">
     			province_id = #{provinceId},
     		</if>
-    		<if test="updt!=null and updt!=''">
+    		<if test="createDate!=null">
     			create_date = #{createDate}
     		</if>
-    		<if test="updt!=null and updt!=''">
+    		<if test="updateDate!=null">
     			update_date = #{updateDate}
     		</if>
     	</set>
@@ -66,6 +93,24 @@
     
     <select id="getAllList" resultType="com.rockies.webservice.model.User">
         	select * from r_user
+    </select>
+    
+    <select id="queryUsers" parameterType="com.rockies.webservice.model.User">
+    	select * from r_user where 
+    	<set>
+    		<if test="id!=null and id!=''">
+    			id = #{id} or 
+    		</if>
+    		<if test="user_name!=null and user_name!=''">
+    			user_name = #{userName} or 
+    		</if>
+    		<if test="email!=null and email!=''">
+    			email = #{email} or
+    		</if>
+    		<if test="mobile_phone!=null and mobile_phone!=''">
+    			mobile_phone = #{mobilePhone}
+    		</if>
+    	</set>
     </select>
     
     <select id="getUserById" resultType="com.rockies.webservice.model.User" parameterType="java.lang.Integer">
@@ -87,12 +132,16 @@
     </select>
     
     <update id="activateUser" parameterType="Map">
-   	 update r_user set status=0 where user_name=#{userName} and active_code=#{activeCode}
-    
+   	 update r_user set status=0 where user_name=#{userName} and active_code=#{activeCode}   
     </update>
        
     <update id="updatePW" parameterType="com.rockies.webservice.model.User">
     	update r_user set password = #{password} where id=#{id}
     </update>
+    
+    <!-- 根据主键删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    	delete from r_user where id=#{id}
+    </delete>
     
 </mapper>

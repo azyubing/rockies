@@ -22,6 +22,11 @@ public class UserServiceImpl implements IUserService {
 	}
 	
 	@Override
+	public List<User> queryUsers(User user) {
+		return userMapper.queryUsers(user);
+	}
+	
+	@Override
 	public void saveUser(User user) {
 		userMapper.saveUser(user);
 	}
@@ -75,12 +80,51 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public boolean activateUser(Map<String, Object> resMap) {
-		//User user = userMapper.login(resMap);
 		int i = userMapper.activateUser(resMap);
 		if(i==1){
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public int insert(User user) {
+		return userMapper.insert(user);
+	}
+
+	@Override
+	public void deleteByPrimaryKey(long id) {
+		userMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public List<User> getAllList() {
+		return userMapper.getAllList();
+	}
+
+	@Override
+	public List<User> getAllListByMap(Map map) {
+		return userMapper.getAllListByMap(map);
+	}
+
+	@Override
+	public List<Map<String, Object>> getAllListMap(Map map) {
+		return userMapper.getAllListMap(map);
+	}
+
+	@Override
+	public User getOneByPrimaryKey(int id) {
+		return (User) userMapper.getOneByPrimaryKey(id);
+	}
+
+	@Override
+	public long getCount(Map map) {
+		return userMapper.getCount(map);
+	}
+
+	@Override
+	public void updateObject(Object o) {
+		userMapper.updateObject(o);
 	}
 
 

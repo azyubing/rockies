@@ -1,6 +1,7 @@
 package com.rockies.webservice.mapper;
 
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
@@ -40,6 +41,9 @@ public interface UserMapper extends BaseMapper {
 	public int emailExit(String email);
 
 	public int updatePW(User user);
+	
+	public List<User> queryUsers(User user);
+	
 }
 
 

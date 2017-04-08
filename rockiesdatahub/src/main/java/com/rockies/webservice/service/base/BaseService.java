@@ -5,32 +5,36 @@ import java.util.Map;
 
 /**
  * 基础service
+ * @param <T>
  *
  */
-public interface BaseService {
+public interface BaseService<T> {
+	
 	/**
 	 * 添加
 	 * @param o
 	 * @return
 	 */
-	public int insert(Object o);
+	public int insert(T t);
+	
 	/**
 	 * 根据主键删除
 	 * @param id
 	 */
-	public void deleteByPrimaryKey(int id);
+	public void deleteByPrimaryKey(long id);
+	
 	/**
 	 * 获取对象集合
 	 * @return
 	 */
-	public List<Object> getAllList();
+	public List<T> getAllList();
 	
 	/**
 	 * 获取对象集合
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")
-	public List<Object> getAllListByMap(Map map);
+	public List<T> getAllListByMap(Map map);
 	
 	/**
 	 * 获取map集合
@@ -45,7 +49,7 @@ public interface BaseService {
 	 * @param id
 	 * @return
 	 */
-	public Object getOneByPrimaryKey(int id);
+	public T getOneByPrimaryKey(int id);
 	
 	/**
 	 * 总记录数

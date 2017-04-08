@@ -18,7 +18,7 @@ public interface BaseMapper {
 	 * 根据主键删除
 	 * @param id
 	 */
-	public void deleteByPrimaryKey(int id);
+	public int deleteByPrimaryKey(long id);
 	/**
 	 * 获取对象集合
 	 * @param <T>
@@ -31,7 +31,7 @@ public interface BaseMapper {
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")
-	public List<Object> getAllListByMap(Map map);
+	public <T> List<T> getAllListByMap(Map map);
 	
 	/**
 	 * 获取map集合
