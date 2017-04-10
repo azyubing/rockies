@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.Cache;
 import org.springframework.cache.support.SimpleValueWrapper;
 import org.springframework.dao.DataAccessException;
@@ -14,6 +16,8 @@ import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 
 public class RedisUtil implements Cache {
+	
+	private static Logger logger = LoggerFactory.getLogger(RedisUtil.class);
 
 	private RedisTemplate<String, Object> redisTemplate;
 	private String name;
@@ -45,7 +49,7 @@ public class RedisUtil implements Cache {
 	 */
 	@Override
 	public ValueWrapper get(Object key) {
-		System.out.println("get key");
+		logger.info("==> Getting key: "+key);
 		final String keyf = key.toString();
 		Object object = null;
 		object = redisTemplate.execute(new RedisCallback<Object>() {
@@ -66,7 +70,7 @@ public class RedisUtil implements Cache {
 	 */
 	@Override
 	public void put(Object key, Object value) {
-		System.out.println("put key");
+		logger.info("==> Putting key: "+key, "value: "+value);
 		final String keyf = key.toString();
 		final Object valuef = value;
 		final long liveTime = 86400;
@@ -120,7 +124,7 @@ public class RedisUtil implements Cache {
 	 */
 	@Override
 	public void evict(Object key) {
-		System.out.println("del key");
+		logger.info("==> Deleting key: "+key);
 		final String keyf = key.toString();
 		redisTemplate.execute(new RedisCallback<Long>() {
 			public Long doInRedis(RedisConnection connection) throws DataAccessException {
@@ -134,7 +138,7 @@ public class RedisUtil implements Cache {
 	 */
 	@Override
 	public void clear() {
-		System.out.println("clear key");
+		logger.info("==> Clearing keys ... ... ");
 		redisTemplate.execute(new RedisCallback<String>() {
 			public String doInRedis(RedisConnection connection) throws DataAccessException {
 				connection.flushDb();

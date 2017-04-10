@@ -14,7 +14,8 @@
         <spring.version>4.2.5.RELEASE</spring.version>
         <jackson.version>2.6.5</jackson.version>
         <slf4j.version>1.7.21</slf4j.version>
-        <log4j.version>2.7</log4j.version>
+        <logback.version>1.1.7</logback.version>
+        <!--  <log4j.version>2.7</log4j.version> -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     	<!-- The main class to start by executing java -jar 
     	<start-class>com.rockies.webservice.Application</start-class>
@@ -100,42 +101,21 @@
 		</dependency>
   				
   		<dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-            <version>${slf4j.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-web</artifactId>
-            <version>${log4j.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-		<dependency>
-    		<groupId>log4j</groupId>
-    		<artifactId>log4j</artifactId>
-    		<version>1.2.17</version>
-		</dependency>
+      		<groupId>org.slf4j</groupId>
+      		<artifactId>slf4j-api</artifactId>
+      		<version>${slf4j.version}</version>
+    	</dependency>
+    	<dependency>
+      		<groupId>ch.qos.logback</groupId>
+      		<artifactId>logback-classic</artifactId>
+      		<version>${logback.version}</version>
+    	</dependency>
+    	<dependency>
+      		<groupId>ch.qos.logback</groupId>
+      		<artifactId>logback-core</artifactId>
+      		<version>${logback.version}</version>
+    	</dependency>
+
 
 		<dependency>
     		<groupId>commons-codec</groupId>

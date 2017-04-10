@@ -14,7 +14,7 @@
         <property name="numTestsPerEvictionRun" value="3"></property>
         <property name="timeBetweenEvictionRunsMillis" value="60000"></property>
         <property name="maxWaitMillis" value="20000" />
-        <property name="testOnBorrow" value="false" />
+        <property name="testOnBorrow" value="false" />          
     </bean>
     
     <!-- 在此将sentinel配置集成到redis连接池中 -->

@@ -10,8 +10,12 @@
   http://www.springframework.org/schema/mvc  http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd 
   http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.2.xsd">
- 
+  
   <context:component-scan base-package="com.rockies" /> 
+  <context:component-scan base-package="com.rockies.webservice" />   
+  <context:annotation-config/>   
+  <mvc:annotation-driven />  
+  <cache:annotation-driven/>
 	
    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
 	    <property name="ignoreResourceNotFound" value="true" />  
