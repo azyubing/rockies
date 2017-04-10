@@ -3,6 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="com.rockies.webservice.mapper.UserMapper">
+	<!--  <cache eviction="LRU" type="com.rockies.redis.RedisCache" />  -->
     
     <resultMap type="com.rockies.webservice.model.User" id="userResultMap">  
         <id     property="id"        column="id" javaType="long" jdbcType="BIGINT"/>  

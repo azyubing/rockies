@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.rockies.webservice.mapper.UserMapper;
@@ -42,6 +43,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
+	@Cacheable(value="User",key="'getUserById'")
 	public User getUserById(int id) {
 		return userMapper.getUserById(id);
 	}

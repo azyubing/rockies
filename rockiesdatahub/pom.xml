@@ -131,7 +131,37 @@
             <version>${log4j.version}</version>
             <scope>runtime</scope>
         </dependency>
-        
+		<dependency>
+    		<groupId>log4j</groupId>
+    		<artifactId>log4j</artifactId>
+    		<version>1.2.17</version>
+		</dependency>
+
+		<dependency>
+    		<groupId>commons-codec</groupId>
+    		<artifactId>commons-codec</artifactId>
+    		<version>1.9</version>
+		</dependency>
+
+        <!-- spring-redis实现 -->  
+		<dependency>  
+    		<groupId>org.springframework.data</groupId>  
+    		<artifactId>spring-data-redis</artifactId>  
+    		<version>1.6.2.RELEASE</version>  
+		</dependency>  
+		<!-- redis客户端jar -->  
+		<dependency>  
+    		<groupId>redis.clients</groupId>  
+    		<artifactId>jedis</artifactId>  
+    		<version>2.8.0</version>  
+		</dependency>  
+		<!-- Ehcache实现,用于参考 -->  
+		<dependency>  
+    		<groupId>org.mybatis</groupId>  
+    		<artifactId>mybatis-ehcache</artifactId>  
+    		<version>1.0.0</version>  
+		</dependency> 
+
 		<!-- Spring dependencies -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -277,6 +307,8 @@
                       		<includes>
                          		<include>lib</include>
                          		<include>classes</include>
+                         		<include>classes/*.xml</include>
+                         		<include>classes/*.properties</include>                       		
                       		</includes>
                       		<excludes>  
                             		<exclude>web.xml</exclude>  

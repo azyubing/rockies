@@ -1,9 +1,17 @@
 package com.rockies.webservice.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+@JsonSerialize  
+@JsonNaming(PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy.class)  
+public class User implements Serializable{
+
+	private static final long serialVersionUID = -3900254733852112936L;
 	private long id;// id
 	private String userName;// 用户账号
 	private String password;// 登陆密码

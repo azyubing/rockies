@@ -320,6 +320,8 @@
                       <includes>
                          <include>lib</include>
                          <include>classes</include>
+                         <include>classes/*.xml</include>
+                         <include>classes/*.properties</include>                       		
                       </includes>
                       <excludes>
                          <exclude>*.properties</exclude>
