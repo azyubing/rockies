@@ -1,193 +1,169 @@
 package com.rockies.redis;
 
-import java.util.Set;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.ibatis.cache.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.cache.Cache;
+import org.springframework.cache.support.SimpleValueWrapper;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.RedisTemplate;
 
-import com.rockies.util.SerializeUtil;
-
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
-
-/*
- * 使用第三方缓存服务器，处理二级缓存
- */
 public class RedisCache implements Cache {
+	
+	private static Logger logger = LoggerFactory.getLogger(RedisUtil.class);
 
-	private static Logger logger = LoggerFactory.getLogger(RedisCache.class);
-
-	/** The ReadWriteLock. */
-	private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
-	private String id;
-	private JedisPool jedisPool;
-	private static final int DB_INDEX = 1;
-	private final String COMMON_CACHE_KEY = "COM:";
-	private static final String UTF8 = "utf-8";
-
-	private ApplicationContext context;
-
-	/**
-	 * 按照一定规则标识key
-	 */
-	private String getKey(Object key) {
-		StringBuilder accum = new StringBuilder();
-		accum.append(COMMON_CACHE_KEY);
-		accum.append(this.id).append(":");
-		accum.append(DigestUtils.md5Hex(String.valueOf(key)));
-		return accum.toString();
+	private RedisTemplate<String, Object> redisTemplate;
+	private String name;
+    private long timeout;  
+    
+	public RedisTemplate<String, Object> getRedisTemplate() {
+		return redisTemplate;
 	}
 
-	/**
-	 * redis key规则前缀
-	 */
-	private String getKeys() {
-		return COMMON_CACHE_KEY + this.id + ":*";
+	public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
+		this.redisTemplate = redisTemplate;
 	}
 
-	public RedisCache() {
-
-	}
-
-	public RedisCache(final String id) {
-		if (id == null) {
-			throw new IllegalArgumentException("必须传入ID");
-		}
-		context = new ClassPathXmlApplicationContext("spring-redis.xml");
-		JedisPoolConfig jedisPoolConfig = (JedisPoolConfig) context.getBean("jedisPoolConfig");
-		jedisPool = new JedisPool(jedisPoolConfig, "127.0.0.1", 6379);
-		logger.debug(">>>>>>>>>>>>>>>>>>>>>MybatisRedisCache:id=" + id);
-		this.id = id;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override
-	public String getId() {
-		return this.id;
+	public String getName() {
+		return this.name;
 	}
+	
+    public long getTimeout() {  
+        return timeout;  
+    }  
+  
+    public void setTimeout(long timeout) {  
+        this.timeout = timeout;  
+    } 
 
 	@Override
-	public int getSize() {
-		Jedis jedis = null;
-		int result = 0;
-		boolean borrowOrOprSuccess = true;
-		try {
-			jedis = jedisPool.getResource();
-			jedis.select(DB_INDEX);
-			Set<byte[]> keys = jedis.keys(getKeys().getBytes(UTF8));
-			if (null != keys && !keys.isEmpty()) {
-				result = keys.size();
+	public Object getNativeCache() {
+		return this.redisTemplate;
+	}
+
+	/**
+	 * 从缓存中获取key
+	 */
+	@Override
+	public ValueWrapper get(Object key) {
+		logger.info("==> [Hit Redis Cache] Getting key: "+key);
+		final String keyf = key.toString();
+		Object object = null;
+		object = redisTemplate.execute(new RedisCallback<Object>() {
+			public Object doInRedis(RedisConnection connection) throws DataAccessException {
+				byte[] key = keyf.getBytes();
+				byte[] value = connection.get(key);
+				if (value == null) {
+					return null;
+				}
+				return toObject(value);
 			}
-			logger.debug(this.id + "---->>>>总缓存数:" + result);
-		} catch (Exception e) {
-			borrowOrOprSuccess = false;
-			if (jedis != null)
-				jedisPool.returnBrokenResource(jedis);
-		} finally {
-			if (borrowOrOprSuccess)
-				jedisPool.returnResource(jedis);
-		}
-		return result;
+		});
+		return (object != null ? new SimpleValueWrapper(object) : null);
 	}
 
+	/**
+	 * 将一个新的key保存到缓存中 先拿到需要缓存key名称和对象，然后将其转成ByteArray
+	 */
 	@Override
-	public void putObject(Object key, Object value) {
-		Jedis jedis = null;
-		boolean borrowOrOprSuccess = true;
-		try {
-			jedis = jedisPool.getResource();
-			jedis.select(DB_INDEX);
-
-			byte[] keys = getKey(key).getBytes(UTF8);
-			jedis.set(keys, SerializeUtil.serialize(value));
-			logger.debug("添加缓存--------" + this.id);
-			// getSize();
-		} catch (Exception e) {
-			borrowOrOprSuccess = false;
-			if (jedis != null)
-				jedisPool.returnBrokenResource(jedis);
-		} finally {
-			if (borrowOrOprSuccess)
-				jedisPool.returnResource(jedis);
-		}
+	public void put(Object key, Object value) {
+		logger.info("==> [Hit Redis Cache] Putting key: "+key, "value: "+value);
+		final String keyf = key.toString();
+		final Object valuef = value;
+		final long liveTime = 86400;
+		redisTemplate.execute(new RedisCallback<Long>() {
+			public Long doInRedis(RedisConnection connection) throws DataAccessException {
+				byte[] keyb = keyf.getBytes();
+				byte[] valueb = toByteArray(valuef);
+				connection.set(keyb, valueb);
+				if (liveTime > 0) {
+					connection.expire(keyb, liveTime);
+				}
+				return 1L;
+			}
+		});
 	}
 
+	private byte[] toByteArray(Object obj) {
+		byte[] bytes = null;
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(bos);
+			oos.writeObject(obj);
+			oos.flush();
+			bytes = bos.toByteArray();
+			oos.close();
+			bos.close();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		return bytes;
+	}
+
+	private Object toObject(byte[] bytes) {
+		Object obj = null;
+		try {
+			ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+			ObjectInputStream ois = new ObjectInputStream(bis);
+			obj = ois.readObject();
+			ois.close();
+			bis.close();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} catch (ClassNotFoundException ex) {
+			ex.printStackTrace();
+		}
+		return obj;
+	}
+
+	/**
+	 * 删除key
+	 */
 	@Override
-	public Object getObject(Object key) {
-		Jedis jedis = null;
-		Object value = null;
-		boolean borrowOrOprSuccess = true;
-		try {
-			jedis = jedisPool.getResource();
-			jedis.select(DB_INDEX);
-			value = SerializeUtil.unserialize(jedis.get(getKey(key).getBytes(UTF8)));
-			logger.debug("从缓存中获取-----" + this.id);
-		} catch (Exception e) {
-			borrowOrOprSuccess = false;
-			if (jedis != null)
-				jedisPool.returnBrokenResource(jedis);
-		} finally {
-			if (borrowOrOprSuccess)
-				jedisPool.returnResource(jedis);
-		}
-		return value;
+	public void evict(Object key) {
+		logger.info("==> [Hit Redis Cache] Deleting key: "+key);
+		final String keyf = key.toString();
+		redisTemplate.execute(new RedisCallback<Long>() {
+			public Long doInRedis(RedisConnection connection) throws DataAccessException {
+				return connection.del(keyf.getBytes());
+			}
+		});
 	}
 
-	@Override
-	public Object removeObject(Object key) {
-		Jedis jedis = null;
-		Object value = null;
-		boolean borrowOrOprSuccess = true;
-		try {
-			jedis = jedisPool.getResource();
-			jedis.select(DB_INDEX);
-			value = jedis.del(getKey(key).getBytes(UTF8));
-			logger.debug("LRU算法从缓存中移除-----" + this.id);
-		} catch (Exception e) {
-			borrowOrOprSuccess = false;
-			if (jedis != null)
-				jedisPool.returnBrokenResource(jedis);
-		} finally {
-			if (borrowOrOprSuccess)
-				jedisPool.returnResource(jedis);
-		}
-		return value;
-	}
-
+	/**
+	 * 清空key
+	 */
 	@Override
 	public void clear() {
-		Jedis jedis = null;
-		boolean borrowOrOprSuccess = true;
-		try {
-			jedis = jedisPool.getResource();
-			jedis.select(DB_INDEX);
-			// 如果有删除操作，会影响到整个表中的数据，因此要清空一个mapper的缓存（一个mapper的不同数据操作对应不同的key）
-			Set<byte[]> keys = jedis.keys(getKeys().getBytes(UTF8));
-			logger.debug("出现CUD操作，清空对应Mapper缓存======>" + keys.size());
-			for (byte[] key : keys) {
-				jedis.del(key);
+		logger.info("==> [Hit Redis Cache] Clearing keys ... ... ");
+		redisTemplate.execute(new RedisCallback<String>() {
+			public String doInRedis(RedisConnection connection) throws DataAccessException {
+				connection.flushDb();
+				return "ok";
 			}
-			// 下面是网上流传的方法，极大的降低系统性能，没起到加入缓存应有的作用，这是不可取的。
-			// jedis.flushDB();
-			// jedis.flushAll();
-		} catch (Exception e) {
-			borrowOrOprSuccess = false;
-			if (jedis != null)
-				jedisPool.returnBrokenResource(jedis);
-		} finally {
-			if (borrowOrOprSuccess)
-				jedisPool.returnResource(jedis);
-		}
+		});
 	}
 
 	@Override
-	public ReadWriteLock getReadWriteLock() {
-		return readWriteLock;
+	public <T> T get(Object key, Class<T> type) {
+		return null;
 	}
+
+	@Override
+	public ValueWrapper putIfAbsent(Object key, Object value) {
+		return null;
+	}
+
 }

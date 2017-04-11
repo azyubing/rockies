@@ -15,7 +15,6 @@
         <jackson.version>2.6.5</jackson.version>
         <slf4j.version>1.7.21</slf4j.version>
         <logback.version>1.1.7</logback.version>
-        <!--  <log4j.version>2.7</log4j.version> -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     	<!-- The main class to start by executing java -jar 
     	<start-class>com.rockies.webservice.Application</start-class>
@@ -116,12 +115,19 @@
       		<version>${logback.version}</version>
     	</dependency>
 
+ 		<!--  
 		<dependency>
     		<groupId>com.jolbox</groupId>
     		<artifactId>bonecp</artifactId>
     		<version>0.8.0.RELEASE</version>
 		</dependency>
+		-->
 
+		<dependency>
+    		<groupId>com.alibaba</groupId>
+    		<artifactId>druid</artifactId>
+    		<version>1.0.26</version>
+		</dependency>
 
 		<dependency>
     		<groupId>commons-codec</groupId>

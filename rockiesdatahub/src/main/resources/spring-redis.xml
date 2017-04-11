@@ -42,10 +42,16 @@
     <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">    
     	<property name="caches">    
         	<set>    
-            	<bean class="com.rockies.redis.RedisUtil">    
+            	<bean class="com.rockies.redis.RedisCache">    
                 	<property name="redisTemplate" ref="redisTemplate" />    
-                    <property name="name" value="User"/> <!-- User名称要在类或方法的注解中使用 -->  
-                </bean>  
+                    <property name="name" value="commonService.getUserById"/> 
+                    <property name="timeout" value="${redis.timeout}" />         
+                </bean> 
+                <bean class="com.rockies.redis.RedisCache">  
+                    <property name="redisTemplate" ref="redisTemplate" />  
+                    <property name="name" value="commonService.getAllUsers" />  
+                    <property name="timeout" value="${redis.timeout}" />  
+                </bean>   
              </set>    
         </property>    
     </bean>

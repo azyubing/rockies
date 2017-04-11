@@ -18,6 +18,7 @@ public class UserServiceImpl implements IUserService {
 	private UserMapper userMapper;
 	
 	@Override
+    @Cacheable(value = "commonService.getAllUsers", key = "new String('commonService.getAllUsers')")  
 	public List<User> getAllUsers() {
 		return userMapper.getAllList();
 	}
@@ -43,7 +44,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	@Cacheable(value="User",key="'getUserById'")
+    @Cacheable(value = "commonService.getUserById", key = "new String('commonService.getUserById.#')+#id", condition = "null != #id")  
 	public User getUserById(int id) {
 		return userMapper.getUserById(id);
 	}

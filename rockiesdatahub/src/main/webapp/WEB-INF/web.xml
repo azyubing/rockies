@@ -40,7 +40,16 @@
 		</init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
- 		 	 
+ 		 	
+	<servlet>  
+    	<servlet-name>DruidStatView</servlet-name>  
+    	<servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>  
+	</servlet>  
+	<servlet-mapping>  
+    	<servlet-name>DruidStatView</servlet-name>  
+    	<url-pattern>/druid/*</url-pattern>  
+	</servlet-mapping>
+ 
   	<servlet-mapping>  
         <!-- 映射路径，不要写成了/*那样会拦截所有的访问，连JSP页面都访问不了 -->  
     	<servlet-name>rest</servlet-name>  

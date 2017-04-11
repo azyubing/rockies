@@ -9,57 +9,45 @@
   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
   http://www.springframework.org/schema/mvc  http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd 
-  http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.2.xsd">
- 
- <!--   
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-        <property name="driverClass" value="${driver}"></property>
-		<property name="jdbcUrl" value="${url}"></property>
-		<property name="user" value="${username}"></property>
-		<property name="password" value="${password}"></property>
-		<property name="minPoolSize" value="10" />
-		<property name="maxPoolSize" value="100" />
-		<property name="maxIdleTime" value="1800" />
-		<property name="acquireIncrement" value="3" />
-		<property name="maxStatements" value="1000" />
-		<property name="initialPoolSize" value="10" />
-		<property name="idleConnectionTestPeriod" value="60" />
-		<property name="acquireRetryAttempts" value="30" />
-		<property name="breakAfterAcquireFailure" value="true" />
-		<property name="testConnectionOnCheckout" value="false" />
-	</bean>
---> 	
-<!--  
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">	
-		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-        <property name="url" value="jdbc:mysql://127.0.0.1:3307/rockies?useUnicode=true&amp;characterEncoding=UTF-8"></property>
-        <property name="username" value="rockies"></property>
-        <property name="password" value="Init1234"></property>
-	</bean>            
--->
-     
+  http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.2.xsd">	
+  
+<!-- 
      <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"  destroy-method="close">  
         <property name="driverClass" value="${rockies.db.driverClass}" />  
         <property name="jdbcUrl" value="${rockies.db.jdbcUrl}" />  
         <property name="username" value="${rockies.db.username}" />  
         <property name="password" value="${rockies.db.password}" />  
-        <!-- 检查数据库连接池中空闲连接的间隔时间，单位是分，默认值：240，如果要取消则设置为0 -->  
         <property name="idleConnectionTestPeriod" value="${rockies.db.idleConnectionTestPeriod}" />  
-        <!-- 连接池中未使用的链接最大存活时间，单位是分，默认值：60，如果要永远存活设置为0 -->  
         <property name="idleMaxAge" value="${rockies.db.idleMaxAge}" />  
-        <!-- 每个分区最大的连接数 -->  
         <property name="maxConnectionsPerPartition" value="${rockies.db.maxConnectionsPerPartition}" />  
-        <!-- 每个分区最小的连接数 -->  
         <property name="minConnectionsPerPartition" value="${rockies.db.minConnectionsPerPartition}" />  
-        <!-- 分区数 ，默认值2，最小1，推荐3-4，视应用而定-->  
         <property name="partitionCount" value="${rockies.db.partitionCount}" />  
-        <!-- 每次去拿数据库连接的时候一次性要拿几个,默认值：2 -->  
         <property name="acquireIncrement" value="${rockies.db.acquireIncrement}" />  
-        <!-- 缓存prepared statements的大小，默认值：0 -->  
         <property name="statementsCacheSize" value="${rockies.db.statementsCacheSize}" />  
-        <!-- 每个分区释放链接助理进程的数量，默认值：3，除非你的一个数据库连接的时间内做了很多工作，不然过多的助理进程会影响你的性能 -->  
         <property name="releaseHelperThreads" value="${rockies.db.releaseHelperThreads}" />  
     </bean>
+-->  
+ 
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">  
+        <property name="url" value="jdbc:mysql://127.0.0.1:3307/rockies?useUnicode=true&amp;characterEncoding=UTF-8" />  
+        <property name="username" value="rockies" />  
+        <property name="password" value="Init1234" />   
+        <property name="maxActive" value="20" />  
+        <property name="initialSize" value="1" />  
+        <property name="maxWait" value="60000" />  
+        <property name="minIdle" value="1" />  
+        <property name="timeBetweenEvictionRunsMillis" value="3000" />  
+        <property name="minEvictableIdleTimeMillis" value="300000" />   
+        <property name="validationQuery" value="SELECT 'x' FROM DUAL" />  
+        <property name="testWhileIdle" value="true" />  
+        <property name="testOnBorrow" value="false" />  
+        <property name="testOnReturn" value="false" />  
+        <!-- mysql 不支持 poolPreparedStatements-->  
+        <!--<property name="poolPreparedStatements" value="true" />-->  
+        <!--<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />-->   
+        <!-- 开启Druid的监控统计功能 -->  
+        <property name="filters" value="stat" />  
+    </bean>  
     
 	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
