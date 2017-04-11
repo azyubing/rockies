@@ -29,15 +29,38 @@
 		<property name="testConnectionOnCheckout" value="false" />
 	</bean>
 --> 	
- 
+<!--  
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">	
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
         <property name="url" value="jdbc:mysql://127.0.0.1:3307/rockies?useUnicode=true&amp;characterEncoding=UTF-8"></property>
         <property name="username" value="rockies"></property>
         <property name="password" value="Init1234"></property>
 	</bean>            
- 
+-->
      
+     <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"  destroy-method="close">  
+        <property name="driverClass" value="${rockies.db.driverClass}" />  
+        <property name="jdbcUrl" value="${rockies.db.jdbcUrl}" />  
+        <property name="username" value="${rockies.db.username}" />  
+        <property name="password" value="${rockies.db.password}" />  
+        <!-- 检查数据库连接池中空闲连接的间隔时间，单位是分，默认值：240，如果要取消则设置为0 -->  
+        <property name="idleConnectionTestPeriod" value="${rockies.db.idleConnectionTestPeriod}" />  
+        <!-- 连接池中未使用的链接最大存活时间，单位是分，默认值：60，如果要永远存活设置为0 -->  
+        <property name="idleMaxAge" value="${rockies.db.idleMaxAge}" />  
+        <!-- 每个分区最大的连接数 -->  
+        <property name="maxConnectionsPerPartition" value="${rockies.db.maxConnectionsPerPartition}" />  
+        <!-- 每个分区最小的连接数 -->  
+        <property name="minConnectionsPerPartition" value="${rockies.db.minConnectionsPerPartition}" />  
+        <!-- 分区数 ，默认值2，最小1，推荐3-4，视应用而定-->  
+        <property name="partitionCount" value="${rockies.db.partitionCount}" />  
+        <!-- 每次去拿数据库连接的时候一次性要拿几个,默认值：2 -->  
+        <property name="acquireIncrement" value="${rockies.db.acquireIncrement}" />  
+        <!-- 缓存prepared statements的大小，默认值：0 -->  
+        <property name="statementsCacheSize" value="${rockies.db.statementsCacheSize}" />  
+        <!-- 每个分区释放链接助理进程的数量，默认值：3，除非你的一个数据库连接的时间内做了很多工作，不然过多的助理进程会影响你的性能 -->  
+        <property name="releaseHelperThreads" value="${rockies.db.releaseHelperThreads}" />  
+    </bean>
+    
 	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />

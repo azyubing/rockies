@@ -49,7 +49,7 @@ public class RedisUtil implements Cache {
 	 */
 	@Override
 	public ValueWrapper get(Object key) {
-		logger.info("==> Getting key: "+key);
+		logger.info("==> [Hit Redis Cache] Getting key: "+key);
 		final String keyf = key.toString();
 		Object object = null;
 		object = redisTemplate.execute(new RedisCallback<Object>() {
@@ -70,7 +70,7 @@ public class RedisUtil implements Cache {
 	 */
 	@Override
 	public void put(Object key, Object value) {
-		logger.info("==> Putting key: "+key, "value: "+value);
+		logger.info("==> [Hit Redis Cache] Putting key: "+key, "value: "+value);
 		final String keyf = key.toString();
 		final Object valuef = value;
 		final long liveTime = 86400;
@@ -124,7 +124,7 @@ public class RedisUtil implements Cache {
 	 */
 	@Override
 	public void evict(Object key) {
-		logger.info("==> Deleting key: "+key);
+		logger.info("==> [Hit Redis Cache] Deleting key: "+key);
 		final String keyf = key.toString();
 		redisTemplate.execute(new RedisCallback<Long>() {
 			public Long doInRedis(RedisConnection connection) throws DataAccessException {
@@ -138,7 +138,7 @@ public class RedisUtil implements Cache {
 	 */
 	@Override
 	public void clear() {
-		logger.info("==> Clearing keys ... ... ");
+		logger.info("==> [Hit Redis Cache] Clearing keys ... ... ");
 		redisTemplate.execute(new RedisCallback<String>() {
 			public String doInRedis(RedisConnection connection) throws DataAccessException {
 				connection.flushDb();

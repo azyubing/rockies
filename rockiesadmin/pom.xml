@@ -12,7 +12,9 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>4.2.5.RELEASE</spring.version>
-        <jackson.version>2.5.3</jackson.version>
+        <jackson.version>2.6.5</jackson.version>
+        <slf4j.version>1.7.21</slf4j.version>
+        <logback.version>1.1.7</logback.version>
   </properties>
   
   <dependencies>   
@@ -35,15 +37,26 @@
     		<version>${jackson.version}</version>
 		</dependency>
 		
-        <dependency>
-    		<groupId>org.slf4j</groupId>
-    		<artifactId>slf4j-log4j12</artifactId>
-    		<version>1.7.12</version>
-		</dependency>
+  		<dependency>
+      		<groupId>org.slf4j</groupId>
+      		<artifactId>slf4j-api</artifactId>
+      		<version>${slf4j.version}</version>
+    	</dependency>
+    	<dependency>
+      		<groupId>ch.qos.logback</groupId>
+      		<artifactId>logback-classic</artifactId>
+      		<version>${logback.version}</version>
+    	</dependency>
+    	<dependency>
+      		<groupId>ch.qos.logback</groupId>
+      		<artifactId>logback-core</artifactId>
+      		<version>${logback.version}</version>
+    	</dependency>
+
 		<dependency>
-    		<groupId>log4j</groupId>
-    		<artifactId>log4j</artifactId>
-    		<version>1.2.17</version>
+    		<groupId>com.jolbox</groupId>
+    		<artifactId>bonecp</artifactId>
+    		<version>0.8.0.RELEASE</version>
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
